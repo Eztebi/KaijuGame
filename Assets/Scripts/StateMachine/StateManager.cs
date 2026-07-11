@@ -7,9 +7,9 @@ public abstract class StateManager<EState> : MonoBehaviour where EState: Enum
     protected Dictionary<EState, BaseState<EState>> states = new Dictionary<EState, BaseState<EState>>();
     protected BaseState<EState> currentState;
     protected bool IsTransitioningState = false;
-    private void Awake(){
-        currentState.AwakeState();
-    }
+    //private void Awake(){
+    //    currentState.AwakeState();
+    //}
     private void Start(){
         currentState.EnterState();
     }
