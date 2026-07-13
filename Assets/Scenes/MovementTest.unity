@@ -169,7 +169,7 @@ Transform:
   m_GameObject: {fileID: 113148945}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.162, y: 0.371, z: 0.405}
+  m_LocalPosition: {x: -0.186, y: 0.07699999, z: 0.0009999871}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -306,7 +306,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -593,7 +593,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -4.18}
+  m_LocalPosition: {x: 0, y: 1, z: -3.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -869,6 +869,14 @@ PrefabInstance:
       propertyPath: m_Avatar
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2471738701543267933, guid: a8de8b9022f877e428726eb12a253ecf, type: 3}
+      propertyPath: m_AnimatePhysics
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2471738701543267933, guid: a8de8b9022f877e428726eb12a253ecf, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3617333719630986723, guid: a8de8b9022f877e428726eb12a253ecf, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -923,7 +931,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9216226554741251741, guid: a8de8b9022f877e428726eb12a253ecf, type: 3}
       propertyPath: m_Name
-      value: SM_Chr_Kaiju_04
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216226554741251741, guid: a8de8b9022f877e428726eb12a253ecf, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -1167,7 +1179,7 @@ MonoBehaviour:
   _leftMultiRotationConstraint: {fileID: 189029158}
   _rightMultiRotationConstraint: {fileID: 902042443}
   _rigidbody: {fileID: 127842358}
-  _rootCollider: {fileID: 0}
+  _rootCollider: {fileID: 127842359}
 --- !u!4 &725832774 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2749030195898751370, guid: a8de8b9022f877e428726eb12a253ecf, type: 3}
@@ -1647,7 +1659,7 @@ Transform:
   m_GameObject: {fileID: 1164723553}
   serializedVersion: 2
   m_LocalRotation: {x: 0.0055242875, y: 0.7032246, z: 0.71092445, w: -0.0055791805}
-  m_LocalPosition: {x: 0.22, y: -0.19000012, z: 2.3299994}
+  m_LocalPosition: {x: -0.02, y: -0.19, z: 2.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2063,7 +2075,7 @@ Transform:
   m_GameObject: {fileID: 1726626551}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.188887, y: 0.371, z: 0.409}
+  m_LocalPosition: {x: 0.188887, y: 0.077, z: 0.005}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2263,7 +2275,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -2329,7 +2341,7 @@ Transform:
   m_GameObject: {fileID: 2059356239}
   serializedVersion: 2
   m_LocalRotation: {x: 0.0043314192, y: 0.7327172, z: 0.6805034, w: 0.0046637626}
-  m_LocalPosition: {x: -0.17, y: -0.06, z: 2.33}
+  m_LocalPosition: {x: 0.01, y: -0.06, z: 2.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

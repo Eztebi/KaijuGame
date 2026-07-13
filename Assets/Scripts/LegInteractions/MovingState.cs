@@ -1,16 +1,24 @@
 using UnityEngine;
 
-public class MovingState : MonoBehaviour
+public class MovingState : LegInteractionState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    MovingState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState estate) : base(context, estate)
     {
-        
+        LegInteractionContext Context = context;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void AwakeState() { }
+    public override void EnterState() { }
+    public override void ExitState() { }
+    public override void UpdateState() { }
+    public override LegInteractionStateMachine.ELegInteractionState GetNextState()
     {
-        
+        return StateKey;
     }
+    public override void OnTriggerEnter(Collider other) { }
+    public override void OnTriggerStay(Collider other) { }
+    public override void OnTriggerExit(Collider other) { }
+    public override void OnCollisionEnter(Collision collision) { }
+    public override void OnCollisionStay(Collision collision) { }
+    public override void OnCollisionExit(Collision collision) { }
 }

@@ -4,12 +4,10 @@ using UnityEngine;
 
 public abstract class StateManager<EState> : MonoBehaviour where EState: Enum
 {
-    protected Dictionary<EState, BaseState<EState>> states = new Dictionary<EState, BaseState<EState>>();
+    protected Dictionary<EState, BaseState<EState>> States = new Dictionary<EState, BaseState<EState>>();
     protected BaseState<EState> currentState;
     protected bool IsTransitioningState = false;
-    //private void Awake(){
-    //    currentState.AwakeState();
-    //}
+
     private void Start(){
         currentState.EnterState();
     }
@@ -28,7 +26,7 @@ public abstract class StateManager<EState> : MonoBehaviour where EState: Enum
     {
         IsTransitioningState = true;
         currentState.ExitState();
-        currentState = states[stateKey];
+        currentState = States[stateKey];
         currentState.EnterState();
         IsTransitioningState=false;
     }
