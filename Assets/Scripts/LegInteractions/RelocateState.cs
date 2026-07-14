@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RelocateState : LegInteractionState
 {
-RelocateState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState estate) : base(context, estate)
+    public RelocateState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState estate) : base(context, estate)
     {
         LegInteractionContext Context = context;
     }

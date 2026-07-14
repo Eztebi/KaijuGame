@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TouchState : LegInteractionState
 {
-    TouchState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState estate) : base(context, estate)
+    public TouchState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState estate) : base(context, estate)
     {
         LegInteractionContext Context = context;
     }

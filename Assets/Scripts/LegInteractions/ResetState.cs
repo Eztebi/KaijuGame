@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ResetState : LegInteractionState
 {
-    ResetState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState estate) : base(context, estate)
+    public ResetState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState estate) : base(context, estate)
     {
         LegInteractionContext Context = context;
     }

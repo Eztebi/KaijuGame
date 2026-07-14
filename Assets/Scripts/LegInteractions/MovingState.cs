@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MovingState : LegInteractionState
 {
-    MovingState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState estate) : base(context, estate)
+    public MovingState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState estate) : base(context, estate)
     {
         LegInteractionContext Context = context;
     }

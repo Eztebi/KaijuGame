@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ReleaseState : LegInteractionState
 {
-    ReleaseState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState estate) : base(context, estate)
+    public ReleaseState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState estate) : base(context, estate)
     {
         LegInteractionContext Context = context;
     }
