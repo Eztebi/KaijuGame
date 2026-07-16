@@ -4,9 +4,9 @@ public abstract class LegInteractionState : BaseState<LegInteractionStateMachine
 {
     protected LegInteractionContext Context;
 
-    protected LegInteractionState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState stateKey): base(stateKey) {
+    public LegInteractionState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState stateKey): base(stateKey) {
         Context = context;
     }
-
+    
     
 }

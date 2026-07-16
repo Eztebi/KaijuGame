@@ -10,7 +10,7 @@ public class LegInteractionStateMachine : StateManager<LegInteractionStateMachin
         Release,
         Touch,
         Relocate,
-        Reset
+        Reset,
     }
     private LegInteractionContext _context;
     [SerializeField] private TwoBoneIKConstraint _leftIkConstraint;
@@ -26,6 +26,7 @@ public class LegInteractionStateMachine : StateManager<LegInteractionStateMachin
 
         _context = new LegInteractionContext(_leftIkConstraint, _rightIkConstraint, _leftMultiRotationConstraint, _rightMultiRotationConstraint,
             _rigidbody, _rootCollider);
+        InitializeStates();
     }
     private void ValidateConstraints()
     {
@@ -45,5 +46,6 @@ public class LegInteractionStateMachine : StateManager<LegInteractionStateMachin
         States.Add(ELegInteractionState.Touch, new TouchState(_context, ELegInteractionState.Touch));
         States.Add(ELegInteractionState.Relocate, new RelocateState(_context, ELegInteractionState.Relocate));
         States.Add(ELegInteractionState.Reset, new ResetState(_context, ELegInteractionState.Reset));
+        currentState = States[ELegInteractionState.Reset];
     }
 }

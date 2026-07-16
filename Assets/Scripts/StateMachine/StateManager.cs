@@ -5,8 +5,8 @@ using UnityEngine;
 public abstract class StateManager<EState> : MonoBehaviour where EState: Enum
 {
     protected Dictionary<EState, BaseState<EState>> States = new Dictionary<EState, BaseState<EState>>();
-    protected BaseState<EState> currentState;
     protected bool IsTransitioningState = false;
+    public BaseState<EState> currentState { get; protected set; }
 
     private void Start(){
         currentState.EnterState();

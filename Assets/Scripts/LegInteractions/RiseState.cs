@@ -6,7 +6,7 @@ public class RiseState : LegInteractionState
         LegInteractionContext Context = context;
     }
 
-    public override void AwakeState() { }
+    //public override void AwakeState() { }
     public override void EnterState() { }
     public override void ExitState() { }
     public override void UpdateState() { }
