@@ -8,9 +8,13 @@ public class ResetState : LegInteractionState
     }
 
     //public override void AwakeState() { }
-    public override void EnterState() { }
+    public override void EnterState() {
+        Debug.Log("Enter Reset State");
+    }
     public override void ExitState() { }
-    public override void UpdateState() { }
+    public override void UpdateState() {
+        Debug.Log("Update Reset State");
+    }
     public override LegInteractionStateMachine.ELegInteractionState GetNextState()
     {
         return StateKey;

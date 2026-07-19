@@ -48,4 +48,5 @@ public class LegInteractionStateMachine : StateManager<LegInteractionStateMachin
         States.Add(ELegInteractionState.Reset, new ResetState(_context, ELegInteractionState.Reset));
         currentState = States[ELegInteractionState.Reset];
     }
+
 }
