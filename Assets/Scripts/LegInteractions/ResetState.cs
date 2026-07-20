@@ -17,6 +17,7 @@ public class ResetState : LegInteractionState
     }
     public override LegInteractionStateMachine.ELegInteractionState GetNextState()
     {
+        return LegInteractionStateMachine.ELegInteractionState.Idle;
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

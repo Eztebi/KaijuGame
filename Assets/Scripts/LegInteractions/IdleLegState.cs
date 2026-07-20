@@ -8,11 +8,24 @@ public class IdleLegState : LegInteractionState
     }
 
     //public override void AwakeState() { }
-    public override void EnterState() { }
-    public override void ExitState() { }
-    public override void UpdateState() { }
+    public override void EnterState() {
+        Debug.Log("Enter Idle State");
+    }
+    public override void ExitState() {
+        
+    }
+    public override void UpdateState() {
+
+        Debug.Log("Update Idle State");
+    }
     public override LegInteractionStateMachine.ELegInteractionState GetNextState()
     {
+        if (Context.InputHandler.LeftLegState == InputHandler.LegState.Up)
+        {
+            Debug.Log("Rise State no entraa");
+            Context.CurrentLeg = LegInteractionContext.ELegType.LEFT;
+            return LegInteractionStateMachine.ELegInteractionState.Rise;
+        }
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }
