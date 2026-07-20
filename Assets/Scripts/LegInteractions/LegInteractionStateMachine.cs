@@ -5,6 +5,7 @@ public class LegInteractionStateMachine : StateManager<LegInteractionStateMachin
 {
     public enum ELegInteractionState
     {
+        Idle,
         Rise,
         Move,
         Release,
@@ -40,6 +41,7 @@ public class LegInteractionStateMachine : StateManager<LegInteractionStateMachin
     }
     private void InitializeStates()
     {
+        States.Add(ELegInteractionState.Idle, new IdleLegState(_context, ELegInteractionState.Idle));e
         States.Add(ELegInteractionState.Rise, new RiseState(_context, ELegInteractionState.Rise));
         States.Add(ELegInteractionState.Move, new MovingState(_context, ELegInteractionState.Move));
         States.Add(ELegInteractionState.Release, new ReleaseState(_context, ELegInteractionState.Release));
