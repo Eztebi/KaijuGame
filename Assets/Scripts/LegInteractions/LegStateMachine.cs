@@ -1,0 +1,69 @@
+using System;
+using UnityEngine;
+using UnityEngine.Animations.Rigging;
+using UnityEngine.Assertions;
+public class LegStateMachine : StateManager<LegStateMachine.ELegState>
+{
+    public enum ELegState
+    {
+        Idle,
+        Rise,
+        Move,
+        Release,
+        Touch,
+        Relocate,
+        Reset,
+    }
+    public enum ELegType
+    {
+        RIGHT,
+        LEFT,
+    }
+
+    private LegInteractionContext _context;
+    [SerializeField] private InputHandler _handler;
+    [SerializeField] private TwoBoneIKConstraint _legIkConstraint;
+    [SerializeField] private MultiRotationConstraint _legMultiRotationConstraint;
+    [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private CapsuleCollider _rootCollider;
+    [SerializeField] private Transform _legRestPosition;
+    [SerializeField] private Transform _upLegPosition;
+    [SerializeField] private Transform _feetRestPosition;
+
+    [SerializeField] private Transform _legIKTargetTransform;
+    [SerializeField] private Transform _feetIKTargetTransform;
+
+    [SerializeField] private ELegType _eLegType;
+    [SerializeField] private bool isGrounded;
+    private void Awake()
+    {
+        ValidateConstraints();
+        _handler = GetComponent<InputHandler>();
+        _context = new LegInteractionContext(_legIkConstraint, _legMultiRotationConstraint,
+            _rigidbody, _rootCollider, _legRestPosition, _upLegPosition, 
+            _feetRestPosition, _legIKTargetTransform,_feetIKTargetTransform,isGrounded,_eLegType,_handler);
+        InitializeStates();
+    }
+    private void ValidateConstraints()
+    {
+        Assert.IsNotNull(_legIkConstraint, "Left IK constraint is not assigned.");
+        Assert.IsNotNull(_legMultiRotationConstraint, "Left multi rotation constraint is not assigned.");
+        Assert.IsNotNull(_rootCollider, "root Collider is not assigned.");
+        Assert.IsNotNull(_rigidbody, "rigidbody is not assigned.");
+        Assert.IsNotNull(_handler, "Input Handler is not assigned.");
+
+    }
+    private void InitializeStates()
+    {
+        States.Add(ELegState.Idle, new IdleLegState(_context, ELegState.Idle));
+        States.Add(ELegState.Rise, new RiseState(_context, ELegState.Rise));
+        States.Add(ELegState.Move, new MovingState(_context, ELegState.Move));
+        States.Add(ELegState.Release, new ReleaseState(_context, ELegState.Release));
+        States.Add(ELegState.Touch, new TouchState(_context, ELegState.Touch));
+        States.Add(ELegState.Relocate, new RelocateState(_context, ELegState.Relocate));
+        States.Add(ELegState.Reset, new ResetState(_context, ELegState.Reset));
+        currentState = States[ELegState.Reset];
+    }
+    public bool Isgrounded => isGrounded;
+    public ELegType LegType => _eLegType;
+}

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TouchState : LegInteractionState
 {
-    public TouchState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState estate) : base(context, estate)
+    public TouchState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
         LegInteractionContext Context = context;
     }
@@ -11,7 +11,7 @@ public class TouchState : LegInteractionState
     public override void EnterState() { }
     public override void ExitState() { }
     public override void UpdateState() { }
-    public override LegInteractionStateMachine.ELegInteractionState GetNextState()
+    public override LegStateMachine.ELegState GetNextState()
     {
         return StateKey;
     }

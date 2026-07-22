@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class IdleLegState : LegInteractionState
 {
-    public IdleLegState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState estate) : base(context, estate)
+    public IdleLegState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
         LegInteractionContext Context = context;
     }
 
     //public override void AwakeState() { }
     public override void EnterState() {
+        //Context.i
         Debug.Log("Enter Idle State");
     }
     public override void ExitState() {
@@ -18,13 +19,23 @@ public class IdleLegState : LegInteractionState
 
         Debug.Log("Update Idle State");
     }
-    public override LegInteractionStateMachine.ELegInteractionState GetNextState()
+    public override LegStateMachine.ELegState GetNextState()
     {
-        if (Context.InputHandler.LeftLegState == InputHandler.LegState.Up)
+        if(Context.LegType == LegStateMachine.ELegType.LEFT)
         {
-            Debug.Log("Rise State no entraa");
-            Context.CurrentLeg = LegInteractionContext.ELegType.LEFT;
-            return LegInteractionStateMachine.ELegInteractionState.Rise;
+            if (Context.InputHandler.LeftLegState == InputHandler.LegState.Up)
+            {
+                Debug.Log("Rise State LEFT");
+                return LegStateMachine.ELegState.Rise;
+            }    
+        }
+        if(Context.LegType == LegStateMachine.ELegType.RIGHT)
+        {
+            if (Context.InputHandler.RightLegState == InputHandler.LegState.Up)
+            {
+                Debug.Log("Rise State RIGHT");
+                return LegStateMachine.ELegState.Rise;
+            }    
         }
         return StateKey;
     }

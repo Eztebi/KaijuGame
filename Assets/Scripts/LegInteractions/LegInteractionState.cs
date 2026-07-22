@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public abstract class LegInteractionState : BaseState<LegInteractionStateMachine.ELegInteractionState>
+public abstract class LegInteractionState : BaseState<LegStateMachine.ELegState>
 {
     protected LegInteractionContext Context;
 
-    public LegInteractionState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState stateKey): base(stateKey) {
+    public LegInteractionState(LegInteractionContext context, LegStateMachine.ELegState stateKey): base(stateKey) {
         Context = context;
     }
     

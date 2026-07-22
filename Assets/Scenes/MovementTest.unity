@@ -1153,8 +1153,9 @@ GameObject:
   m_Component:
   - component: {fileID: 699127360}
   - component: {fileID: 699127359}
-  - component: {fileID: 699127361}
   - component: {fileID: 699127362}
+  - component: {fileID: 699127364}
+  - component: {fileID: 699127363}
   m_Layer: 0
   m_Name: FeetRig
   m_TagString: Untagged
@@ -1321,31 +1322,6 @@ Transform:
   - {fileID: 902042441}
   m_Father: {fileID: 127842356}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &699127361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 699127358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6987f5c822f53648976023af04c1724, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LegInteractionStateMachine
-  _handler: {fileID: 699127362}
-  _leftLegIkConstraint: {fileID: 189029157}
-  _rightLegIkConstraint: {fileID: 902042442}
-  _leftLegMultiRotationConstraint: {fileID: 189029158}
-  _rightLegMultiRotationConstraint: {fileID: 902042443}
-  _rigidbody: {fileID: 127842358}
-  _rootCollider: {fileID: 127842359}
-  _leftLegRestPosition: {fileID: 460494191}
-  _leftUpLegPosition: {fileID: 1525484841}
-  _rightLegRestPosition: {fileID: 1151206356}
-  _rightLegUpPosition: {fileID: 217454228}
-  _leftFeetRestPosition: {fileID: 855587651}
-  _rightFeetRestPosition: {fileID: 2083434667}
 --- !u!114 &699127362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1360,6 +1336,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InputHandler
   leftLegMoveValue: {x: 0, y: 0}
   rightLegMoveValue: {x: 0, y: 0}
+--- !u!114 &699127363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699127358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da8b8c313fd5e641b28ad9370ad03ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LegStateMachine
+  _handler: {fileID: 699127362}
+  _legIkConstraint: {fileID: 189029157}
+  _legMultiRotationConstraint: {fileID: 189029158}
+  _rigidbody: {fileID: 127842358}
+  _rootCollider: {fileID: 127842359}
+  _legRestPosition: {fileID: 460494191}
+  _upLegPosition: {fileID: 1525484841}
+  _feetRestPosition: {fileID: 855587651}
+  _legIKTargetTransform: {fileID: 113148946}
+  _feetIKTargetTransform: {fileID: 2059356240}
+  _eLegType: 1
+  isGrounded: 0
+--- !u!114 &699127364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699127358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da8b8c313fd5e641b28ad9370ad03ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LegStateMachine
+  _handler: {fileID: 699127362}
+  _legIkConstraint: {fileID: 902042442}
+  _legMultiRotationConstraint: {fileID: 902042443}
+  _rigidbody: {fileID: 127842358}
+  _rootCollider: {fileID: 127842359}
+  _legRestPosition: {fileID: 1151206356}
+  _upLegPosition: {fileID: 217454228}
+  _feetRestPosition: {fileID: 2083434667}
+  _legIKTargetTransform: {fileID: 1726626552}
+  _feetIKTargetTransform: {fileID: 1164723554}
+  _eLegType: 0
+  isGrounded: 0
 --- !u!4 &725832774 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2749030195898751370, guid: a8de8b9022f877e428726eb12a253ecf, type: 3}
@@ -1595,7 +1619,7 @@ GameObject:
   - component: {fileID: 902042442}
   - component: {fileID: 902042443}
   m_Layer: 0
-  m_Name: RighLeg
+  m_Name: RightLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2334,7 +2358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1476594495}
   m_Layer: 0
-  m_Name: RighLeg_hint
+  m_Name: RightLeg_hint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2472,7 +2496,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1726626552}
   m_Layer: 0
-  m_Name: RighLeg_target
+  m_Name: RightLeg_target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

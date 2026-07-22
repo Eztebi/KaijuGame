@@ -1,79 +1,57 @@
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using static LegStateMachine;
 
 public class LegInteractionContext
 {
-    public enum ELegType
-    {
-        RIGHT,
-        LEFT,
-        BOTH,
-    }
     private InputHandler _handler;
-    private TwoBoneIKConstraint _leftIkConstraint;
-    private TwoBoneIKConstraint _rightIkConstraint;
-    private MultiRotationConstraint _leftMultiRotationConstraint;
-    private MultiRotationConstraint _rightMultiRotationConstraint;
+    private TwoBoneIKConstraint _ikConstraint;
+    private MultiRotationConstraint _multiRotationConstraint;
     private Rigidbody _rigidbody;
     private CapsuleCollider _rootCollider;
-    private Transform _leftLegRestPosition;
-    private Transform _leftLegUpPosition;
-    private Transform _rightLegRestPosition;
-    private Transform _rightLegUpPosition;
-    private Transform _rightFeetRestPosition;
-    private Transform _leftFeetRestPosition;
 
-    private Transform _rightLegIKTargetTransform;
-    private Transform _leftLegIKTargetTransform;
-    private Transform _leftFeetIKTargetTransform;
-    private Transform _rightFeetTargetIKTransform;
-    public ELegType _currentLeg;
-    public LegInteractionContext(TwoBoneIKConstraint leftLegIkConstraint, TwoBoneIKConstraint rightLegIkConstraint, 
-        MultiRotationConstraint leftLegMultiRotationConstraint, MultiRotationConstraint rightLegMultiRotationConstraint, 
-        Rigidbody rigidbody, CapsuleCollider rootCollider, Transform leftLegRestPosition, Transform leftLegUpPosition,
-        Transform rightLegRestPosition, Transform rightLegUpPosition, Transform leftFeetRestPosition, Transform rightFeetRestPosition, 
-        InputHandler inputHandler, Transform rightLegIKTargetTransform, Transform leftLegIKTargetTransform, Transform leftFeetIKTargetTransform, 
-        Transform rightFeetIKTargetTransform)
+    private Transform _legRestPosition;
+    private Transform _legUpPosition;
+    private Transform _feetRestPosition;
+
+    private Transform _legIKTargetTransform;
+    private Transform _feetIKTargetTransform;
+    private LegStateMachine.ELegType _legType;
+    private bool _isGrounded;
+
+    public LegInteractionContext(TwoBoneIKConstraint ikConstraint, MultiRotationConstraint legMultiRotationConstraint, 
+        Rigidbody rigidbody, CapsuleCollider rootCollider, Transform legRestPosition, Transform legUpPosition,
+        Transform feetRestPosition, Transform legIKTargetTransform, Transform feetIKTargetTransform, bool isGrounded,
+        LegStateMachine.ELegType legType, InputHandler inputHandler)
     {
-        _leftIkConstraint = leftLegIkConstraint;
-        _rightIkConstraint = rightLegIkConstraint;
-        _leftMultiRotationConstraint = leftLegMultiRotationConstraint;
-        _rightMultiRotationConstraint = rightLegMultiRotationConstraint;
+        _ikConstraint = ikConstraint;
+        _multiRotationConstraint = legMultiRotationConstraint;
         _rigidbody = rigidbody;
         _rootCollider = rootCollider;
-        _leftLegRestPosition = leftLegRestPosition;
-        _leftLegUpPosition = leftLegUpPosition;
-        _rightLegRestPosition = rightLegRestPosition;
-        _rightLegUpPosition = rightLegUpPosition;
+        _legRestPosition = legRestPosition;
+        _legUpPosition = legUpPosition;
+        _feetRestPosition = feetRestPosition;
+        _legIKTargetTransform = legIKTargetTransform;
+        _feetIKTargetTransform = feetIKTargetTransform;
+        _isGrounded = isGrounded;
+        _legType = legType;
         _handler = inputHandler;
-        _leftLegIKTargetTransform = leftLegIKTargetTransform;
-        _rightLegIKTargetTransform = rightLegIKTargetTransform;
-        _leftFeetIKTargetTransform = leftFeetIKTargetTransform;
-        _rightFeetTargetIKTransform = rightFeetIKTargetTransform;
     }
 
-    public TwoBoneIKConstraint LeftIkConstraint => _leftIkConstraint;
-    public TwoBoneIKConstraint RightIkConstraint => _rightIkConstraint;
-    public MultiRotationConstraint LeftMultiRotationConstraint => _leftMultiRotationConstraint;
-    public MultiRotationConstraint RightMultiRotationConstraint => _rightMultiRotationConstraint;
+    public TwoBoneIKConstraint LeftIkConstraint => _ikConstraint;
+    public MultiRotationConstraint LeftMultiRotationConstraint => _multiRotationConstraint;
     public Rigidbody Rb => _rigidbody;
     public CapsuleCollider RootCollider => _rootCollider;
-    public Transform LeftRestPosition => _leftLegRestPosition;
-    public Transform LeftUpPosition => _leftLegUpPosition;
-    public Transform RightRestPosition => _rightLegRestPosition;
-    public Transform RightUpPosition => _rightLegUpPosition;
-    public Transform LeftFeetRestPosition => _leftFeetRestPosition;
-    public Transform RightFeetRestPosition => _rightFeetRestPosition;
+    public Transform LegRestPosition => _legRestPosition;
+    public Transform LegUpPosition => _legUpPosition;
+    public Transform feetRestPosition => _feetRestPosition;
     public InputHandler InputHandler => _handler; 
-    public Transform LeftLegIKTargetTransform => _leftLegIKTargetTransform;
-    public Transform RightLegIKTragetTransform => _rightLegIKTargetTransform;
-    public Transform LeftFeetIKTargetTransform => _leftFeetIKTargetTransform;
-    public Transform RightFeetIKTragetTransform => _rightFeetTargetIKTransform;
+    public Transform LegIKTargetTransform => _legIKTargetTransform;
+    public Transform FeetIKTargetTransform => _feetIKTargetTransform;
+    public ELegType LegType => _legType;
+
     //public TwoBoneIKConstraint CurrentIkConstraint { get; set; }
     //public Transform LeftLegIKTargetTransform {  get; set; }
     //public Transform RightLegIKTragetTransform { get ; set; }
     //public Transform CurrentLegIKTargetTransform { get; set; }
-    public ELegType CurrentLeg => _currentLeg;
-
-
 }

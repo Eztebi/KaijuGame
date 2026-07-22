@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RiseState : LegInteractionState
 {
-    public RiseState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState estate) : base(context,estate) {
+    public RiseState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context,estate) {
         LegInteractionContext Context = context;
     }
 
@@ -15,7 +15,7 @@ public class RiseState : LegInteractionState
     public override void UpdateState() {
         Debug.Log("Update Rise State");
     }
-    public override LegInteractionStateMachine.ELegInteractionState GetNextState()
+    public override LegStateMachine.ELegState GetNextState()
     {
         return StateKey;
     }
@@ -27,11 +27,6 @@ public class RiseState : LegInteractionState
     public override void OnCollisionExit(Collision collision) { }
     private void MoveToPosition()
     {
-        if(Context.CurrentLeg == LegInteractionContext.ELegType.LEFT)
-        {
-            //Context.CurrentLegIKTargetTransform = Context.LeftUpPosition;
-            Context.LeftLegIKTargetTransform.position = Context.LeftUpPosition.position;
-        }
- 
+        Context.LegIKTargetTransform.position = Context.LegUpPosition.position;
     }
 }

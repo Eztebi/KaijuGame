@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RelocateState : LegInteractionState
 {
-    public RelocateState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState estate) : base(context, estate)
+    public RelocateState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
         LegInteractionContext Context = context;
     }
@@ -11,7 +11,7 @@ public class RelocateState : LegInteractionState
     public override void EnterState() { }
     public override void ExitState() { }
     public override void UpdateState() { }
-    public override LegInteractionStateMachine.ELegInteractionState GetNextState()
+    public override LegStateMachine.ELegState GetNextState()
     {
         return StateKey;
     }

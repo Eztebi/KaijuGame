@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ResetState : LegInteractionState
 {
-    public ResetState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState estate) : base(context, estate)
+    public ResetState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
         LegInteractionContext Context = context;
     }
@@ -15,9 +15,9 @@ public class ResetState : LegInteractionState
     public override void UpdateState() {
         Debug.Log("Update Reset State");
     }
-    public override LegInteractionStateMachine.ELegInteractionState GetNextState()
+    public override LegStateMachine.ELegState GetNextState()
     {
-        return LegInteractionStateMachine.ELegInteractionState.Idle;
+        return LegStateMachine.ELegState.Idle;
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

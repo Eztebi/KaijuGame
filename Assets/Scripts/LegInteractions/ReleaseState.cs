@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ReleaseState : LegInteractionState
 {
-    public ReleaseState(LegInteractionContext context, LegInteractionStateMachine.ELegInteractionState estate) : base(context, estate)
+    public ReleaseState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
         LegInteractionContext Context = context;
     }
@@ -11,7 +11,7 @@ public class ReleaseState : LegInteractionState
     public override void EnterState() { }
     public override void ExitState() { }
     public override void UpdateState() { }
-    public override LegInteractionStateMachine.ELegInteractionState GetNextState()
+    public override LegStateMachine.ELegState GetNextState()
     {
         return StateKey;
     }
