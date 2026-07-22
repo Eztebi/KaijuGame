@@ -17,6 +17,12 @@ public class RiseState : LegInteractionState
     }
     public override LegStateMachine.ELegState GetNextState()
     {
+
+        if(Context.LegIKTargetTransform.position == Context.LegUpPosition.position)
+        {
+            return LegStateMachine.ELegState.Move;
+        }
+        return CheckToReturnToReset();
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }
@@ -25,8 +31,9 @@ public class RiseState : LegInteractionState
     public override void OnCollisionEnter(Collision collision) { }
     public override void OnCollisionStay(Collision collision) { }
     public override void OnCollisionExit(Collision collision) { }
-    private void MoveToPosition()
+    public override void MoveToPosition()
     {
         Context.LegIKTargetTransform.position = Context.LegUpPosition.position;
+        Context._currentLegPos = Context.LegUpPosition.position;
     }
 }

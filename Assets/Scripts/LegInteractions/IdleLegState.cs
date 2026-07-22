@@ -16,28 +16,16 @@ public class IdleLegState : LegInteractionState
         
     }
     public override void UpdateState() {
-
         Debug.Log("Update Idle State");
+        MoveToPosition();
     }
     public override LegStateMachine.ELegState GetNextState()
     {
-        if(Context.LegType == LegStateMachine.ELegType.LEFT)
+        if(Context.CurrentLegState == InputHandler.ELegPos.Up)
         {
-            if (Context.InputHandler.LeftLegState == InputHandler.LegState.Up)
-            {
-                Debug.Log("Rise State LEFT");
-                return LegStateMachine.ELegState.Rise;
-            }    
+            return LegStateMachine.ELegState.Rise;
         }
-        if(Context.LegType == LegStateMachine.ELegType.RIGHT)
-        {
-            if (Context.InputHandler.RightLegState == InputHandler.LegState.Up)
-            {
-                Debug.Log("Rise State RIGHT");
-                return LegStateMachine.ELegState.Rise;
-            }    
-        }
-        return StateKey;
+        return CheckToReturnToReset();
     }
     public override void OnTriggerEnter(Collider other) { }
     public override void OnTriggerStay(Collider other) { }
@@ -45,4 +33,9 @@ public class IdleLegState : LegInteractionState
     public override void OnCollisionEnter(Collision collision) { }
     public override void OnCollisionStay(Collision collision) { }
     public override void OnCollisionExit(Collision collision) { }
+    public override void MoveToPosition()
+    {
+        Context.LegIKTargetTransform.position = Context.LegRestPosition.position;
+        Context._currentLegPos = Context.LegRestPosition.position;
+    }
 }

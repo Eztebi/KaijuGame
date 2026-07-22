@@ -7,6 +7,14 @@ public abstract class LegInteractionState : BaseState<LegStateMachine.ELegState>
     public LegInteractionState(LegInteractionContext context, LegStateMachine.ELegState stateKey): base(stateKey) {
         Context = context;
     }
-    
-    
+
+    public virtual void MoveToPosition() { }
+    public virtual LegStateMachine.ELegState CheckToReturnToReset()
+    {
+        if (Context.CurrentLegState == InputHandler.ELegPos.Down)
+        {
+            return LegStateMachine.ELegState.Reset;
+        }
+        return StateKey;
+    }
 }

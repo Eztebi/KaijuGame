@@ -8,11 +8,16 @@ public class RelocateState : LegInteractionState
     }
 
     //public override void AwakeState() { }
-    public override void EnterState() { }
-    public override void ExitState() { }
+    public override void EnterState() {
+        Debug.Log("Enter Relocate State");
+    }
+    public override void ExitState() {
+        Debug.Log("Update Relocate State");
+    }
     public override void UpdateState() { }
     public override LegStateMachine.ELegState GetNextState()
     {
+        return CheckToReturnToReset();
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

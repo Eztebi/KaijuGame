@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class ResetState : LegInteractionState
 {
+    private float timeToReset = 1;
+    private float timer = 0;
     public ResetState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
         LegInteractionContext Context = context;
@@ -9,6 +11,8 @@ public class ResetState : LegInteractionState
 
     //public override void AwakeState() { }
     public override void EnterState() {
+        timer = 0;
+        MoveToPosition();
         Debug.Log("Enter Reset State");
     }
     public override void ExitState() { }
@@ -17,7 +21,12 @@ public class ResetState : LegInteractionState
     }
     public override LegStateMachine.ELegState GetNextState()
     {
+        //if (timer > timeToReset)
+        //{
         return LegStateMachine.ELegState.Idle;
+        //}
+        ////MoveToPosition();
+        //timer += Time.deltaTime;
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }
@@ -26,4 +35,8 @@ public class ResetState : LegInteractionState
     public override void OnCollisionEnter(Collision collision) { }
     public override void OnCollisionStay(Collision collision) { }
     public override void OnCollisionExit(Collision collision) { }
+    public override void MoveToPosition()
+    {
+        Context.LegIKTargetTransform.position = Context.LegRestPosition.position;
+    }
 }
