@@ -17,6 +17,7 @@ public class ResetState : LegInteractionState
     }
     public override void ExitState() { }
     public override void UpdateState() {
+        MoveToPosition();
         Debug.Log("Update Reset State");
     }
     public override LegStateMachine.ELegState GetNextState()
@@ -37,6 +38,22 @@ public class ResetState : LegInteractionState
     public override void OnCollisionExit(Collision collision) { }
     public override void MoveToPosition()
     {
-        Context.LegIKTargetTransform.position = Context.LegRestPosition.position;
+        Ray ray;
+        if(Context.LegType == LegStateMachine.ELegType.RIGHT)
+        {
+            Vector3 pos = new Vector3(Context.BodyPosition.position.x - Context._currentLegPos.x, Context.BodyPosition.position.y, Context._currentLegPos.z);
+            ray = new Ray(Context.BodyPosition.position, Vector3.down * (Context.LegUpPosition.position.y - Context.LegRestPosition.position.y) *2);
+        }
+        else
+        {
+            Vector3 pos = new Vector3(Context.BodyPosition.position.x + Context._currentLegPos.x, Context.BodyPosition.position.y, Context._currentLegPos.z);
+            ray = new Ray(Context.BodyPosition.position, Vector3.down * (Context.LegUpPosition.position.y - Context.LegRestPosition.position.y) *2);
+        }
+  
+        if(Physics.Raycast(ray, out RaycastHit hit))
+        {
+            Context._currentLegPos = hit.point;
+            Context.LegIKTargetTransform.position = Context._currentLegPos;
+        }
     }
 }

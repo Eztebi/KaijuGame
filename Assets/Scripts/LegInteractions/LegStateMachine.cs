@@ -21,35 +21,40 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
     }
 
     private LegInteractionContext _context;
+    [SerializeField] private Transform _otherLeg;
     [SerializeField] private InputHandler _handler;
     [SerializeField] private TwoBoneIKConstraint _legIkConstraint;
     [SerializeField] private MultiRotationConstraint _legMultiRotationConstraint;
-    [SerializeField] private Rigidbody _rigidbody;
-    [SerializeField] private CapsuleCollider _rootCollider;
+    //[SerializeField] private Rigidbody _rigidbody;
+    //[SerializeField] private CapsuleCollider _rootCollider;
+    [SerializeField] private BoxCollider _legCollider;
     [SerializeField] private Transform _legRestPosition;
     [SerializeField] private Transform _upLegPosition;
     [SerializeField] private Transform _feetRestPosition;
+    [SerializeField] private Transform _bodyPosition;
 
     [SerializeField] private Transform _legIKTargetTransform;
     [SerializeField] private Transform _feetIKTargetTransform;
 
     [SerializeField] private ELegType _eLegType;
     [SerializeField] private bool isGrounded;
+    [SerializeField] private LayerMask _groundLayerMask;
     private void Awake()
     {
         ValidateConstraints();
         _handler = GetComponent<InputHandler>();
         _context = new LegInteractionContext(_legIkConstraint, _legMultiRotationConstraint,
-            _rigidbody, _rootCollider, _legRestPosition, _upLegPosition, 
-            _feetRestPosition, _legIKTargetTransform,_feetIKTargetTransform,isGrounded,_eLegType,_handler);
+            /*_rigidbody, _rootCollider,*/ _legRestPosition, _upLegPosition, 
+            _feetRestPosition, _legIKTargetTransform,_feetIKTargetTransform,_legCollider,_bodyPosition,
+            _groundLayerMask,_otherLeg,isGrounded,_eLegType,_handler);
         InitializeStates();
     }
     private void ValidateConstraints()
     {
         Assert.IsNotNull(_legIkConstraint, "Left IK constraint is not assigned.");
         Assert.IsNotNull(_legMultiRotationConstraint, "Left multi rotation constraint is not assigned.");
-        Assert.IsNotNull(_rootCollider, "root Collider is not assigned.");
-        Assert.IsNotNull(_rigidbody, "rigidbody is not assigned.");
+        //Assert.IsNotNull(_rootCollider, "root Collider is not assigned.");
+        //Assert.IsNotNull(_rigidbody, "rigidbody is not assigned.");
         Assert.IsNotNull(_handler, "Input Handler is not assigned.");
 
     }
@@ -66,4 +71,16 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
     }
     public bool Isgrounded => isGrounded;
     public ELegType LegType => _eLegType;
+    private void OnDrawGizmos()
+    {
+        if (_context == null)
+            return;
+
+        Gizmos.color = Color.magenta;
+
+        Gizmos.DrawRay(_context._currentLegPos, Vector3.down * (_context.LegUpPosition.position.y - _context.LegRestPosition.position.y));
+
+        Gizmos.color = Color.pink;
+        Gizmos.DrawRay(_bodyPosition.position, Vector3.down * (_context.LegUpPosition.position.y - _context.LegRestPosition.position.y) * 2);
+    }
 }

@@ -24,7 +24,7 @@ public class MovingState : LegInteractionState
     }
     public override LegStateMachine.ELegState GetNextState()
     {
-        return CheckToReturnToReset();
+        //return CheckToReturnToReset();
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }
@@ -39,6 +39,13 @@ public class MovingState : LegInteractionState
         _calculatedPos.x -= Time.deltaTime * speed * Context.CurrentLegMoveValue.x;
         _calculatedPos.z -= Time.deltaTime * speed * Context.CurrentLegMoveValue.y;
         Context.LegIKTargetTransform.position = _calculatedPos;
+        Context._currentLegPos = _calculatedPos;
 
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.indigo;
+        Vector3 pos = new Vector3(Context._currentLegPos.x, Context._currentLegPos.y - Context.LegRestPosition.position.y, Context._currentLegPos.z);
+        Gizmos.DrawRay(pos, Vector3.down);
     }
 }

@@ -27,4 +27,20 @@ public class ReleaseState : LegInteractionState
     public override void OnCollisionEnter(Collision collision) { }
     public override void OnCollisionStay(Collision collision) { }
     public override void OnCollisionExit(Collision collision) { }
+
+    public override void MoveToPosition()
+    {
+        float feetHeight = Context.LegUpPosition.position.y - Context.LegRestPosition.position.y;
+        Ray ray = new Ray(Context.LegIKTargetTransform.position, Vector3.down);
+        if (Physics.Raycast(ray, out RaycastHit hit, feetHeight, LayerMask.GetMask("Floor")))
+        {
+            Context.LegIKTargetTransform.position = hit.point;
+            Context._currentLegPos = hit.point;
+        }
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(Context.LegIKTargetTransform.position, Vector3.down);
+    }
 }
