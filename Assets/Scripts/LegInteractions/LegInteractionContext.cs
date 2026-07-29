@@ -11,6 +11,7 @@ public class LegInteractionContext
     //private CapsuleCollider _rootCollider;
     private BoxCollider _legCollider;
 
+    private Transform _fullBodyPos;
     private Transform _legRestPosition;
     private Transform _legUpPosition;
     private Transform _feetRestPosition;
@@ -27,7 +28,7 @@ public class LegInteractionContext
     public LegInteractionContext(TwoBoneIKConstraint ikConstraint, MultiRotationConstraint legMultiRotationConstraint, 
         /*Rigidbody rigidbody, CapsuleCollider rootCollider,*/ Transform legRestPosition, Transform legUpPosition,
         Transform feetRestPosition, Transform legIKTargetTransform, Transform feetIKTargetTransform, BoxCollider legCollider, 
-        Transform bodyPosition, LayerMask groundMask,Transform otherLegPosition, bool isGrounded,
+        Transform bodyPosition, LayerMask groundMask,Transform otherLegPosition,Transform fullBodyPos, bool isGrounded,
         LegStateMachine.ELegType legType, InputHandler inputHandler)
     {
         _ikConstraint = ikConstraint;
@@ -46,6 +47,7 @@ public class LegInteractionContext
         _handler = inputHandler;
         _groundMask = groundMask;
         _otherLegPosition = otherLegPosition;
+        _fullBodyPos = fullBodyPos;
 
     }
     public Vector2 CurrentLegMoveValue
@@ -80,5 +82,6 @@ public class LegInteractionContext
     public bool IsGrounded { get { return _isGrounded; } set { _isGrounded = value; } }
     public LayerMask GroundMask => _groundMask;
     public Transform OtherLegPosition => _otherLegPosition; 
+    public Transform FullBodyPos => _fullBodyPos;
 
 }

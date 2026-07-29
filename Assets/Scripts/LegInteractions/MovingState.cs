@@ -24,7 +24,10 @@ public class MovingState : LegInteractionState
     }
     public override LegStateMachine.ELegState GetNextState()
     {
-        //return CheckToReturnToReset();
+        if (Context.CurrentLegState == InputHandler.ELegPos.Down)
+        {
+            return LegStateMachine.ELegState.Release;
+        }
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

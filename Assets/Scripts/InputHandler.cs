@@ -25,8 +25,7 @@ public class InputHandler : MonoBehaviour
         rightLegUpAction = InputSystem.actions.FindAction("RightLegUp");
         leftLegMoveAction = InputSystem.actions.FindAction("LeftLegMove");
         rightLegMoveAction = InputSystem.actions.FindAction("RightLegMove");
-        leftLegReleaseAction = InputSystem.actions.FindAction("LeftLegRelease");
-        rightLegReleaseAction = InputSystem.actions.FindAction("RightLegRelease");
+
 
         leftLegState = ELegPos.Down;
         rightLegState = ELegPos.Down;
@@ -42,26 +41,26 @@ public class InputHandler : MonoBehaviour
         {
             leftLegState = ELegPos.Up;
             leftLegMoveValue = leftLegMoveAction.ReadValue<Vector2>();
-            Debug.Log("Left Leg Up");
-            if (leftLegMoveValue != Vector2.zero) Debug.Log("Left Leg Moving");
+            //Debug.Log("Left Leg Up");
+            //if (leftLegMoveValue != Vector2.zero) Debug.Log("Left Leg Moving");
 
         }
         else
         {
             leftLegState = ELegPos.Down;
-            Debug.Log("Left Leg Release");
+            //Debug.Log("Left Leg Release");
         }
         if(rightLegUpAction.IsPressed())
         {
             rightLegState = ELegPos.Up;
             rightLegMoveValue = rightLegMoveAction.ReadValue<Vector2>();
-            Debug.Log("Right Leg Up");
-            if(rightLegMoveValue != Vector2.zero) Debug.Log("Right Leg Moving");  
+            //Debug.Log("Right Leg Up");
+            //if(rightLegMoveValue != Vector2.zero) Debug.Log("Right Leg Moving");  
         }
         else
         {
             rightLegState = ELegPos.Down;
-            Debug.Log("Right Leg Realese");
+            //Debug.Log("Right Leg Realese");
         }
     }
 }

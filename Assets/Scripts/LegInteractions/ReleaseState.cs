@@ -18,7 +18,7 @@ public class ReleaseState : LegInteractionState
     }
     public override LegStateMachine.ELegState GetNextState()
     {
-        return CheckToReturnToReset();
+        if (CheckHasGround()) return LegStateMachine.ELegState.Relocate;
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }
@@ -28,15 +28,17 @@ public class ReleaseState : LegInteractionState
     public override void OnCollisionStay(Collision collision) { }
     public override void OnCollisionExit(Collision collision) { }
 
-    public override void MoveToPosition()
+    public bool CheckHasGround()
     {
-        float feetHeight = Context.LegUpPosition.position.y - Context.LegRestPosition.position.y;
-        Ray ray = new Ray(Context.LegIKTargetTransform.position, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, feetHeight, LayerMask.GetMask("Floor")))
+        Vector3 pos = new Vector3(Context._currentLegPos.x, Context.BodyPosition.position.y, Context._currentLegPos.z);
+        float feetHeight = Context.BodyPosition.position.y - Context.LegRestPosition.position.y;
+        Ray ray = new Ray(pos, Vector3.down * feetHeight);
+        if (Physics.Raycast(ray, out RaycastHit hit, feetHeight, Context.GroundMask))
         {
-            Context.LegIKTargetTransform.position = hit.point;
-            Context._currentLegPos = hit.point;
+            Debug.Log("hay suelo abajo");
+            return true;
         }
+        return false;
     }
     private void OnDrawGizmos()
     {

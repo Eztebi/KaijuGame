@@ -21,6 +21,7 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
     }
 
     private LegInteractionContext _context;
+    [SerializeField] private Transform _fullBody;
     [SerializeField] private Transform _otherLeg;
     [SerializeField] private InputHandler _handler;
     [SerializeField] private TwoBoneIKConstraint _legIkConstraint;
@@ -46,7 +47,7 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
         _context = new LegInteractionContext(_legIkConstraint, _legMultiRotationConstraint,
             /*_rigidbody, _rootCollider,*/ _legRestPosition, _upLegPosition, 
             _feetRestPosition, _legIKTargetTransform,_feetIKTargetTransform,_legCollider,_bodyPosition,
-            _groundLayerMask,_otherLeg,isGrounded,_eLegType,_handler);
+            _groundLayerMask,_otherLeg,_fullBody,isGrounded,_eLegType,_handler);
         InitializeStates();
     }
     private void ValidateConstraints()
