@@ -41,7 +41,7 @@ public class RiseState : LegInteractionState
     public override void OnCollisionExit(Collision collision) { }
     public Vector3 CheckBodyDistance()
     {
-        Vector3 midPoint = Vector3.Lerp(Context._currentLegPos, Context.OtherLegPosition.position, 0.5f);
+        Vector3 midPoint = Vector3.Lerp(Context._currentLegPos, Context.OtherLegPosition.position, 0.8f);
 
         return new Vector3(midPoint.x, Context.FullBodyPos.position.y, midPoint.z);
     }
