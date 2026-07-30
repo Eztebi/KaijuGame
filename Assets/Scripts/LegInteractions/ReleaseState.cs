@@ -40,9 +40,4 @@ public class ReleaseState : LegInteractionState
         }
         return false;
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(Context.LegIKTargetTransform.position, Vector3.down);
-    }
 }

@@ -4,6 +4,7 @@ public class MovingState : LegInteractionState
 {
     private Vector3 _calculatedPos;
     private float speed = 3;
+    private float maxLegDistance = .8f;
     public MovingState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
         LegInteractionContext Context = context;
@@ -41,14 +42,18 @@ public class MovingState : LegInteractionState
     public override void MoveToPosition() {
         _calculatedPos.x -= Time.deltaTime * speed * Context.CurrentLegMoveValue.x;
         _calculatedPos.z -= Time.deltaTime * speed * Context.CurrentLegMoveValue.y;
+
+        Vector3 _anchorPoint = new Vector3(Context.LegRestPosition.position.x, _calculatedPos.y, Context.LegRestPosition.position.z);
+
+        Vector3 offset = _calculatedPos - _anchorPoint;
+        offset = Vector3.ClampMagnitude(offset, maxLegDistance);
+
+        _calculatedPos = _anchorPoint + offset;
+
+
         Context.LegIKTargetTransform.position = _calculatedPos;
         Context._currentLegPos = _calculatedPos;
+        
 
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.indigo;
-        Vector3 pos = new Vector3(Context._currentLegPos.x, Context._currentLegPos.y - Context.LegRestPosition.position.y, Context._currentLegPos.z);
-        Gizmos.DrawRay(pos, Vector3.down);
     }
 }
