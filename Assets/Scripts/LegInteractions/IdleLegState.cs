@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
 public class IdleLegState : LegInteractionState
@@ -63,6 +64,6 @@ public class IdleLegState : LegInteractionState
             Context.LegIKTargetTransform.position = hit.point;
             Context._currentLegPos = hit.point;
         }
-
     }
+    
 }
