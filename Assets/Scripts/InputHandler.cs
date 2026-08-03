@@ -16,7 +16,7 @@ public class InputHandler : MonoBehaviour
     InputAction rightLegMoveAction;
     InputAction leftLegReleaseAction;
     InputAction rightLegReleaseAction;
-
+    public Animator animator;
     public ELegPos LeftLegState => leftLegState;
     public ELegPos RightLegState => rightLegState; 
     private void Start()
@@ -41,6 +41,8 @@ public class InputHandler : MonoBehaviour
         {
             leftLegState = ELegPos.Up;
             leftLegMoveValue = leftLegMoveAction.ReadValue<Vector2>();
+            animator.enabled = true;
+
             //Debug.Log("Left Leg Up");
             //if (leftLegMoveValue != Vector2.zero) Debug.Log("Left Leg Moving");
 
@@ -48,18 +50,23 @@ public class InputHandler : MonoBehaviour
         else
         {
             leftLegState = ELegPos.Down;
+            animator.enabled = false;
             //Debug.Log("Left Leg Release");
         }
         if(rightLegUpAction.IsPressed())
         {
             rightLegState = ELegPos.Up;
             rightLegMoveValue = rightLegMoveAction.ReadValue<Vector2>();
+            animator.enabled = true;
+
             //Debug.Log("Right Leg Up");
             //if(rightLegMoveValue != Vector2.zero) Debug.Log("Right Leg Moving");  
         }
         else
         {
             rightLegState = ELegPos.Down;
+            animator.enabled = false;
+
             //Debug.Log("Right Leg Realese");
         }
     }
