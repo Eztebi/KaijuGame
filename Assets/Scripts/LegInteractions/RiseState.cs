@@ -5,7 +5,7 @@ public class RiseState : LegInteractionState
 {
     private Vector3 bodyPos;
     private Vector3 legPos;
-    private float moveSpeed = 2f;
+    private float moveSpeed = 3f;
     public RiseState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context,estate) {
         LegInteractionContext Context = context;
     }
@@ -23,14 +23,19 @@ public class RiseState : LegInteractionState
     }
     public override void UpdateState() {
         MoveToPosition();
+
         Debug.Log("Update Rise State");
     }
     public override LegStateMachine.ELegState GetNextState()
     {
 
-        float distanceToTarget = Vector3.Distance(Context._currentLegPos, legPos);
-        if (Context.IsGrounded || distanceToTarget < .1f) return LegStateMachine.ELegState.Move;
-        
+        float distanceToLegTarget = Vector3.Distance(Context._currentLegPos, legPos);
+        float distanceToBodyTarget = Vector3.Distance(Context.FullBodyPos.position, bodyPos);
+
+        if (distanceToLegTarget < .1 && distanceToBodyTarget < .1f)
+            return LegStateMachine.ELegState.Move;
+
+        if (Context.CurrentLegState == ELegInput.Down) return LegStateMachine.ELegState.Release;
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }
@@ -41,9 +46,10 @@ public class RiseState : LegInteractionState
     public override void OnCollisionExit(Collision collision) { }
     public Vector3 CheckBodyDistance()
     {
-        Vector3 midPoint = Vector3.Lerp(Context._currentLegPos, Context.OtherLegPosition.position, 0.8f);
+        float targetY = Context.LegUpPosition.position.y + Context.feetRestPosition.position.y;
+        Vector3 midPoint = Vector3.Lerp(Context._currentLegPos, Context.OtherLegPosition.position, 0.3f);
 
-        return new Vector3(midPoint.x, Context.FullBodyPos.position.y, midPoint.z);
+        return new Vector3(midPoint.x, targetY, midPoint.z);
     }
 
     public Vector3 CheckLegDistance()

@@ -25,7 +25,7 @@ public class MovingState : LegInteractionState
     }
     public override LegStateMachine.ELegState GetNextState()
     {
-        if (Context.CurrentLegState == InputHandler.ELegPos.Down)
+        if (Context.CurrentLegState == InputHandler.ELegInput.Down)
         {
             return LegStateMachine.ELegState.Release;
         }

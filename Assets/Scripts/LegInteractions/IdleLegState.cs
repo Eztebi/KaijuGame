@@ -25,7 +25,7 @@ public class IdleLegState : LegInteractionState
     }
     public override LegStateMachine.ELegState GetNextState()
     {
-        if(Context.CurrentLegState == InputHandler.ELegPos.Up)
+        if(Context.CurrentLegState == InputHandler.ELegInput.Up)
         {
             return LegStateMachine.ELegState.Rise;
 

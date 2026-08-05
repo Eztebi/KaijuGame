@@ -38,7 +38,17 @@ public class ResetState : LegInteractionState
     public override void OnCollisionExit(Collision collision) { }
     public override void MoveToPosition()
     {
-        Context.LegIKTargetTransform.position = Context.LegRestPosition.position;
-        Context._currentLegPos = Context.LegRestPosition.position;
+        
+    }
+    private void FeetRestPosition()
+    {
+        Vector3 pos = new Vector3(Context._currentLegPos.x, Context.BodyPosition.position.y, Context._currentLegPos.z);
+        float feetHeight = Context.BodyPosition.position.y - Context.LegRestPosition.position.y;
+        Ray ray = new Ray(pos, Vector3.down * feetHeight);
+        if (Physics.Raycast(ray, out RaycastHit hit, feetHeight, Context.GroundMask))
+        {
+            Context.LegIKTargetTransform.position = hit.point;
+            Context._currentLegPos = hit.point;
+        }
     }
 }

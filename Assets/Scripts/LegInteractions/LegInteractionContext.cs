@@ -22,7 +22,7 @@ public class LegInteractionContext
     private Transform _feetIKTargetTransform;
     private LegStateMachine.ELegType _legType;
     private bool _isGrounded;
-    private InputHandler.ELegPos _currentLegState;
+    private InputHandler.ELegInput _currentLegState;
     public Vector3 _currentLegPos;
     private LayerMask _groundMask;
     public LegInteractionContext(TwoBoneIKConstraint ikConstraint, MultiRotationConstraint legMultiRotationConstraint, 
@@ -58,11 +58,11 @@ public class LegInteractionContext
             return _legType == LegStateMachine.ELegType.LEFT ? _handler.leftLegMoveValue : _handler.rightLegMoveValue;
         }
     }
-    public InputHandler.ELegPos CurrentLegState
+    public InputHandler.ELegInput CurrentLegState
     {
         get
         {
-            if (_handler == null) return InputHandler.ELegPos.Down;
+            if (_handler == null) return InputHandler.ELegInput.Down;
             return _legType == LegStateMachine.ELegType.LEFT ? _handler.LeftLegState : _handler.RightLegState;
         }
     }

@@ -4,7 +4,7 @@ public class RelocateState : LegInteractionState
 {
     private Vector3 bodyPos;
     private Vector3 legPos;
-    private float moveSpeed = 2f;
+    private float moveSpeed = 4f;
 
     public RelocateState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
@@ -30,7 +30,11 @@ public class RelocateState : LegInteractionState
     {
         //return CheckToReturnToReset();
         float distanceToTarget = Vector3.Distance(Context._currentLegPos, legPos);
-        if (Context.IsGrounded || distanceToTarget < .1f) return LegStateMachine.ELegState.Touch;
+        if (distanceToTarget < .1f)
+        {
+            Context.IsGrounded = true;
+            return LegStateMachine.ELegState.Touch;
+        }
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

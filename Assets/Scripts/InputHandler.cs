@@ -2,12 +2,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class InputHandler : MonoBehaviour
 {
-    public enum ELegPos{
+    public enum ELegInput{
         Down,
         Up,
     }
-    private ELegPos leftLegState;
-    private ELegPos rightLegState;
+    private ELegInput leftLegState;
+    private ELegInput rightLegState;
     public Vector2 leftLegMoveValue;
     public Vector2 rightLegMoveValue;
     InputAction leftLegUpAction;
@@ -17,8 +17,8 @@ public class InputHandler : MonoBehaviour
     InputAction leftLegReleaseAction;
     InputAction rightLegReleaseAction;
     public Animator animator;
-    public ELegPos LeftLegState => leftLegState;
-    public ELegPos RightLegState => rightLegState; 
+    public ELegInput LeftLegState => leftLegState;
+    public ELegInput RightLegState => rightLegState; 
     private void Start()
     {
         leftLegUpAction = InputSystem.actions.FindAction("LeftLegUp");
@@ -27,8 +27,8 @@ public class InputHandler : MonoBehaviour
         rightLegMoveAction = InputSystem.actions.FindAction("RightLegMove");
 
 
-        leftLegState = ELegPos.Down;
-        rightLegState = ELegPos.Down;
+        leftLegState = ELegInput.Down;
+        rightLegState = ELegInput.Down;
     }
     
     private void OnEnable()
@@ -39,7 +39,7 @@ public class InputHandler : MonoBehaviour
     {
         if (leftLegUpAction.IsPressed()) 
         {
-            leftLegState = ELegPos.Up;
+            leftLegState = ELegInput.Up;
             leftLegMoveValue = leftLegMoveAction.ReadValue<Vector2>();
             //animator.enabled = true;
 
@@ -49,13 +49,13 @@ public class InputHandler : MonoBehaviour
         }
         else
         {
-            leftLegState = ELegPos.Down;
+            leftLegState = ELegInput.Down;
             //animator.enabled = false;
             //Debug.Log("Left Leg Release");
         }
         if(rightLegUpAction.IsPressed())
         {
-            rightLegState = ELegPos.Up;
+            rightLegState = ELegInput.Up;
             rightLegMoveValue = rightLegMoveAction.ReadValue<Vector2>();
            // animator.enabled = true;
 
@@ -64,7 +64,7 @@ public class InputHandler : MonoBehaviour
         }
         else
         {
-            rightLegState = ELegPos.Down;
+            rightLegState = ELegInput.Down;
             //animator.enabled = false;
 
             //Debug.Log("Right Leg Realese");

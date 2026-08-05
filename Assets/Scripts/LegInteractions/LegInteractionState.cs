@@ -11,7 +11,7 @@ public abstract class LegInteractionState : BaseState<LegStateMachine.ELegState>
     public virtual void MoveToPosition() { }
     public virtual LegStateMachine.ELegState CheckToReturnToReset()
     {
-        if (Context.CurrentLegState == InputHandler.ELegPos.Down)
+        if (Context.CurrentLegState == InputHandler.ELegInput.Down)
         {
             return LegStateMachine.ELegState.Reset;
         }
