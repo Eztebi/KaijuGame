@@ -38,7 +38,7 @@ public class TouchState : LegInteractionState
 
     private Vector3 CheckGroundPoint()
     {
-        Vector3 pos = new Vector3(Context._currentLegPos.x, Context.BodyPosition.position.y + 1f, Context._currentLegPos.z);
+        Vector3 pos = new Vector3(Context._currentLegPos.x, Context.FullBodyPos.position.y + 1f, Context._currentLegPos.z);
         if (Physics.Raycast(pos, Vector3.down, out RaycastHit hit, 10f, Context.GroundMask))
         {
             return hit.point;

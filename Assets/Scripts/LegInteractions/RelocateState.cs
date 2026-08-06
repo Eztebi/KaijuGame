@@ -56,7 +56,7 @@ public class RelocateState : LegInteractionState
 
     public Vector3 CheckLegDistance()
     {
-        Vector3 rayOrigin = new Vector3(Context.LegIKTargetTransform.position.x, Context.BodyPosition.position.y + 1f, Context.LegIKTargetTransform.position.z);
+        Vector3 rayOrigin = new Vector3(Context.LegIKTargetTransform.position.x, Context.FullBodyPos.position.y + 1f, Context.LegIKTargetTransform.position.z);
         float maxDistance = 10f;
 
         if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, maxDistance, Context.GroundMask))
@@ -79,7 +79,7 @@ public class RelocateState : LegInteractionState
         Vector3 midPoint = Vector3.Lerp(legPos, Context.OtherLegPosition.position, 0.5f);
 
         // 2. Calculamos la altura original
-        float fixedBodyOffset = Mathf.Abs(Context.BodyPosition.localPosition.y);
+        float fixedBodyOffset = Mathf.Abs(Context.FullBodyPos.position.y);
 
         // 3. LA CORRECCIÓN: Le restamos a la altura para obligar al personaje a "agacharse" un poco.
         // Prueba con -0.2f. Si sigue en el aire, súbelo a -0.3f o -0.4f hasta que pise bien.

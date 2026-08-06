@@ -44,8 +44,8 @@ public class ResetState : LegInteractionState
     public override void OnCollisionExit(Collision collision) { }
     public Vector3 CheckLegDistance()
     {
-        Vector3 pos = new Vector3(Context._currentLegPos.x, Context.BodyPosition.position.y, Context._currentLegPos.z);
-        float feetHeight = Context.BodyPosition.position.y - Context.LegRestPosition.position.y;
+        Vector3 pos = new Vector3(Context._currentLegPos.x, Context.FullBodyPos.position.y, Context._currentLegPos.z);
+        float feetHeight = Context.FullBodyPos.position.y - Context.LegRestPosition.position.y;
 
         return pos;
     }
@@ -58,8 +58,8 @@ public class ResetState : LegInteractionState
     }
     private void FeetRestPosition()
     {
-        Vector3 pos = new Vector3(Context._currentLegPos.x, Context.BodyPosition.position.y, Context._currentLegPos.z);
-        float feetHeight = Context.BodyPosition.position.y - Context.LegRestPosition.position.y;
+        Vector3 pos = new Vector3(Context._currentLegPos.x, Context.FullBodyPos.position.y, Context._currentLegPos.z);
+        float feetHeight = Context.FullBodyPos.position.y - Context.LegRestPosition.position.y;
         Ray ray = new Ray(pos, Vector3.down * feetHeight);
         if (Physics.Raycast(ray, out RaycastHit hit, feetHeight, Context.GroundMask))
         {

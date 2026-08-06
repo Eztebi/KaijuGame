@@ -34,6 +34,7 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
     [SerializeField] private Transform _upLegPosition;
     [SerializeField] private Transform _feetRestPosition;
     [SerializeField] private Transform _hipPosition;
+    [SerializeField] private Transform _hipNormalPos;
 
     [SerializeField] private Transform _legIKTargetTransform;
     [SerializeField] private Transform _feetIKTargetTransform;
@@ -47,7 +48,7 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
         _handler = GetComponent<InputHandler>();
         _context = new LegInteractionContext(_legIkConstraint, _legMultiRotationConstraint,
             /*_rigidbody, _rootCollider,*/ _legRestPosition, _upLegPosition, 
-            _feetRestPosition, _legIKTargetTransform,_feetIKTargetTransform,_legCollider,_hipPosition,
+            _feetRestPosition, _legIKTargetTransform,_feetIKTargetTransform,_legCollider,_hipPosition,_hipNormalPos,
             _groundLayerMask,_otherLeg,_fullBody,isGrounded,_eLegType,_handler);
         InitializeStates();
     }

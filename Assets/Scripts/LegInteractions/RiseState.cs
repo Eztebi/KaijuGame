@@ -15,8 +15,14 @@ public class RiseState : LegInteractionState
     {
         Debug.Log("Enter Rise State");
         Context.IsGrounded = false;
-        float maxBodyY = Context.OtherLegPosition.position.y + Context.feetRestPosition.position.y;
-        targetBodyPos = new Vector3(Context.OtherLegPosition.position.x, maxBodyY, Context.OtherLegPosition.position.z);
+        if (Vector3.Distance(Context.FullBodyPos.position + Context.HipPosition.position, Context.FullBodyPos.position + Context.HipNormalPos.position) < 0.1f)
+        {
+            //targetBodyPos = 
+        }
+        else
+        {
+            targetBodyPos = Context.FullBodyPos.position + Context.HipNormalPos.position;
+        }
     }
     public override void ExitState() {
         targetBodyPos = Vector3.zero;
