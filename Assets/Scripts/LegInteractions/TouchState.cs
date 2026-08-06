@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class TouchState : LegInteractionState
 {
+    private float moveSpeed = 6f;
+    private Vector3 targetGroundPos;
     public TouchState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
         LegInteractionContext Context = context;
@@ -9,17 +11,22 @@ public class TouchState : LegInteractionState
 
     //public override void AwakeState() { }
     public override void EnterState() {
+        Context.IsGrounded = true;
+        targetGroundPos = CheckGroundPoint();
         Debug.Log("Enter Touch State");
     }
     public override void ExitState() { }
     public override void UpdateState() {
         Debug.Log("Update Touch State");
+        targetGroundPos = CheckGroundPoint();
         MoveToPosition();
     }
     public override LegStateMachine.ELegState GetNextState()
     {
-        //return CheckToReturnToReset();
-        return LegStateMachine.ELegState.Idle;
+        if (Vector3.Distance(Context.LegIKTargetTransform.position, targetGroundPos) < .1f)
+        {
+            return LegStateMachine.ELegState.Idle;
+        }
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }
@@ -29,16 +36,19 @@ public class TouchState : LegInteractionState
     public override void OnCollisionStay(Collision collision) { }
     public override void OnCollisionExit(Collision collision) { }
 
+    private Vector3 CheckGroundPoint()
+    {
+        Vector3 pos = new Vector3(Context._currentLegPos.x, Context.BodyPosition.position.y + 1f, Context._currentLegPos.z);
+        if (Physics.Raycast(pos, Vector3.down, out RaycastHit hit, 10f, Context.GroundMask))
+        {
+            return hit.point;
+        }
+        return Context._currentLegPos;
+    }
+
     public override void MoveToPosition()
     {
-        Vector3 pos = new Vector3(Context._currentLegPos.x, Context.BodyPosition.position.y, Context._currentLegPos.z);
-        float feetHeight = Context.BodyPosition.position.y - Context.LegRestPosition.position.y;
-        Ray ray = new Ray(pos, Vector3.down * feetHeight);
-        if (Physics.Raycast(ray, out RaycastHit hit, feetHeight, LayerMask.GetMask("Floor")))
-        {
-            Context.LegIKTargetTransform.position = hit.point;
-            Context._currentLegPos = hit.point;
-            Debug.Log("En suelo");
-        }
+        Context.LegIKTargetTransform.position = Vector3.Lerp(Context.LegIKTargetTransform.position, targetGroundPos, Time.deltaTime * moveSpeed);
+        Context._currentLegPos = Context.LegIKTargetTransform.position;
     }
 }

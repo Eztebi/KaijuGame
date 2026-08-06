@@ -33,7 +33,7 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
     [SerializeField] private Transform _legRestPosition;
     [SerializeField] private Transform _upLegPosition;
     [SerializeField] private Transform _feetRestPosition;
-    [SerializeField] private Transform _bodyPosition;
+    [SerializeField] private Transform _hipPosition;
 
     [SerializeField] private Transform _legIKTargetTransform;
     [SerializeField] private Transform _feetIKTargetTransform;
@@ -47,7 +47,7 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
         _handler = GetComponent<InputHandler>();
         _context = new LegInteractionContext(_legIkConstraint, _legMultiRotationConstraint,
             /*_rigidbody, _rootCollider,*/ _legRestPosition, _upLegPosition, 
-            _feetRestPosition, _legIKTargetTransform,_feetIKTargetTransform,_legCollider,_bodyPosition,
+            _feetRestPosition, _legIKTargetTransform,_feetIKTargetTransform,_legCollider,_hipPosition,
             _groundLayerMask,_otherLeg,_fullBody,isGrounded,_eLegType,_handler);
         InitializeStates();
     }
@@ -84,6 +84,6 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
         Gizmos.DrawRay(_context._currentLegPos, Vector3.down * (_context.LegUpPosition.position.y - _context.LegRestPosition.position.y));
 
         Gizmos.color = Color.pink;
-        Gizmos.DrawRay(_bodyPosition.position, Vector3.down * (_context.LegUpPosition.position.y - _context.LegRestPosition.position.y) * 2);
+        Gizmos.DrawRay(_hipPosition.position, Vector3.down * (_context.LegUpPosition.position.y - _context.LegRestPosition.position.y) * 2);
     }
 }

@@ -6,18 +6,10 @@ public class RelocateState : LegInteractionState
     private Vector3 legPos;
     private float moveSpeed = 4f;
 
-    public RelocateState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
-
-    {
-        LegInteractionContext Context = context;
-    }
-
-    //public override void AwakeState() { }
+    public RelocateState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate) { }
 
     public override void EnterState()
     {
-        legPos = CheckLegDistance();
-        bodyPos = CheckBodyDistance();
         Debug.Log("Enter Relocate State");
     }
 
@@ -25,27 +17,28 @@ public class RelocateState : LegInteractionState
     {
         bodyPos = Vector3.zero;
         legPos = Vector3.zero;
-        Debug.Log("Update Relocate State");
     }
 
     public override void UpdateState()
     {
+        legPos = CheckLegDistance();
+        bodyPos = CheckBodyDistance();
         MoveToPosition();
     }
 
     public override LegStateMachine.ELegState GetNextState()
     {
-        //return CheckToReturnToReset();
-        float distanceToTarget = Vector3.Distance(Context._currentLegPos, legPos);
-        if (distanceToTarget < .1f)
+        float distanceToLeg = Vector3.Distance(Context._currentLegPos, legPos);
+        float distanceToBody = Vector3.Distance(Context.FullBodyPos.position, bodyPos);
+
+        // Aumentamos ligeramente el margen de tolerancia a 0.1f para que no se quede bloqueado intentando llegar al milímetro
+        if (distanceToLeg < 0.1f && distanceToBody < 0.1f)
         {
             Context.IsGrounded = true;
             return LegStateMachine.ELegState.Touch;
         }
         return StateKey;
-
     }
-
     public override void OnTriggerEnter(Collider other) { }
     public override void OnTriggerStay(Collider other) { }
     public override void OnTriggerExit(Collider other) { }
@@ -59,31 +52,41 @@ public class RelocateState : LegInteractionState
     }
     public override void OnCollisionStay(Collision collision) { }
     public override void OnCollisionExit(Collision collision) { }
-    public Vector3 CheckBodyDistance()
-    {
-        Vector3 midPoint = Vector3.Lerp(Context._currentLegPos, Context.OtherLegPosition.position, 0.3f);
+    private float footYOffset = 100f; // Ajusta esto si el pie queda muy arriba o atraviesa el piso
 
-        return new Vector3(midPoint.x, Context.FullBodyPos.position.y, midPoint.z);
-    }
     public Vector3 CheckLegDistance()
     {
-        Vector3 rayOrigin = new Vector3(Context._currentLegPos.x, Context.BodyPosition.position.y + 1f, Context._currentLegPos.z);
-        float maxDistance = 10f; 
+        Vector3 rayOrigin = new Vector3(Context.LegIKTargetTransform.position.x, Context.BodyPosition.position.y + 1f, Context.LegIKTargetTransform.position.z);
+        float maxDistance = 10f;
 
         if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, maxDistance, Context.GroundMask))
         {
-            return hit.point;
+            // Dibuja una línea verde en la ventana de Scene para que veas dónde detecta el suelo
+            Debug.DrawLine(rayOrigin, hit.point, Color.green);
+
+            // Le sumamos/restamos un pequeño offset para compensar el hueso del tobillo/pie
+            return new Vector3(hit.point.x, hit.point.y + footYOffset, hit.point.z);
         }
 
+        // Si no detecta suelo, dibuja línea roja
+        Debug.DrawRay(rayOrigin, Vector3.down * maxDistance, Color.red);
         return Context.LegRestPosition.position;
     }
 
-    public override void MoveToPosition()
-
+    public Vector3 CheckBodyDistance()
     {
-        Context.FullBodyPos.position = Vector3.Lerp(Context.FullBodyPos.position, bodyPos, Time.deltaTime * moveSpeed);
+        // 1. Centro horizontal para equilibrar el peso
+        Vector3 midPoint = Vector3.Lerp(legPos, Context.OtherLegPosition.position, 0.5f);
 
-        Context.LegIKTargetTransform.position = Vector3.Lerp(Context.LegIKTargetTransform.position, legPos, Time.deltaTime * moveSpeed);
-        Context._currentLegPos = Context.LegIKTargetTransform.position;
+        // 2. Calculamos la altura original
+        float fixedBodyOffset = Mathf.Abs(Context.BodyPosition.localPosition.y);
+
+        // 3. LA CORRECCIÓN: Le restamos a la altura para obligar al personaje a "agacharse" un poco.
+        // Prueba con -0.2f. Si sigue en el aire, súbelo a -0.3f o -0.4f hasta que pise bien.
+        float dropOffset = 0.2f;
+
+        float targetY = (Context.OtherLegPosition.position.y + fixedBodyOffset) - dropOffset;
+
+        return new Vector3(midPoint.x, targetY, midPoint.z);
     }
 }

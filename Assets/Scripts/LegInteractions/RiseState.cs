@@ -16,15 +16,14 @@ public class RiseState : LegInteractionState
         Debug.Log("Enter Rise State");
         Context.IsGrounded = false;
         float maxBodyY = Context.OtherLegPosition.position.y + Context.feetRestPosition.position.y;
-        targetBodyPos = new Vector3(Context.OtherLegPosition.position.x,maxBodyY,Context.OtherLegPosition.position.z);
-
+        targetBodyPos = new Vector3(Context.OtherLegPosition.position.x, maxBodyY, Context.OtherLegPosition.position.z);
     }
     public override void ExitState() {
         targetBodyPos = Vector3.zero;
         targetLegPos = Vector3.zero;
     }
     public override void UpdateState() {
-        targetLegPos = new Vector3(Context._currentLegPos.x, Context.LegUpPosition.position.y, Context._currentLegPos.z);
+        targetLegPos = Context.LegUpPosition.position;
 
         MoveToPosition();
 
@@ -35,10 +34,10 @@ public class RiseState : LegInteractionState
         float distanceToLeg = Vector3.Distance(Context.LegIKTargetTransform.position, targetLegPos);
         float distanceToBody = Vector3.Distance(Context.FullBodyPos.position, targetBodyPos);
 
-        if (distanceToLeg < .1f && distanceToBody < .1f)
+        if (distanceToLeg < 0.1f && distanceToBody < 0.1f)
             return LegStateMachine.ELegState.Move;
 
-        if (Context.CurrentLegState == ELegInput.Down)
+        if (Context.CurrentLegState == InputHandler.ELegInput.Down)
             return LegStateMachine.ELegState.Release;
 
         return StateKey;
@@ -49,26 +48,10 @@ public class RiseState : LegInteractionState
     public override void OnCollisionEnter(Collision collision) { }
     public override void OnCollisionStay(Collision collision) { }
     public override void OnCollisionExit(Collision collision) { }
-    public Vector3 CheckBodyDistance()
-    {
-        float targetY = Context.LegUpPosition.position.y + Context.feetRestPosition.position.y;
-        Vector3 midPoint = Vector3.Lerp(Context._currentLegPos, Context.OtherLegPosition.position, 0.3f);
-
-        return new Vector3(midPoint.x, targetY, midPoint.z);
-    }
-
-    public Vector3 CheckLegDistance()
-    {
-        Vector3 pos = new Vector3(Context._currentLegPos.x, Context.LegUpPosition.position.y, Context._currentLegPos.z);
-        return pos;
-    }
-
     public override void MoveToPosition()
     {
         Context.FullBodyPos.position = Vector3.Lerp(Context.FullBodyPos.position, targetBodyPos, Time.deltaTime * moveSpeed);
-
         Context.LegIKTargetTransform.position = Vector3.Lerp(Context.LegIKTargetTransform.position, targetLegPos, Time.deltaTime * moveSpeed);
-
         Context._currentLegPos = Context.LegIKTargetTransform.position;
     }
 }
