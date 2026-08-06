@@ -3,39 +3,44 @@ using static InputHandler;
 
 public class RiseState : LegInteractionState
 {
-    private Vector3 bodyPos;
-    private Vector3 legPos;
+    private Vector3 targetBodyPos;
+    private Vector3 targetLegPos;
     private float moveSpeed = 3f;
     public RiseState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context,estate) {
         LegInteractionContext Context = context;
     }
 
     //public override void AwakeState() { }
-    public override void EnterState() {
+    public override void EnterState()
+    {
         Debug.Log("Enter Rise State");
-        legPos = CheckLegDistance();
-        bodyPos = CheckBodyDistance();
         Context.IsGrounded = false;
+        float maxBodyY = Context.OtherLegPosition.position.y + Context.feetRestPosition.position.y;
+        targetBodyPos = new Vector3(Context.OtherLegPosition.position.x,maxBodyY,Context.OtherLegPosition.position.z);
+
     }
     public override void ExitState() {
-        bodyPos = Vector3.zero;
-        legPos = Vector3.zero;
+        targetBodyPos = Vector3.zero;
+        targetLegPos = Vector3.zero;
     }
     public override void UpdateState() {
+        targetLegPos = new Vector3(Context._currentLegPos.x, Context.LegUpPosition.position.y, Context._currentLegPos.z);
+
         MoveToPosition();
 
         Debug.Log("Update Rise State");
     }
     public override LegStateMachine.ELegState GetNextState()
     {
+        float distanceToLeg = Vector3.Distance(Context.LegIKTargetTransform.position, targetLegPos);
+        float distanceToBody = Vector3.Distance(Context.FullBodyPos.position, targetBodyPos);
 
-        float distanceToLegTarget = Vector3.Distance(Context._currentLegPos, legPos);
-        float distanceToBodyTarget = Vector3.Distance(Context.FullBodyPos.position, bodyPos);
-
-        if (distanceToLegTarget < .1 && distanceToBodyTarget < .1f)
+        if (distanceToLeg < .1f && distanceToBody < .1f)
             return LegStateMachine.ELegState.Move;
 
-        if (Context.CurrentLegState == ELegInput.Down) return LegStateMachine.ELegState.Release;
+        if (Context.CurrentLegState == ELegInput.Down)
+            return LegStateMachine.ELegState.Release;
+
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }
@@ -60,8 +65,9 @@ public class RiseState : LegInteractionState
 
     public override void MoveToPosition()
     {
-        Context.FullBodyPos.position = Vector3.Lerp(Context.FullBodyPos.position, bodyPos, Time.deltaTime * moveSpeed);
-        Context.LegIKTargetTransform.position = Vector3.Lerp(Context.LegIKTargetTransform.position, legPos, Time.deltaTime * moveSpeed);
+        Context.FullBodyPos.position = Vector3.Lerp(Context.FullBodyPos.position, targetBodyPos, Time.deltaTime * moveSpeed);
+
+        Context.LegIKTargetTransform.position = Vector3.Lerp(Context.LegIKTargetTransform.position, targetLegPos, Time.deltaTime * moveSpeed);
 
         Context._currentLegPos = Context.LegIKTargetTransform.position;
     }

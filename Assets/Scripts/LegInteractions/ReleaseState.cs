@@ -4,7 +4,7 @@ public class ReleaseState : LegInteractionState
 {
     public ReleaseState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
-        LegInteractionContext Context = context;
+        //LegInteractionContext Context = context;
     }
 
     //public override void AwakeState() { }
@@ -19,6 +19,7 @@ public class ReleaseState : LegInteractionState
     public override LegStateMachine.ELegState GetNextState()
     {
         if (CheckHasGround()) return LegStateMachine.ELegState.Relocate;
+        else return LegStateMachine.ELegState.Ragdoll;
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }
@@ -31,13 +32,17 @@ public class ReleaseState : LegInteractionState
     public bool CheckHasGround()
     {
         Vector3 pos = new Vector3(Context._currentLegPos.x, Context.BodyPosition.position.y, Context._currentLegPos.z);
-        float feetHeight = Context.BodyPosition.position.y - Context.LegRestPosition.position.y;
-        Ray ray = new Ray(pos, Vector3.down * feetHeight);
-        if (Physics.Raycast(ray, out RaycastHit hit, feetHeight, Context.GroundMask))
+
+        float maxDistance = Mathf.Abs(Context.BodyPosition.position.y - Context.LegRestPosition.position.y) + 2f;
+
+        if (Physics.Raycast(pos, Vector3.down, out RaycastHit hit, maxDistance, Context.GroundMask))
         {
-            Debug.Log("hay suelo abajo");
+            Debug.Log("Hay suelo abajo Relocate");
             return true;
         }
+
+        Debug.Log("No hay suelo abajo Ragdoll");
         return false;
     }
 }
+

@@ -43,7 +43,7 @@ public class InputHandler : MonoBehaviour
             leftLegMoveValue = leftLegMoveAction.ReadValue<Vector2>();
             //animator.enabled = true;
 
-            //Debug.Log("Left Leg Up");
+            Debug.Log("Left Leg Up");
             //if (leftLegMoveValue != Vector2.zero) Debug.Log("Left Leg Moving");
 
         }
@@ -59,7 +59,7 @@ public class InputHandler : MonoBehaviour
             rightLegMoveValue = rightLegMoveAction.ReadValue<Vector2>();
            // animator.enabled = true;
 
-            //Debug.Log("Right Leg Up");
+            Debug.Log("Right Leg Up");
             //if(rightLegMoveValue != Vector2.zero) Debug.Log("Right Leg Moving");  
         }
         else

@@ -19,7 +19,7 @@ public class TouchState : LegInteractionState
     public override LegStateMachine.ELegState GetNextState()
     {
         //return CheckToReturnToReset();
-        return LegStateMachine.ELegState.Reset;
+        return LegStateMachine.ELegState.Idle;
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

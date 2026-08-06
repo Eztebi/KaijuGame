@@ -12,6 +12,7 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
         Release,
         Touch,
         Relocate,
+        Ragdoll,
         Reset,
     }
     public enum ELegType
@@ -68,6 +69,7 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
         States.Add(ELegState.Touch, new TouchState(_context, ELegState.Touch));
         States.Add(ELegState.Relocate, new RelocateState(_context, ELegState.Relocate));
         States.Add(ELegState.Reset, new ResetState(_context, ELegState.Reset));
+        States.Add(ELegState.Ragdoll, new RagdollLegState(_context, ELegState.Ragdoll));
         currentState = States[ELegState.Reset];
     }
     public bool Isgrounded => isGrounded;

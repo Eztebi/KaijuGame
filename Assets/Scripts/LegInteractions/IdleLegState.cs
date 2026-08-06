@@ -6,12 +6,13 @@ public class IdleLegState : LegInteractionState
 {
     public IdleLegState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
-        LegInteractionContext Context = context;
+        //LegInteractionContext Context = context;
     }
 
     //public override void AwakeState() { }
     public override void EnterState() {
         //Context.i
+        Context.LegIKTargetTransform.position = Context._currentLegPos;
         Debug.Log("Enter Idle State");
         //MoveToPosition();
     }
@@ -20,8 +21,9 @@ public class IdleLegState : LegInteractionState
     }
     public override void UpdateState() {
         Debug.Log("Update Idle State");
-        //MoveToPosition();
-        FeetRestPosition();
+        
+        Context.LegIKTargetTransform.position = Context._currentLegPos;
+        
     }
     public override LegStateMachine.ELegState GetNextState()
     {
@@ -49,21 +51,5 @@ public class IdleLegState : LegInteractionState
         }
     }
     public override void OnCollisionExit(Collision collision) { }
-    public override void MoveToPosition()
-    {
-        Context.LegIKTargetTransform.position = Context.LegRestPosition.position;
-        Context._currentLegPos = Context.LegRestPosition.position;
-    }
-    private void FeetRestPosition()
-    {
-        Vector3 pos = new Vector3(Context._currentLegPos.x,Context.BodyPosition.position.y,Context._currentLegPos.z);
-        float feetHeight = Context.BodyPosition.position.y - Context.LegRestPosition.position.y;
-        Ray ray = new Ray(pos, Vector3.down * feetHeight);
-        if(Physics.Raycast(ray, out RaycastHit hit, feetHeight,Context.GroundMask))
-        {
-            Context.LegIKTargetTransform.position = hit.point;
-            Context._currentLegPos = hit.point;
-        }
-    }
     
 }
