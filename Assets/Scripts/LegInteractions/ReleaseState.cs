@@ -18,8 +18,7 @@ public class ReleaseState : LegInteractionState
     }
     public override LegStateMachine.ELegState GetNextState()
     {
-        if (CheckHasGround()) return LegStateMachine.ELegState.Relocate;
-        else return LegStateMachine.ELegState.Ragdoll;
+        return LegStateMachine.ELegState.Relocate;
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

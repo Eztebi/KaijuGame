@@ -5,6 +5,7 @@ public class InputHandler : MonoBehaviour
     public enum ELegInput{
         Down,
         Up,
+        Ragdoll
     }
     private ELegInput leftLegState;
     private ELegInput rightLegState;
