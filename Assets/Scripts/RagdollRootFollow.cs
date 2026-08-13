@@ -3,35 +3,38 @@ using UnityEngine.UIElements;
 
 public class RagdollRootFollow : MonoBehaviour
 {
-    public Transform physicalModelRoot;
-
-    [Tooltip("El hueso de la cadera (Hips) del modelo físico")]
     public Transform physicalHips;
-
+    public Transform rootBone;
+    public Transform ragdollContainer;
     private Vector3 _offset;
 
     void Start()
     {
-        // 1. Desvinculamos el modelo físico del Padre para evitar el bucle de físicas
-        if (physicalModelRoot != null)
+        if (physicalHips != null && rootBone != null)
         {
-            physicalModelRoot.SetParent(null);
-        }
+            // 1. Calculamos la distancia original
+            _offset = rootBone.position - physicalHips.position;
 
-        // 2. Calculamos la distancia inicial
-        if (physicalHips != null)
-        {
-            _offset = transform.position - physicalHips.position;
+            // 2. Metemos la cadera física dentro de tu contenedor organizado
+            if (ragdollContainer != null)
+            {
+                physicalHips.SetParent(ragdollContainer);
+            }
+            else
+            {
+                // Si se te olvida asignar el contenedor, lo suelta en la escena para que no explote
+                physicalHips.SetParent(null);
+            }
         }
     }
 
-    // Usamos FixedUpdate porque estamos siguiendo objetos físicos (Rigidbodies)
-    void FixedUpdate()
+    // Usamos LateUpdate para actualizar la malla DESPUÉS de las físicas
+    void LateUpdate()
     {
-        if (physicalHips != null)
+        if (physicalHips != null && rootBone != null)
         {
-            // Movemos el contenedor (que ahora solo tiene al modelo Fantasma/IK)
-            transform.position = physicalHips.position + _offset;
+            // 3. Movemos el Root para que viaje junto al ragdoll, evitando que se estire la piel
+            rootBone.position = physicalHips.position + _offset;
         }
     }
 }
