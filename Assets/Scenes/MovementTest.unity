@@ -3103,6 +3103,12 @@ MonoBehaviour:
   _groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  _currentLegBones:
+  - {fileID: 2078425039}
+  - {fileID: 2079143924}
+  - {fileID: 1010017892}
+  - {fileID: 422329598}
+  _hipJoint: {fileID: 2100125030}
 --- !u!114 &699127364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3133,6 +3139,12 @@ MonoBehaviour:
   _groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  _currentLegBones:
+  - {fileID: 1777237316}
+  - {fileID: 702451500}
+  - {fileID: 310879723}
+  - {fileID: 480715686}
+  _hipJoint: {fileID: 2100125030}
 --- !u!4 &699725058 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4797739631178923557, guid: a8de8b9022f877e428726eb12a253ecf, type: 3}
@@ -7432,12 +7444,12 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 10
+    positionSpring: 25000
     positionDamper: 0
     maximumForce: 3.4028233e+38
     useAcceleration: 0
   m_ProjectionMode: 0
-  m_ProjectionDistance: 0.1
+  m_ProjectionDistance: 0
   m_ProjectionAngle: 180
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
@@ -10034,11 +10046,11 @@ ConfigurableJoint:
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
-  m_XMotion: 2
+  m_XMotion: 1
   m_YMotion: 2
-  m_ZMotion: 2
+  m_ZMotion: 1
   m_AngularXMotion: 1
-  m_AngularYMotion: 2
+  m_AngularYMotion: 1
   m_AngularZMotion: 1
   m_LinearLimitSpring:
     spring: 0
@@ -10091,7 +10103,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
-  m_RotationDriveMode: 0
+  m_RotationDriveMode: 1
   m_AngularXDrive:
     serializedVersion: 4
     positionSpring: 0

@@ -10,24 +10,31 @@ public class IdleLegState : LegInteractionState
     }
 
     //public override void AwakeState() { }
-    public override void EnterState() {
-        //Context.i
+    public override void EnterState()
+    {
+        //Context._currentLegPos = Context.LegRestPosition.position;
         Context.LegIKTargetTransform.position = Context._currentLegPos;
+        Context.SetLegStiffness(15000f, 500f);
+
+        //Context.HipJoint.xMotion = ConfigurableJointMotion.Locked;
+        //Context.HipJoint.zMotion = ConfigurableJointMotion.Locked;
+        //BoneMotionType(ConfigurableJointMotion.Locked);
         Debug.Log("Enter Idle State");
         //MoveToPosition();
     }
-    public override void ExitState() {
-        
+    public override void ExitState()
+    {
+
     }
-    public override void UpdateState() {
-        Debug.Log("Update Idle State");
-        
+    public override void UpdateState()
+    {
         Context.LegIKTargetTransform.position = Context._currentLegPos;
-        
+        Debug.Log("Update Idle State");
+
     }
     public override LegStateMachine.ELegState GetNextState()
     {
-        if(Context.CurrentLegState == InputHandler.ELegInput.Up)
+        if (Context.CurrentLegState == InputHandler.ELegInput.Up)
         {
             return LegStateMachine.ELegState.Rise;
 
@@ -38,18 +45,45 @@ public class IdleLegState : LegInteractionState
     public override void OnTriggerEnter(Collider other) { }
     public override void OnTriggerStay(Collider other) { }
     public override void OnTriggerExit(Collider other) { }
-    public override void OnCollisionEnter(Collision collision) {
-        if(collision.gameObject.CompareTag("Ground"))
+    public override void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
         {
             Context.IsGrounded = true;
         }
     }
-    public override void OnCollisionStay(Collision collision) {
+    public override void OnCollisionStay(Collision collision)
+    {
         if (collision.gameObject.CompareTag("Ground"))
         {
             Context.IsGrounded = true;
         }
     }
     public override void OnCollisionExit(Collision collision) { }
-    
+
+    private void BoneMotionType(ConfigurableJointMotion motion)
+    {
+        foreach (var boneLeg in Context.CurrentLegBones)
+        {
+            if (motion == ConfigurableJointMotion.Locked)
+            {
+                boneLeg.GetJoint.xMotion = ConfigurableJointMotion.Locked;
+                boneLeg.GetJoint.yMotion = ConfigurableJointMotion.Locked;
+                boneLeg.GetJoint.zMotion = ConfigurableJointMotion.Locked;
+            }
+            else if (motion == ConfigurableJointMotion.Limited)
+            {
+                boneLeg.GetJoint.xMotion = ConfigurableJointMotion.Limited;
+                boneLeg.GetJoint.yMotion = ConfigurableJointMotion.Limited;
+                boneLeg.GetJoint.zMotion = ConfigurableJointMotion.Limited;
+            }
+            else if (motion == ConfigurableJointMotion.Free)
+            {
+                boneLeg.GetJoint.xMotion = ConfigurableJointMotion.Free;
+                boneLeg.GetJoint.yMotion = ConfigurableJointMotion.Free;
+                boneLeg.GetJoint.zMotion = ConfigurableJointMotion.Free;
+            }
+        }
+    }
 }
+    

@@ -9,6 +9,9 @@ public class ReleaseState : LegInteractionState
 
     //public override void AwakeState() { }
     public override void EnterState() {
+        Context.HipJoint.xMotion = ConfigurableJointMotion.Free;
+        Context.HipJoint.zMotion = ConfigurableJointMotion.Free;
+
         Debug.Log("Enter Release State");
 
     }

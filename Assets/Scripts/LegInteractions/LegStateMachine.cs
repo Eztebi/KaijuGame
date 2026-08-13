@@ -42,6 +42,9 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
     [SerializeField] private ELegType _eLegType;
     [SerializeField] private bool isGrounded;
     [SerializeField] private LayerMask _groundLayerMask;
+
+    [SerializeField] private StaticBoneFollower[] _currentLegBones;
+    [SerializeField] private ConfigurableJoint _hipJoint;
     private void Awake()
     {
         ValidateConstraints();
@@ -49,7 +52,7 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
         _context = new LegInteractionContext(_legIkConstraint, _legMultiRotationConstraint,
             /*_rigidbody, _rootCollider,*/ _legRestPosition, _upLegPosition, 
             _feetRestPosition, _legIKTargetTransform,_feetIKTargetTransform,_legCollider,_hipPosition,_hipNormalPos,
-            _groundLayerMask,_otherLeg,_fullBody,isGrounded,_eLegType,_handler);
+            _groundLayerMask,_otherLeg,_fullBody, _currentLegBones,_hipJoint,isGrounded,_eLegType,_handler);
         InitializeStates();
     }
     private void ValidateConstraints()

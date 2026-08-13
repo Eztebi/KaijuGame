@@ -26,10 +26,14 @@ public class LegInteractionContext
     private InputHandler.ELegInput _currentLegState;
     public Vector3 _currentLegPos;
     private LayerMask _groundMask;
+
+    private StaticBoneFollower[] _currentLegBones;
+    private ConfigurableJoint _hipJoint;
+
     public LegInteractionContext(TwoBoneIKConstraint ikConstraint, MultiRotationConstraint legMultiRotationConstraint, 
         /*Rigidbody rigidbody, CapsuleCollider rootCollider,*/ Transform legRestPosition, Transform legUpPosition,
         Transform feetRestPosition, Transform legIKTargetTransform, Transform feetIKTargetTransform, BoxCollider legCollider, 
-        Transform hipPosition, Transform hipNormalPos, LayerMask groundMask,Transform otherLegPosition,Transform fullBodyPos, bool isGrounded,
+        Transform hipPosition, Transform hipNormalPos, LayerMask groundMask,Transform otherLegPosition,Transform fullBodyPos, StaticBoneFollower[] currentLegBones,ConfigurableJoint hipJoint, bool isGrounded,
         LegStateMachine.ELegType legType, InputHandler inputHandler)
     {
         _ikConstraint = ikConstraint;
@@ -50,7 +54,8 @@ public class LegInteractionContext
         _groundMask = groundMask;
         _otherLegPosition = otherLegPosition;
         _fullBodyPos = fullBodyPos;
-
+        _currentLegBones = currentLegBones;
+        _hipJoint = hipJoint;
     }
     public Vector2 CurrentLegMoveValue
     {
@@ -66,6 +71,15 @@ public class LegInteractionContext
         {
             if (_handler == null) return InputHandler.ELegInput.Down;
             return _legType == LegStateMachine.ELegType.LEFT ? _handler.LeftLegState : _handler.RightLegState;
+        }
+    }
+    public void SetLegStiffness(float spring, float damper)
+    {
+        if (_currentLegBones == null) return;
+
+        foreach (var muscle in _currentLegBones)
+        {
+            muscle.SetMuscleStrength(spring, damper);
         }
     }
     public TwoBoneIKConstraint LeftIkConstraint => _ikConstraint;
@@ -86,4 +100,6 @@ public class LegInteractionContext
     public Transform FullBodyPos => _fullBodyPos;
     public Transform HipPosition => _hipPosition;
     public Transform HipNormalPos => _hipNormalPos;
+    public ConfigurableJoint HipJoint => _hipJoint;
+    public StaticBoneFollower[] CurrentLegBones => _currentLegBones;
 }

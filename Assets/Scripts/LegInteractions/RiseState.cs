@@ -15,11 +15,12 @@ public class RiseState : LegInteractionState
     {
         Debug.Log("Enter Rise State");
         Context.IsGrounded = false;
-        float standingHeightOffset = Mathf.Abs(Context.feetRestPosition.localPosition.y);
+        //float standingHeightOffset = Mathf.Abs(Context.feetRestPosition.localPosition.y);
 
-        float targetY = Context.OtherLegPosition.position.y + standingHeightOffset;
+        //float targetY = Context.OtherLegPosition.position.y + standingHeightOffset;
 
-        targetBodyPos = new Vector3(Context.OtherLegPosition.position.x,targetY,Context.OtherLegPosition.position.z);
+        //targetBodyPos = new Vector3(Context.OtherLegPosition.position.x,targetY,Context.OtherLegPosition.position.z);
+        Context.SetLegStiffness(4000f, 80f);
     }
     public override void ExitState() {
         targetBodyPos = Vector3.zero;
@@ -35,14 +36,16 @@ public class RiseState : LegInteractionState
     public override LegStateMachine.ELegState GetNextState()
     {
         float distanceToLeg = Vector3.Distance(Context.LegIKTargetTransform.position, targetLegPos);
-        float distanceToBody = Vector3.Distance(Context.FullBodyPos.position, targetBodyPos);
+        //float distanceToBody = Vector3.Distance(Context.FullBodyPos.position, targetBodyPos);
 
-        if (distanceToLeg < 0.1f && distanceToBody < 0.1f)
+        if (distanceToLeg < 0.1f)
             return LegStateMachine.ELegState.Move;
 
         if (Context.CurrentLegState == InputHandler.ELegInput.Down)
             return LegStateMachine.ELegState.Release;
 
+        //Ragdoll check
+        //if(Context.)
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }
@@ -53,7 +56,7 @@ public class RiseState : LegInteractionState
     public override void OnCollisionExit(Collision collision) { }
     public override void MoveToPosition()
     {
-        Context.FullBodyPos.position = Vector3.Lerp(Context.FullBodyPos.position, targetBodyPos, Time.deltaTime * moveSpeed);
+        //Context.FullBodyPos.position = Vector3.Lerp(Context.FullBodyPos.position, targetBodyPos, Time.deltaTime * moveSpeed);
         Context.LegIKTargetTransform.position = Vector3.Lerp(Context.LegIKTargetTransform.position, targetLegPos, Time.deltaTime * moveSpeed);
         Context._currentLegPos = Context.LegIKTargetTransform.position;
     }

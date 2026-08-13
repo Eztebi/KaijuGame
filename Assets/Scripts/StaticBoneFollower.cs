@@ -23,4 +23,16 @@ public class StaticBoneFollower : MonoBehaviour
             _joint.SetTargetRotationLocal(staticBone.localRotation, _startLocalRotation);
         }
     }
+
+    public void SetMuscleStrength(float springForce, float damperForce = 100f)
+    {
+        if (_joint != null)
+        {
+            JointDrive drive = _joint.slerpDrive;
+            drive.positionSpring = springForce;
+            drive.positionDamper = damperForce;
+            _joint.slerpDrive = drive;
+        }
+    }
+    public ConfigurableJoint GetJoint => _joint;
 }
