@@ -51,7 +51,7 @@ public class RagdollLegState : LegInteractionState
         if (Context.CurrentMultiRotationConstraint != null) Context.CurrentMultiRotationConstraint.weight = 1f;
 
         // 2. RECUPERAR FUERZA MUSCULAR
-        Context.SetLegStiffness(15000f, 500f); // O los valores por defecto que prefieras
+        //Context.SetLegStiffness(15000f, 500f); // O los valores por defecto que prefieras
 
         // 3. RECUPERAR CADERA
         if (Context.HipJoint != null)

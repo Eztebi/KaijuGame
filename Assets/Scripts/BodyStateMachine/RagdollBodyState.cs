@@ -18,7 +18,7 @@ public class RagdollBodyState : BodyState
     }
     public override void ExitState()
     {
-        Context.SetBoneStiffness(15000f, 500f);
+        //Context.SetBoneStiffness(15000f, 500f);
     }
     public override void UpdateState()
     {

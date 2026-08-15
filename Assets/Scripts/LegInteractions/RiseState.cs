@@ -19,7 +19,7 @@ public class RiseState : LegInteractionState
         Context.IsGrounded = false;
 
         // Ajustamos la firmeza muscular para levantar la pierna
-        Context.SetLegStiffness(4000f, 80f);
+        //Context.SetLegStiffness(4000f, 80f);
         targetLegPos = Context.LegUpPosition.position;
     }
 

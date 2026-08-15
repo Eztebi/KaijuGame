@@ -14,7 +14,7 @@ public class ResetState : LegInteractionState
     public override void EnterState()
     {
         timer = 0;
-        Context.SetLegStiffness(15000f, 500f);
+        //Context.SetLegStiffness(15000f, 500f);
 
         // 1. Meta de los pies (Dónde debe aterrizar)
         targetFootPosGlobal = GetFloorPosition();
