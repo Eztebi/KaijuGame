@@ -12,6 +12,7 @@ public class TouchState : LegInteractionState
     //public override void AwakeState() { }
     public override void EnterState()
     {
+        Context.LegActiveState = InputHandler.ELegActiveState.Down;
         Context.IsGrounded = true;
         Debug.Log("Enter Touch State");
     }

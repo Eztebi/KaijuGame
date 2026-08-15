@@ -7,7 +7,7 @@
             "id": "f1829db3-465a-454c-b955-78fcb8f68234",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "Restart",
                     "type": "Button",
                     "id": "c6ae43b1-7572-4d72-8f40-9d9b48e102a4",
                     "expectedControlType": "",
@@ -56,11 +56,22 @@
                 {
                     "name": "",
                     "id": "923519d7-e8b2-48ed-8d8d-1aa6413ae116",
-                    "path": "",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Restart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "108c1c33-8778-4cd1-9e7e-c4870dcd0d69",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Restart",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

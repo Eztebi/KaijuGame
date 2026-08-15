@@ -1,4 +1,5 @@
 using UnityEngine;
+using static InputHandler;
 
 public class MovingState : LegInteractionState
 {
@@ -12,6 +13,8 @@ public class MovingState : LegInteractionState
 
     //public override void AwakeState() { }
     public override void EnterState() {
+        Context.LegActiveState = ELegActiveState.Up;
+
         if (Context.LegIKTargetTransform != null)
         {
             _calculatedPos = Context.LegIKTargetTransform.position;
@@ -25,7 +28,12 @@ public class MovingState : LegInteractionState
     }
     public override LegStateMachine.ELegState GetNextState()
     {
-        if (Context.CurrentLegState == InputHandler.ELegInput.Down)
+        if (Context.OtherLegActiveState == InputHandler.ELegActiveState.Up || Context.OtherLegActiveState == InputHandler.ELegActiveState.Ragdoll)
+        {
+            return LegStateMachine.ELegState.Ragdoll;
+        }
+
+        if (Context.CurrentLegInput == InputHandler.ELegInput.Down)
         {
             return LegStateMachine.ELegState.Release;
         }

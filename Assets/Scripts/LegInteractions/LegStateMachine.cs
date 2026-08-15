@@ -49,10 +49,17 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
     {
         ValidateConstraints();
         _handler = GetComponent<InputHandler>();
+        FeetCollisionMessenger forwarder = _legCollider.gameObject.GetComponent<FeetCollisionMessenger>();
+        if (forwarder == null)
+        {
+            forwarder = _legCollider.gameObject.AddComponent<FeetCollisionMessenger>();
+        }
+        forwarder.stateMachine = this;
+
         _context = new LegInteractionContext(_legIkConstraint, _legMultiRotationConstraint,
-            /*_rigidbody, _rootCollider,*/ _legRestPosition, _upLegPosition, 
-            _feetRestPosition, _legIKTargetTransform,_feetIKTargetTransform,_legCollider,_hipPosition,_hipNormalPos,
-            _groundLayerMask,_otherLeg,_fullBody, _currentLegBones,_hipJoint,isGrounded,_eLegType,_handler);
+            /*_rigidbody, _rootCollider,*/ _legRestPosition, _upLegPosition,
+            _feetRestPosition, _legIKTargetTransform, _feetIKTargetTransform, _legCollider, _hipPosition, _hipNormalPos,
+            _groundLayerMask, _otherLeg, _fullBody, _currentLegBones, _hipJoint, isGrounded, _eLegType, _handler);
         InitializeStates();
     }
     private void ValidateConstraints()

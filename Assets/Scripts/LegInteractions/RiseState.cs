@@ -14,6 +14,7 @@ public class RiseState : LegInteractionState
 
     public override void EnterState()
     {
+        Context.LegActiveState = InputHandler.ELegActiveState.Up;
         Debug.Log("Enter Rise State");
         Context.IsGrounded = false;
 
@@ -47,14 +48,18 @@ public class RiseState : LegInteractionState
 
     public override LegStateMachine.ELegState GetNextState()
     {
-        float distanceToLeg = Vector3.Distance(Context.LegIKTargetTransform.position, targetLegPos);
+        if (Context.OtherLegActiveState == InputHandler.ELegActiveState.Up || Context.OtherLegActiveState == InputHandler.ELegActiveState.Ragdoll)
+        {
+            return LegStateMachine.ELegState.Ragdoll;
+        }
 
+        float distanceToLeg = Vector3.Distance(Context.LegIKTargetTransform.position, targetLegPos);
         if (distanceToLeg < 0.1f)
             return LegStateMachine.ELegState.Move;
 
-        if (Context.CurrentLegState == InputHandler.ELegInput.Down)
+        if (Context.CurrentLegInput == InputHandler.ELegInput.Down)
             return LegStateMachine.ELegState.Release;
-        
+
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

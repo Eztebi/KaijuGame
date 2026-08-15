@@ -24,6 +24,10 @@ public class IdleBodyState : BodyState
     }
     public override BodyStateMachine.EBodyState GetNextState()
     {
+        if(Context.Handler.RightLegActiveState == InputHandler.ELegActiveState.Ragdoll || Context.Handler.LeftLegActiveState == InputHandler.ELegActiveState.Ragdoll)
+        {
+            return BodyStateMachine.EBodyState.Ragdoll;
+        }
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

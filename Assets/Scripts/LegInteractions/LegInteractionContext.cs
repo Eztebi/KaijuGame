@@ -23,17 +23,17 @@ public class LegInteractionContext
     private Transform _feetIKTargetTransform;
     private LegStateMachine.ELegType _legType;
     private bool _isGrounded;
-    private InputHandler.ELegInput _currentLegState;
+    private InputHandler.ELegInput _currentLegInput;
     public Vector3 _currentLegPos;
     private LayerMask _groundMask;
 
     private StaticBoneFollower[] _currentLegBones;
     private ConfigurableJoint _hipJoint;
 
-    public LegInteractionContext(TwoBoneIKConstraint ikConstraint, MultiRotationConstraint legMultiRotationConstraint, 
+    public LegInteractionContext(TwoBoneIKConstraint ikConstraint, MultiRotationConstraint legMultiRotationConstraint,
         /*Rigidbody rigidbody, CapsuleCollider rootCollider,*/ Transform legRestPosition, Transform legUpPosition,
-        Transform feetRestPosition, Transform legIKTargetTransform, Transform feetIKTargetTransform, BoxCollider legCollider, 
-        Transform hipPosition, Transform hipNormalPos, LayerMask groundMask,Transform otherLegPosition,Transform fullBodyPos, StaticBoneFollower[] currentLegBones,ConfigurableJoint hipJoint, bool isGrounded,
+        Transform feetRestPosition, Transform legIKTargetTransform, Transform feetIKTargetTransform, BoxCollider legCollider,
+        Transform hipPosition, Transform hipNormalPos, LayerMask groundMask, Transform otherLegPosition, Transform fullBodyPos, StaticBoneFollower[] currentLegBones, ConfigurableJoint hipJoint, bool isGrounded,
         LegStateMachine.ELegType legType, InputHandler inputHandler)
     {
         _ikConstraint = ikConstraint;
@@ -65,12 +65,54 @@ public class LegInteractionContext
             return _legType == LegStateMachine.ELegType.LEFT ? _handler.leftLegMoveValue : _handler.rightLegMoveValue;
         }
     }
-    public InputHandler.ELegInput CurrentLegState
+    public InputHandler.ELegInput CurrentLegInput
     {
         get
         {
             if (_handler == null) return InputHandler.ELegInput.Down;
-            return _legType == LegStateMachine.ELegType.LEFT ? _handler.LeftLegState : _handler.RightLegState;
+            return _legType == LegStateMachine.ELegType.LEFT ? _handler.LeftLegInput : _handler.RightLegInput;
+        }
+        set
+        {
+            if (_handler == null) return;
+            if (_legType == LegStateMachine.ELegType.LEFT)
+            {
+                _handler.LeftLegInput = value;
+            }
+            else
+            {
+                _handler.RightLegInput = value;
+            }
+        }
+    }
+    public InputHandler.ELegActiveState LegActiveState
+    {
+        get
+        {
+            if (_handler == null) return InputHandler.ELegActiveState.Down;
+            return _legType == LegStateMachine.ELegType.LEFT ? _handler.LeftLegActiveState : _handler.RightLegActiveState;
+        }
+        set
+        {
+            if (_handler == null) return;
+
+            if (_legType == LegStateMachine.ELegType.LEFT)
+            {
+                _handler.LeftLegActiveState = value;
+            }
+            else
+            {
+                _handler.RightLegActiveState = value;
+            }
+        }
+
+    }
+    public InputHandler.ELegActiveState OtherLegActiveState
+    {
+        get
+        {
+            if (_handler == null) return InputHandler.ELegActiveState.Down;
+            return _legType == LegStateMachine.ELegType.LEFT ? _handler.RightLegActiveState : _handler.LeftLegActiveState;
         }
     }
     public void SetLegStiffness(float spring, float damper)
@@ -82,8 +124,8 @@ public class LegInteractionContext
             muscle.SetMuscleStrength(spring, damper);
         }
     }
-    public TwoBoneIKConstraint LeftIkConstraint => _ikConstraint;
-    public MultiRotationConstraint LeftMultiRotationConstraint => _multiRotationConstraint;
+    public TwoBoneIKConstraint CurrentIkConstraint => _ikConstraint;
+    public MultiRotationConstraint CurrentMultiRotationConstraint => _multiRotationConstraint;
     //public Rigidbody Rb => _rigidbody;
     //public CapsuleCollider RootCollider => _rootCollider;
     public Transform LegRestPosition => _legRestPosition;

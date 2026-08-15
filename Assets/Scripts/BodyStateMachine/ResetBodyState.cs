@@ -13,7 +13,7 @@ public class ResetBodyState : BodyState
 
     public override void EnterState()
     {
-
+        //Context.SetBoneStiffness(15000f, 50f);
         Debug.Log("Enter Body Reset State ");
     }
 
@@ -21,11 +21,12 @@ public class ResetBodyState : BodyState
 
     public override void UpdateState()
     {
-        MoveToPosition();
+        
     }
 
     public override BodyStateMachine.EBodyState GetNextState()
     {
+        return BodyStateMachine.EBodyState.Idle;
         return StateKey;
     }
 
