@@ -6,20 +6,22 @@ public class IdleLegState : LegInteractionState
 {
     public IdleLegState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
-        //LegInteractionContext Context = context;
+        LegInteractionContext Context = context;
     }
 
     //public override void AwakeState() { }
     public override void EnterState()
     {
         //Context._currentLegPos = Context.LegRestPosition.position;
-        Context.LegIKTargetTransform.position = Context._currentLegPos;
-        Context.SetLegStiffness(15000f, 500f);
+        //Context.LegIKTargetTransform.position = Context._currentLegPos;
+        //Context.SetLegStiffness(15000f, 500f);
 
         //Context.HipJoint.xMotion = ConfigurableJointMotion.Locked;
         //Context.HipJoint.zMotion = ConfigurableJointMotion.Locked;
-        //BoneMotionType(ConfigurableJointMotion.Locked);
+        //Context.HipJoint.yMotion = ConfigurableJointMotion.Locked;
+        //LegBoneMotionType(ConfigurableJointMotion.Locked);
         Debug.Log("Enter Idle State");
+        Context.LegIKTargetTransform.position = Context._currentLegPos;
         //MoveToPosition();
     }
     public override void ExitState()
@@ -28,9 +30,9 @@ public class IdleLegState : LegInteractionState
     }
     public override void UpdateState()
     {
-        Context.LegIKTargetTransform.position = Context._currentLegPos;
+       // Context.LegIKTargetTransform.position = Context._currentLegPos;
         Debug.Log("Update Idle State");
-
+        Context.LegIKTargetTransform.position = Context._currentLegPos;
     }
     public override LegStateMachine.ELegState GetNextState()
     {
@@ -61,7 +63,7 @@ public class IdleLegState : LegInteractionState
     }
     public override void OnCollisionExit(Collision collision) { }
 
-    private void BoneMotionType(ConfigurableJointMotion motion)
+    private void LegBoneMotionType(ConfigurableJointMotion motion)
     {
         foreach (var boneLeg in Context.CurrentLegBones)
         {

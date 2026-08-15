@@ -78,16 +78,16 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
     }
     public bool Isgrounded => isGrounded;
     public ELegType LegType => _eLegType;
-    private void OnDrawGizmos()
-    {
-        if (_context == null)
-            return;
+    //private void OnDrawGizmos()
+    //{
+    //    if (_context == null)
+    //        return;
 
-        Gizmos.color = Color.magenta;
+    //    Gizmos.color = Color.magenta;
 
-        Gizmos.DrawRay(_context._currentLegPos, Vector3.down * (_context.LegUpPosition.position.y - _context.LegRestPosition.position.y));
+    //    Gizmos.DrawRay(_context._currentLegPos, Vector3.down * (_context.LegUpPosition.position.y - _context.LegRestPosition.position.y));
 
-        Gizmos.color = Color.pink;
-        Gizmos.DrawRay(_hipPosition.position, Vector3.down * (_context.LegUpPosition.position.y - _context.LegRestPosition.position.y) * 2);
-    }
+    //    Gizmos.color = Color.pink;
+    //    Gizmos.DrawRay(_hipPosition.position, Vector3.down * (_context.LegUpPosition.position.y - _context.LegRestPosition.position.y) * 2);
+    //}
 }

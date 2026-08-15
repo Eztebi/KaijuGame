@@ -2,69 +2,73 @@ using UnityEngine;
 
 public class ResetState : LegInteractionState
 {
-    private Vector3 bodyPos;
-    private Vector3 legPos;
-    private float moveSpeed = 2f;
-    private float timeToReset = 1;
-    private float timer = 0;
+    private Vector3 targetFootPosGlobal;
+    private float moveSpeed = 5f;
+    private float timeToReset = 2f;
+    private float timer = 0f;
+
     public ResetState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
-        LegInteractionContext Context = context;
     }
 
-    //public override void AwakeState() { }
-    public override void EnterState() {
+    public override void EnterState()
+    {
         timer = 0;
-        bodyPos = CheckLegDistance();
-        MoveToPosition();
-        FeetRestPosition();
-        Debug.Log("Enter Reset State");
+        Context.SetLegStiffness(15000f, 500f);
+
+        // 1. Meta de los pies (Dónde debe aterrizar)
+        targetFootPosGlobal = GetFloorPosition();
+
+        // Prevención del bug 0,0,0
+        if (Context._currentLegPos == Vector3.zero)
+        {
+            Context._currentLegPos = Context.LegIKTargetTransform.position;
+        }
+
+        Debug.Log("Enter Reset State - Moviendo SOLO la pierna");
     }
+
     public override void ExitState() { }
-    public override void UpdateState() {
-        //MoveToPosition();
-        bodyPos = Vector3.zero;
-        Debug.Log("Update Reset State");
+
+    public override void UpdateState()
+    {
+        MoveToPosition();
     }
+
     public override LegStateMachine.ELegState GetNextState()
     {
-        //if (timer > timeToReset)
-        //{
-        return LegStateMachine.ELegState.Idle;
-        //}
-        ////MoveToPosition();
-        //timer += Time.deltaTime;
+        // Transición cuando pase el tiempo o cuando el pie ya haya llegado a su meta
+        if (timer > timeToReset || Vector3.Distance(Context._currentLegPos, targetFootPosGlobal) < 0.05f)
+        {
+            return LegStateMachine.ELegState.Idle;
+        }
+        timer += Time.deltaTime;
         return StateKey;
     }
+
     public override void OnTriggerEnter(Collider other) { }
     public override void OnTriggerStay(Collider other) { }
     public override void OnTriggerExit(Collider other) { }
     public override void OnCollisionEnter(Collision collision) { }
     public override void OnCollisionStay(Collision collision) { }
     public override void OnCollisionExit(Collision collision) { }
-    public Vector3 CheckLegDistance()
-    {
-        Vector3 pos = new Vector3(Context._currentLegPos.x, Context.FullBodyPos.position.y, Context._currentLegPos.z);
-        float feetHeight = Context.FullBodyPos.position.y - Context.LegRestPosition.position.y;
 
-        return pos;
-    }
     public override void MoveToPosition()
     {
-        Context.FullBodyPos.position = Vector3.Lerp(Context.FullBodyPos.position, bodyPos, Time.deltaTime * moveSpeed);
+        // Actualizamos la meta en tiempo real por si el cuerpo (padre) se está moviendo por otra razón
+        targetFootPosGlobal = GetFloorPosition();
 
-        Context._currentLegPos = Context.LegRestPosition.position;
+        // Movemos SOLO la posición global de la pierna hacia su descanso
+        Context._currentLegPos = Vector3.Lerp(Context._currentLegPos, targetFootPosGlobal, Time.deltaTime * moveSpeed);
+
+        // Aplicamos la posición al target del IK
         Context.LegIKTargetTransform.position = Context._currentLegPos;
     }
-    private void FeetRestPosition()
+
+    private Vector3 GetFloorPosition()
     {
-        Vector3 pos = new Vector3(Context._currentLegPos.x, Context.FullBodyPos.position.y, Context._currentLegPos.z);
-        float feetHeight = Context.FullBodyPos.position.y - Context.LegRestPosition.position.y;
-        Ray ray = new Ray(pos, Vector3.down * feetHeight);
-        if (Physics.Raycast(ray, out RaycastHit hit, feetHeight, Context.GroundMask))
-        {
-            Context.LegIKTargetTransform.position = hit.point;
-            Context._currentLegPos = hit.point;
-        }
+        // Si quieres usar el raycast de nuevo, descoméntalo aquí.
+        // Por ahora, simplemente devuelve la posición global de descanso.
+        return Context.LegRestPosition.position;
     }
 }

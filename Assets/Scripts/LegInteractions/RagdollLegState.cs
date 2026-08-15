@@ -22,7 +22,6 @@ public class RagdollLegState : LegInteractionState
     }
     public override void UpdateState()
     {
-        MoveToPosition();
     }
     public override LegStateMachine.ELegState GetNextState()
     {

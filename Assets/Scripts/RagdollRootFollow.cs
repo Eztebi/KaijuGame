@@ -5,7 +5,7 @@ public class RagdollRootFollow : MonoBehaviour
 {
     public Transform physicalHips;
     public Transform rootBone;
-    public Transform ragdollContainer;
+    public Transform staticContainer;
     private Vector3 _offset;
 
     void Start()
@@ -16,9 +16,9 @@ public class RagdollRootFollow : MonoBehaviour
             _offset = rootBone.position - physicalHips.position;
 
             // 2. Metemos la cadera física dentro de tu contenedor organizado
-            if (ragdollContainer != null)
+            if (staticContainer != null)
             {
-                physicalHips.SetParent(ragdollContainer);
+                physicalHips.SetParent(staticContainer);
             }
             else
             {
@@ -28,7 +28,6 @@ public class RagdollRootFollow : MonoBehaviour
         }
     }
 
-    // Usamos LateUpdate para actualizar la malla DESPUÉS de las físicas
     void LateUpdate()
     {
         if (physicalHips != null && rootBone != null)
