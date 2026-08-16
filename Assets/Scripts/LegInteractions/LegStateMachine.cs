@@ -44,9 +44,6 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
     [SerializeField] private LayerMask _groundLayerMask;
 
     [SerializeField] private StaticBoneFollower[] _currentLegBones;
-    [SerializeField] private ConfigurableJoint _hipJoint;
-    [SerializeField] private ConfigurableJoint _spineJoimt;
-    [SerializeField] private Rigidbody _hipRB;
 
     [Header("Fisicas piernas")]
     [SerializeField] private Rigidbody _upperLegRB;
@@ -56,6 +53,8 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
     [SerializeField] private ConfigurableJoint _upperLegJoint;
     [SerializeField] private ConfigurableJoint _lowerLegJoint;
     [SerializeField] private ConfigurableJoint _feetJoint;
+    [SerializeField] private Transform _ragdollLegPos;
+    [SerializeField] private Transform _ragdollOtherLegPos;
     private void Awake()
     {
         ValidateConstraints();
@@ -70,16 +69,17 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
         _context = new LegInteractionContext(_legIkConstraint, _legMultiRotationConstraint,
             /*_rigidbody, _rootCollider,*/ _legRestPosition, _upLegPosition,
             _feetRestPosition, _legIKTargetTransform, _feetIKTargetTransform, _legCollider, _hipPosition, _hipNormalPos,
-            _groundLayerMask, _otherLeg, _fullBody,_hipRB, _currentLegBones, _hipJoint, _spineJoimt, isGrounded, _eLegType,
-            _handler,_upperLegRB, _lowerLegRB, _feetRB, _upperLegJoint, _lowerLegJoint, _feetJoint);
+            _groundLayerMask, _otherLeg, _fullBody, _currentLegBones, isGrounded, _eLegType,
+            _handler,_upperLegRB, _lowerLegRB, _feetRB, _upperLegJoint, _lowerLegJoint, _feetJoint,_ragdollLegPos, _ragdollOtherLegPos);
         InitializeStates();
     }
     private void ValidateConstraints()
     {
         Assert.IsNotNull(_legIkConstraint, "Left IK constraint is not assigned.");
         Assert.IsNotNull(_legMultiRotationConstraint, "Left multi rotation constraint is not assigned.");
-        //Assert.IsNotNull(_rootCollider, "root Collider is not assigned.");
-        //Assert.IsNotNull(_rigidbody, "rigidbody is not assigned.");
+        Assert.IsNotNull(_legCollider, "leg collider is not assigned.");
+        Assert.IsNotNull(_ragdollOtherLegPos, "ragdoll other leg is not assigned.");
+        Assert.IsNotNull(_ragdollLegPos, "ragdoll leg is not assigned.");
         Assert.IsNotNull(_handler, "Input Handler is not assigned.");
 
     }
@@ -97,16 +97,5 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
     }
     public bool Isgrounded => isGrounded;
     public ELegType LegType => _eLegType;
-    //private void OnDrawGizmos()
-    //{
-    //    if (_context == null)
-    //        return;
 
-    //    Gizmos.color = Color.magenta;
-
-    //    Gizmos.DrawRay(_context._currentLegPos, Vector3.down * (_context.LegUpPosition.position.y - _context.LegRestPosition.position.y));
-
-    //    Gizmos.color = Color.pink;
-    //    Gizmos.DrawRay(_hipPosition.position, Vector3.down * (_context.LegUpPosition.position.y - _context.LegRestPosition.position.y) * 2);
-    //}
 }

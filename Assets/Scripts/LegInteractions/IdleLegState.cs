@@ -41,6 +41,10 @@ public class IdleLegState : LegInteractionState
         {
             return LegStateMachine.ELegState.Rise;
         }
+        if(Context.OtherLegActiveState == InputHandler.ELegActiveState.Ragdoll)
+        {
+            return LegStateMachine.ELegState.Ragdoll;
+        }
         //if (Context.LegActiveState == InputHandler.ELegActiveState.Ragdoll) return LegStateMachine.ELegState.Ragdoll;
         //return CheckToReturnToReset();
         return StateKey;

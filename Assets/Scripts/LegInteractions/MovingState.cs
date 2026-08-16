@@ -6,6 +6,8 @@ public class MovingState : LegInteractionState
     private Vector3 _calculatedPos;
     private float speed = 2;
     private float maxLegDistance = .9f;
+    private float ragdollDist = 1.4f;
+
     public MovingState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
         LegInteractionContext Context = context;
@@ -37,6 +39,11 @@ public class MovingState : LegInteractionState
         {
             return LegStateMachine.ELegState.Release;
         }
+        if (CheckLegDistanceToRagdoll())
+        {
+            Context.LegActiveState = ELegActiveState.Ragdoll;
+            return LegStateMachine.ELegState.Ragdoll;
+        }
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }
@@ -60,10 +67,10 @@ public class MovingState : LegInteractionState
         {
             Vector3 clampedOffset = Vector3.ClampMagnitude(offset, maxLegDistance);
 
-            Vector3 excess = offset - clampedOffset;
+            Vector3 movebod = offset - clampedOffset;
             if (Context.FullBodyPos != null)
             {
-                Context.FullBodyPos.position += excess;
+                Context.FullBodyPos.position += movebod;
             }
             _calculatedPos = _anchorPoint + clampedOffset;
         }
@@ -73,5 +80,14 @@ public class MovingState : LegInteractionState
         }
         Context.LegIKTargetTransform.position = _calculatedPos;
         Context._currentLegPos = _calculatedPos;
+    }
+    private bool CheckLegDistanceToRagdoll()
+    {
+        float dist = Vector3.Distance(Context.RagdollLegPos.position, Context.OtherRagdollLegPos.position);
+        if (dist > ragdollDist)
+        {
+            return true;
+        }
+        return false;
     }
 }

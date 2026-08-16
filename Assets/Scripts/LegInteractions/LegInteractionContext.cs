@@ -26,12 +26,9 @@ public class LegInteractionContext
     private InputHandler.ELegInput _currentLegInput;
     public Vector3 _currentLegPos;
     private LayerMask _groundMask;
-
+    private Transform _ragdollLegPos;
+    private Transform _ragdollOtherLegPos;
     private StaticBoneFollower[] _currentLegBones;
-    private ConfigurableJoint _hipJoint;
-    private ConfigurableJoint _spineJoint;
-
-    private Rigidbody _hipRB;
 
     public Rigidbody UpperLegRB { get; private set; }
     public Rigidbody LowerLegRB { get; private set; }
@@ -41,15 +38,16 @@ public class LegInteractionContext
     public ConfigurableJoint LowerLegJoint { get; private set; }
     public ConfigurableJoint FeetJoint { get; private set; }
 
-    private float upperLegMass, lowerLegMass, FeetMass, ballMass;
+    private float upperLegMass, lowerLegMass, FeetMass;
 
     public LegInteractionContext(TwoBoneIKConstraint ikConstraint, MultiRotationConstraint legMultiRotationConstraint,
             /*Rigidbody rigidbody, CapsuleCollider rootCollider,*/ Transform legRestPosition, Transform legUpPosition,
             Transform feetRestPosition, Transform legIKTargetTransform, Transform feetIKTargetTransform, BoxCollider legCollider,
             Transform hipPosition, Transform hipNormalPos, LayerMask groundMask, Transform otherLegPosition, Transform fullBodyPos,
-            Rigidbody hipRB, StaticBoneFollower[] currentLegBones, ConfigurableJoint hipJoint, ConfigurableJoint spineJoint, bool isGrounded,
+            StaticBoneFollower[] currentLegBones, bool isGrounded,
             LegStateMachine.ELegType legType, InputHandler inputHandler, Rigidbody upLegRB, Rigidbody lowLegRB, Rigidbody feetRB,
-            ConfigurableJoint upLegJoint, ConfigurableJoint lowLegJoint, ConfigurableJoint feetJoint)
+            ConfigurableJoint upLegJoint, ConfigurableJoint lowLegJoint, ConfigurableJoint feetJoint, Transform ragdollLegPos,
+            Transform ragdollOtherLegPos)
     {
         _ikConstraint = ikConstraint;
         _multiRotationConstraint = legMultiRotationConstraint;
@@ -70,15 +68,14 @@ public class LegInteractionContext
         _otherLegPosition = otherLegPosition;
         _fullBodyPos = fullBodyPos;
         _currentLegBones = currentLegBones;
-        _hipJoint = hipJoint;
-        _hipRB = hipRB;
-        _spineJoint = spineJoint;
         UpperLegRB = upLegRB;
         LowerLegRB = lowLegRB;
         FeetRB = feetRB;
         UpperLegJoint = upLegJoint;
         LowerLegJoint = lowLegJoint;
         FeetJoint = feetJoint;
+        _ragdollLegPos = ragdollLegPos;
+        _ragdollOtherLegPos = ragdollOtherLegPos;
 
         if (UpperLegRB != null) upperLegMass = UpperLegRB.mass;
         if (LowerLegRB != null) lowerLegMass = LowerLegRB.mass;
@@ -203,8 +200,7 @@ public class LegInteractionContext
     public Transform FullBodyPos => _fullBodyPos;
     public Transform HipPosition => _hipPosition;
     public Transform HipNormalPos => _hipNormalPos;
-    public ConfigurableJoint HipJoint => _hipJoint;
-    public ConfigurableJoint SpineJoint => _spineJoint;
     public StaticBoneFollower[] CurrentLegBones => _currentLegBones;
-    public Rigidbody hipRB => _hipRB;
+    public Transform RagdollLegPos => _ragdollLegPos;
+    public Transform OtherRagdollLegPos => _ragdollOtherLegPos;
 }

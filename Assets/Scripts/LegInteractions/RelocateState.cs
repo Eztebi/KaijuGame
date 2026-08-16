@@ -8,6 +8,7 @@ public class RelocateState : LegInteractionState
     private float moveSpeed = 2f;
 
     private float bodyHeightTweak = -0.1f;
+    private float ragdollDist = 1.4f;
 
     public RelocateState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
@@ -64,7 +65,11 @@ public class RelocateState : LegInteractionState
             Context.LegActiveState = ELegActiveState.Down;
             return LegStateMachine.ELegState.Touch;
         }
-
+        if (CheckLegDistanceToRagdoll())
+        {
+            Context.LegActiveState = ELegActiveState.Ragdoll;
+            return LegStateMachine.ELegState.Ragdoll;
+        }
         return StateKey;
     }
 
@@ -106,5 +111,14 @@ public class RelocateState : LegInteractionState
             Context.LegIKTargetTransform.position = Vector3.Lerp(Context.LegIKTargetTransform.position, legPos, Time.deltaTime * (moveSpeed * 1.5f));
             Context._currentLegPos = Context.LegIKTargetTransform.position;
         }
+    }
+    private bool CheckLegDistanceToRagdoll()
+    {
+        float dist = Vector3.Distance(Context.RagdollLegPos.position, Context.OtherRagdollLegPos.position);
+        if (dist > ragdollDist)
+        {
+            return true;
+        }
+        return false;
     }
 }

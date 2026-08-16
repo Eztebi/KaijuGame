@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class StandingUpBodyState : BodyState
 {
-    private Vector3 bodyPos;
-    private Vector3 legPos;
-    private float moveSpeed = 2f;
     public StandingUpBodyState(BodyStateMachineContext context, BodyStateMachine.EBodyState estate) : base(context, estate)
     {
         BodyStateMachineContext Context = context;
