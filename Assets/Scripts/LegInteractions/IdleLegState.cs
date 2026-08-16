@@ -14,16 +14,9 @@ public class IdleLegState : LegInteractionState
     {
         Context.SetLegToIdle();
         Context.LegActiveState = InputHandler.ELegActiveState.Down;
-        //Context._currentLegPos = Context.LegRestPosition.position;
-        //Context.LegIKTargetTransform.position = Context._currentLegPos;
 
-        //Context.HipJoint.xMotion = ConfigurableJointMotion.Locked;
-        //Context.HipJoint.zMotion = ConfigurableJointMotion.Locked;
-        //Context.HipJoint.yMotion = ConfigurableJointMotion.Locked;
-        //LegBoneMotionType(ConfigurableJointMotion.Locked);
         Debug.Log("Enter Idle State");
         Context.LegIKTargetTransform.position = Context._currentLegPos;
-        //MoveToPosition();
     }
     public override void ExitState()
     {

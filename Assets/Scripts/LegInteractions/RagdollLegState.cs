@@ -5,6 +5,7 @@ public class RagdollLegState : LegInteractionState
 
     public RagdollLegState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
+        LegInteractionContext Context = context;
     }
 
     public override void EnterState()

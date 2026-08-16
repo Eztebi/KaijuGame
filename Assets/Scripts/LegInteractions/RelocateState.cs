@@ -12,13 +12,13 @@ public class RelocateState : LegInteractionState
 
     public RelocateState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
+        LegInteractionContext Context = context;
     }
 
     public override void EnterState()
     {
 
         Debug.Log("Enter Relocate State");
-        Context.IsGrounded = false;
     }
 
     public override void ExitState()

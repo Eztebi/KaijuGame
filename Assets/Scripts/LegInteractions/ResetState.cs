@@ -9,6 +9,7 @@ public class ResetState : LegInteractionState
 
     public ResetState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
+        LegInteractionContext Context = context;
     }
 
     public override void EnterState()

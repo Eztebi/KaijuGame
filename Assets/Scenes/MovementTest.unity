@@ -5935,15 +5935,14 @@ MonoBehaviour:
   - {fileID: 2078425039}
   - {fileID: 2079143924}
   - {fileID: 422329598}
-  _hipJoint: {fileID: 2100125032}
-  _spineJoimt: {fileID: 1425095138}
-  _hipRB: {fileID: 2100125027}
   _upperLegRB: {fileID: 2078425034}
   _lowerLegRB: {fileID: 2079143920}
   _feetRB: {fileID: 422329596}
   _upperLegJoint: {fileID: 2078425037}
   _lowerLegJoint: {fileID: 2079143922}
   _feetJoint: {fileID: 422329595}
+  _ragdollLegPos: {fileID: 422329597}
+  _ragdollOtherLegPos: {fileID: 480715685}
 --- !u!114 &1378020899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5978,15 +5977,14 @@ MonoBehaviour:
   - {fileID: 1777237316}
   - {fileID: 702451500}
   - {fileID: 480715686}
-  _hipJoint: {fileID: 2100125032}
-  _spineJoimt: {fileID: 1425095138}
-  _hipRB: {fileID: 2100125027}
   _upperLegRB: {fileID: 1777237311}
   _lowerLegRB: {fileID: 702451496}
   _feetRB: {fileID: 480715684}
   _upperLegJoint: {fileID: 1777237314}
   _lowerLegJoint: {fileID: 702451498}
   _feetJoint: {fileID: 480715683}
+  _ragdollLegPos: {fileID: 480715685}
+  _ragdollOtherLegPos: {fileID: 422329597}
 --- !u!114 &1378020900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6086,7 +6084,7 @@ Rigidbody:
   m_GameObject: {fileID: 1425095133}
   serializedVersion: 5
   m_Mass: 2
-  m_LinearDamping: 0.2
+  m_LinearDamping: 0.41
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -8043,8 +8041,8 @@ Rigidbody:
   m_GameObject: {fileID: 2100125025}
   serializedVersion: 5
   m_Mass: 3.125
-  m_LinearDamping: 0.2
-  m_AngularDamping: 0.05
+  m_LinearDamping: 0.5
+  m_AngularDamping: 0.14
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}

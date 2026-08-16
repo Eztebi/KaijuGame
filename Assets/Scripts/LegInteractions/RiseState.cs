@@ -9,7 +9,7 @@ public class RiseState : LegInteractionState
 
     public RiseState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
-        // Usa la propiedad heredada 'Context' de la clase base
+        LegInteractionContext Context = context;
     }
 
     public override void EnterState()
@@ -20,8 +20,6 @@ public class RiseState : LegInteractionState
         Debug.Log("Enter Rise State");
         Context.IsGrounded = false;
 
-        // Ajustamos la firmeza muscular para levantar la pierna
-        //Context.SetLegStiffness(4000f, 80f);
         targetLegPos = Context.LegUpPosition.position;
     }
 
@@ -33,16 +31,12 @@ public class RiseState : LegInteractionState
 
     public override void UpdateState()
     {
-        // 1. Posición objetivo para la pierna que se alza
 
-        // 2. Posición objetivo para el cuerpo (Hips) SOBRE la otra pierna (la apoyada)
         float standingHeightOffset = Mathf.Abs(Context.feetRestPosition.localPosition.y);
         float targetY = Context.OtherLegPosition.position.y + standingHeightOffset;
 
-        // Alineamos X y Z del cuerpo exactamente sobre la pierna de apoyo, manteniendo la altura en Y
         targetBodyPos = new Vector3(Context.OtherLegPosition.position.x,targetY,Context.OtherLegPosition.position.z);
 
-        // 3. Movemos tanto el cuerpo como la pierna
         MoveToPosition();
 
         Debug.Log("Update Rise State");
@@ -72,10 +66,7 @@ public class RiseState : LegInteractionState
     public override void OnCollisionExit(Collision collision) { }
     public override void MoveToPosition()
     {
-        // Desplazamos las caderas/cuerpo hacia el objetivo sobre la pierna de apoyo
         Context.FullBodyPos.position = Vector3.Lerp(Context.FullBodyPos.position, targetBodyPos, Time.deltaTime * moveSpeed);
-
-        // Subimos el IK del pie que se alza
         Context.LegIKTargetTransform.position = Vector3.Lerp(Context.LegIKTargetTransform.position, targetLegPos, Time.deltaTime * moveSpeed);
         Context._currentLegPos = Context.LegIKTargetTransform.position;
     }
