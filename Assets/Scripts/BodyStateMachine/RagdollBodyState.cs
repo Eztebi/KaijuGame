@@ -12,8 +12,8 @@ public class RagdollBodyState : BodyState
 
     public override void EnterState()
     {
-        Context.SetBoneStiffness(0f, 0f);
-
+        //Context.SetBoneStiffness(0f, 0f);
+        Context.SetBodyToRagdoll();
         Debug.Log("Enter Falling State");
     }
     public override void ExitState()
@@ -26,7 +26,7 @@ public class RagdollBodyState : BodyState
     }
     public override BodyStateMachine.EBodyState GetNextState()
     {
-        if (Context.Handler.RightLegActiveState != InputHandler.ELegActiveState.Reset || Context.Handler.LeftLegActiveState != InputHandler.ELegActiveState.Reset)
+        if (Context.Handler.RightLegActiveState != InputHandler.ELegActiveState.Ragdoll || Context.Handler.LeftLegActiveState != InputHandler.ELegActiveState.Ragdoll)
         {
             return BodyStateMachine.EBodyState.Reset;
         }

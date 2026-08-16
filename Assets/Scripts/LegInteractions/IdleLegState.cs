@@ -64,29 +64,5 @@ public class IdleLegState : LegInteractionState
     }
     public override void OnCollisionExit(Collision collision) { }
 
-    private void LegBoneMotionType(ConfigurableJointMotion motion)
-    {
-        foreach (var boneLeg in Context.CurrentLegBones)
-        {
-            if (motion == ConfigurableJointMotion.Locked)
-            {
-                boneLeg.GetJoint.xMotion = ConfigurableJointMotion.Locked;
-                boneLeg.GetJoint.yMotion = ConfigurableJointMotion.Locked;
-                boneLeg.GetJoint.zMotion = ConfigurableJointMotion.Locked;
-            }
-            else if (motion == ConfigurableJointMotion.Limited)
-            {
-                boneLeg.GetJoint.xMotion = ConfigurableJointMotion.Limited;
-                boneLeg.GetJoint.yMotion = ConfigurableJointMotion.Limited;
-                boneLeg.GetJoint.zMotion = ConfigurableJointMotion.Limited;
-            }
-            else if (motion == ConfigurableJointMotion.Free)
-            {
-                boneLeg.GetJoint.xMotion = ConfigurableJointMotion.Free;
-                boneLeg.GetJoint.yMotion = ConfigurableJointMotion.Free;
-                boneLeg.GetJoint.zMotion = ConfigurableJointMotion.Free;
-            }
-        }
-    }
 }
     

@@ -47,21 +47,31 @@ public class MovingState : LegInteractionState
     public override void OnCollisionExit(Collision collision) {
         
     }
-    public override void MoveToPosition() {
-        _calculatedPos.x -= Time.deltaTime * speed * Context.CurrentLegMoveValue.x;
-        _calculatedPos.z -= Time.deltaTime * speed * Context.CurrentLegMoveValue.y;
+    public override void MoveToPosition()
+    {
+        Vector3 desiredPos = _calculatedPos;
+        desiredPos.x -= Time.deltaTime * speed * Context.CurrentLegMoveValue.x;
+        desiredPos.z -= Time.deltaTime * speed * Context.CurrentLegMoveValue.y;
 
-        Vector3 _anchorPoint = new Vector3(Context.LegRestPosition.position.x, _calculatedPos.y, Context.LegRestPosition.position.z);
+        Vector3 _anchorPoint = new Vector3(Context.LegRestPosition.position.x, desiredPos.y, Context.LegRestPosition.position.z);
+        Vector3 offset = desiredPos - _anchorPoint;
 
-        Vector3 offset = _calculatedPos - _anchorPoint;
-        offset = Vector3.ClampMagnitude(offset, maxLegDistance);
+        if (offset.magnitude > maxLegDistance)
+        {
+            Vector3 clampedOffset = Vector3.ClampMagnitude(offset, maxLegDistance);
 
-        _calculatedPos = _anchorPoint + offset;
-
-
+            Vector3 excess = offset - clampedOffset;
+            if (Context.FullBodyPos != null)
+            {
+                Context.FullBodyPos.position += excess;
+            }
+            _calculatedPos = _anchorPoint + clampedOffset;
+        }
+        else
+        {
+            _calculatedPos = desiredPos;
+        }
         Context.LegIKTargetTransform.position = _calculatedPos;
         Context._currentLegPos = _calculatedPos;
-        
-
     }
 }

@@ -14,12 +14,8 @@ public class ResetState : LegInteractionState
     public override void EnterState()
     {
         timer = 0;
-        //Context.SetLegStiffness(15000f, 500f);
-
-        // 1. Meta de los pies (Dónde debe aterrizar)
         targetFootPosGlobal = GetFloorPosition();
 
-        // Prevención del bug 0,0,0
         if (Context._currentLegPos == Vector3.zero)
         {
             Context._currentLegPos = Context.LegIKTargetTransform.position;
@@ -55,20 +51,13 @@ public class ResetState : LegInteractionState
 
     public override void MoveToPosition()
     {
-        // Actualizamos la meta en tiempo real por si el cuerpo (padre) se está moviendo por otra razón
         targetFootPosGlobal = GetFloorPosition();
-
-        // Movemos SOLO la posición global de la pierna hacia su descanso
         Context._currentLegPos = Vector3.Lerp(Context._currentLegPos, targetFootPosGlobal, Time.deltaTime * moveSpeed);
-
-        // Aplicamos la posición al target del IK
         Context.LegIKTargetTransform.position = Context._currentLegPos;
     }
 
     private Vector3 GetFloorPosition()
     {
-        // Si quieres usar el raycast de nuevo, descoméntalo aquí.
-        // Por ahora, simplemente devuelve la posición global de descanso.
         return Context.LegRestPosition.position;
     }
 }
