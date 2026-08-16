@@ -12,6 +12,7 @@ public class IdleBodyState : BodyState
 
     public override void EnterState()
     {
+        Context.SetBodyToIdle();
         Debug.Log("Enter Idle State");
     }
     public override void ExitState()
@@ -20,6 +21,7 @@ public class IdleBodyState : BodyState
     }
     public override void UpdateState()
     {
+        //Context.HipsJoint.targetPosition = new Vector3(0, -alturaDeseada, 0);
         Debug.Log("Update Idle State");
     }
     public override BodyStateMachine.EBodyState GetNextState()

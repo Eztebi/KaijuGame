@@ -12,10 +12,10 @@ public class IdleLegState : LegInteractionState
     //public override void AwakeState() { }
     public override void EnterState()
     {
+        Context.SetLegToIdle();
         Context.LegActiveState = InputHandler.ELegActiveState.Down;
         //Context._currentLegPos = Context.LegRestPosition.position;
         //Context.LegIKTargetTransform.position = Context._currentLegPos;
-        //Context.SetLegStiffness(15000f, 500f);
 
         //Context.HipJoint.xMotion = ConfigurableJointMotion.Locked;
         //Context.HipJoint.zMotion = ConfigurableJointMotion.Locked;

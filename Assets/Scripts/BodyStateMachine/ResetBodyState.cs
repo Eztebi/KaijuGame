@@ -13,6 +13,7 @@ public class ResetBodyState : BodyState
 
     public override void EnterState()
     {
+        Context.SetBodyToReset();
         //Context.SetBoneStiffness(15000f, 50f);
         Debug.Log("Enter Body Reset State ");
     }

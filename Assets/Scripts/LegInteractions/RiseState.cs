@@ -14,6 +14,8 @@ public class RiseState : LegInteractionState
 
     public override void EnterState()
     {
+        Context.SetLegToRise();
+
         Context.LegActiveState = InputHandler.ELegActiveState.Up;
         Debug.Log("Enter Rise State");
         Context.IsGrounded = false;

@@ -15,6 +15,8 @@ public class RelocateState : LegInteractionState
 
     public override void EnterState()
     {
+        //Context.SetLegStiffness(0f, 0f);
+
         Debug.Log("Enter Relocate State");
         Context.IsGrounded = false;
     }

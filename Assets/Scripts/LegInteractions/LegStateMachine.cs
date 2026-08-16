@@ -45,6 +45,17 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
 
     [SerializeField] private StaticBoneFollower[] _currentLegBones;
     [SerializeField] private ConfigurableJoint _hipJoint;
+    [SerializeField] private ConfigurableJoint _spineJoimt;
+    [SerializeField] private Rigidbody _hipRB;
+
+    [Header("Fisicas piernas")]
+    [SerializeField] private Rigidbody _upperLegRB;
+    [SerializeField] private Rigidbody _lowerLegRB;
+    [SerializeField] private Rigidbody _feetRB;
+
+    [SerializeField] private ConfigurableJoint _upperLegJoint;
+    [SerializeField] private ConfigurableJoint _lowerLegJoint;
+    [SerializeField] private ConfigurableJoint _feetJoint;
     private void Awake()
     {
         ValidateConstraints();
@@ -59,7 +70,8 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
         _context = new LegInteractionContext(_legIkConstraint, _legMultiRotationConstraint,
             /*_rigidbody, _rootCollider,*/ _legRestPosition, _upLegPosition,
             _feetRestPosition, _legIKTargetTransform, _feetIKTargetTransform, _legCollider, _hipPosition, _hipNormalPos,
-            _groundLayerMask, _otherLeg, _fullBody, _currentLegBones, _hipJoint, isGrounded, _eLegType, _handler);
+            _groundLayerMask, _otherLeg, _fullBody,_hipRB, _currentLegBones, _hipJoint, _spineJoimt, isGrounded, _eLegType,
+            _handler,_upperLegRB, _lowerLegRB, _feetRB, _upperLegJoint, _lowerLegJoint, _feetJoint);
         InitializeStates();
     }
     private void ValidateConstraints()

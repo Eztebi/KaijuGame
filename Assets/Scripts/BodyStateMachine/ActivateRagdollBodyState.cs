@@ -12,6 +12,7 @@ public class ActivateRagdollBodyState : BodyState
 
     public override void EnterState()
     {
+        Context.SetBodyToRagdoll();
         Debug.Log("Enter Activateragdoll State");
     }
     public override void ExitState()
