@@ -16,7 +16,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "LeftLegMove",
+                    "name": "LegMove",
                     "type": "Value",
                     "id": "db5ed5e6-a26b-4147-9800-c796daf072da",
                     "expectedControlType": "Vector2",
@@ -25,9 +25,9 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "RightLegMove",
+                    "name": "CameraMove",
                     "type": "Value",
-                    "id": "03dd774a-0910-426d-8024-c4e125436e0c",
+                    "id": "4033b82b-1daa-49d9-ada9-eeaff05ebeee",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -82,7 +82,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "LeftLegMove",
+                    "action": "LegMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -93,7 +93,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "LeftLegMove",
+                    "action": "LegMove",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -104,7 +104,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "LeftLegMove",
+                    "action": "LegMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -115,7 +115,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "LeftLegMove",
+                    "action": "LegMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -126,7 +126,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "LeftLegMove",
+                    "action": "LegMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -137,7 +137,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "LeftLegMove",
+                    "action": "LegMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -148,7 +148,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "LeftLegMove",
+                    "action": "LegMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -159,7 +159,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "LeftLegMove",
+                    "action": "LegMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -170,7 +170,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "LeftLegMove",
+                    "action": "LegMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -181,7 +181,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "LeftLegMove",
+                    "action": "LegMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -192,7 +192,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "LeftLegMove",
+                    "action": "LegMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -203,139 +203,62 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "LeftLegMove",
+                    "action": "LegMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "6dcaf435-d10d-41e5-a359-9ba47e2722ca",
+                    "id": "397a8c99-9df0-43c5-b6aa-c3eee57e6fc8",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "RightLegMove",
+                    "action": "CameraMove",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "WASD",
-                    "id": "df076eea-76bd-47f6-a613-2b85b05abda7",
-                    "path": "Dpad",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RightLegMove",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "d3e1f4ef-dd33-4a9c-9ada-9c5c784fc063",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "RightLegMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "up",
-                    "id": "e1418f95-89fe-4b11-b208-db21785edc04",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "RightLegMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "8233365e-961c-4a3e-9c71-5f4aa69dbdba",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "RightLegMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "1e89e9a3-8ab9-421c-ad4b-d3c493588337",
-                    "path": "<Keyboard>/downArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "RightLegMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "f235233c-44ff-480f-a6ce-6ac22d7a8ace",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "RightLegMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "1e53b655-d7d6-4c33-bb97-ca1e7335df57",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "RightLegMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "c31a0b15-cd04-4c0f-91b7-ebdccb8b3e33",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "RightLegMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "ec86077a-1e00-4c52-b52b-37b74a4e5837",
-                    "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "RightLegMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
-                    "id": "2e3b8d9e-a094-42d3-b4ca-1987aa677aa3",
+                    "id": "247dbcdf-0bc2-4122-991d-9924149789d3",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "CameraMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f1a064c2-6ac6-48a9-b503-ead1a08fb229",
+                    "path": "<VirtualMouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "CameraMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1bb25e32-af21-4fda-a5e6-80885262ee22",
                     "path": "<XRController>/{Primary2DAxis}",
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "RightLegMove",
+                    "action": "CameraMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "0710eb45-40bc-4f56-bd63-73ad1b6b30f9",
+                    "id": "e39acf6e-e9c4-463f-bcc9-a97cf52176dd",
                     "path": "<Joystick>/stick",
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "RightLegMove",
+                    "action": "CameraMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -16,12 +16,12 @@ public class InputHandler : MonoBehaviour
     private ELegActiveState rightLegState;
     private ELegInput leftLegInput;
     private ELegInput rightLegInput;
-    public Vector2 leftLegMoveValue;
-    public Vector2 rightLegMoveValue;
+    public Vector2 legMoveValue;
+    public Vector2 cameraMoveValue;
     InputAction leftLegUpAction;
     InputAction rightLegUpAction;
-    InputAction leftLegMoveAction;
-    InputAction rightLegMoveAction;
+    InputAction legMoveAction;
+    InputAction cameraMoveAction;
     InputAction resetButtonAction;
     public Animator animator;
     public ELegInput LeftLegInput
@@ -52,9 +52,9 @@ public class InputHandler : MonoBehaviour
     {
         leftLegUpAction = InputSystem.actions.FindAction("LeftLegUp");
         rightLegUpAction = InputSystem.actions.FindAction("RightLegUp");
-        leftLegMoveAction = InputSystem.actions.FindAction("LeftLegMove");
-        rightLegMoveAction = InputSystem.actions.FindAction("RightLegMove");
+        legMoveAction = InputSystem.actions.FindAction("LegMove");
         resetButtonAction = InputSystem.actions.FindAction("Restart");
+        cameraMoveAction = InputSystem.actions.FindAction("CameraMove");
 
         leftLegInput = ELegInput.Down;
         rightLegInput = ELegInput.Down;
@@ -69,7 +69,7 @@ public class InputHandler : MonoBehaviour
         if (leftLegUpAction.IsPressed())
         {
             leftLegInput = ELegInput.Up;
-            leftLegMoveValue = leftLegMoveAction.ReadValue<Vector2>();
+            legMoveValue = legMoveAction.ReadValue<Vector2>();
             //animator.enabled = true;
 
             Debug.Log("Left Leg Up");
@@ -85,7 +85,7 @@ public class InputHandler : MonoBehaviour
         if (rightLegUpAction.IsPressed())
         {
             rightLegInput = ELegInput.Up;
-            rightLegMoveValue = rightLegMoveAction.ReadValue<Vector2>();
+            legMoveValue = legMoveAction.ReadValue<Vector2>();
             // animator.enabled = true;
 
             Debug.Log("Right Leg Up");
@@ -109,9 +109,6 @@ public class InputHandler : MonoBehaviour
             }
         }
 
-        if (rightLegInput != ELegInput.Up)
-        {
-            rightLegMoveValue = rightLegMoveAction.ReadValue<Vector2>();
-        }
+        cameraMoveValue = cameraMoveAction.ReadValue<Vector2>();    
     }
 }

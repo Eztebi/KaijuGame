@@ -21,6 +21,7 @@ public class IdleBodyState : BodyState
     }
     public override void UpdateState()
     {
+        CameraAndHipPosMovement();
         //Context.HipsJoint.targetPosition = new Vector3(0, -alturaDeseada, 0);
         Debug.Log("Update Idle State");
     }

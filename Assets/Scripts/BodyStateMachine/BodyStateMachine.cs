@@ -1,3 +1,5 @@
+using System;
+using Unity.Cinemachine;
 using UnityEngine;
 using static LegStateMachine;
 
@@ -26,13 +28,14 @@ public class BodyStateMachine : StateManager<BodyStateMachine.EBodyState>
     [SerializeField] public ConfigurableJoint _hipsJoint;
     [SerializeField] public ConfigurableJoint _spineJoint;
     [SerializeField] public ConfigurableJoint _headJoint;
-
+    [SerializeField] public CinemachineCamera _camera;
+    [SerializeField] public CinemachineOrbitalFollow _orbitalFollow;
     private void Awake()
     {
         ValidateConstraints();
         _handler = GetComponent<InputHandler>();
         _context = new BodyStateMachineContext(_bodyPos, _bones,  _handler, _rigidbodies, _animator, _hipsRB, _spineRB, _headRB, 
-            _hipsJoint, _spineJoint, _headJoint);
+            _hipsJoint, _spineJoint, _headJoint, _camera, _orbitalFollow);
         InitializeStates();
     }
     private void ValidateConstraints()

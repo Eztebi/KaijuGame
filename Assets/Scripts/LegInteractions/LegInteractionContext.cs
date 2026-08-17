@@ -86,7 +86,7 @@ public class LegInteractionContext
         get
         {
             if (_handler == null) return Vector2.zero;
-            return _legType == LegStateMachine.ELegType.LEFT ? _handler.leftLegMoveValue : _handler.rightLegMoveValue;
+            return _handler.legMoveValue;
         }
     }
     public InputHandler.ELegInput CurrentLegInput

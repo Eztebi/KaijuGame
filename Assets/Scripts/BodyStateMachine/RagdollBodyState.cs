@@ -22,6 +22,7 @@ public class RagdollBodyState : BodyState
     }
     public override void UpdateState()
     {
+        CameraAndHipPosMovement();
         Debug.Log("Update Falling State");
     }
     public override BodyStateMachine.EBodyState GetNextState()
