@@ -28,6 +28,10 @@ public class IdleLegState : LegInteractionState
     }
     public override LegStateMachine.ELegState GetNextState()
     {
+        if(Context.IsGrounded == false)
+        {
+
+        }
         if (Context.CurrentLegInput == InputHandler.ELegInput.Up)
         {
             return LegStateMachine.ELegState.Rise;
@@ -42,7 +46,9 @@ public class IdleLegState : LegInteractionState
     }
     public override void OnTriggerEnter(Collider other) { }
     public override void OnTriggerStay(Collider other) { }
-    public override void OnTriggerExit(Collider other) { }
+    public override void OnTriggerExit(Collider other) {
+        
+    }
     public override void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -57,7 +63,13 @@ public class IdleLegState : LegInteractionState
             Context.IsGrounded = true;
         }
     }
-    public override void OnCollisionExit(Collision collision) { }
+    public override void OnCollisionExit(Collision collision) {
+        if (collision.collider.CompareTag("Ground") && !Context.IsGrounded)
+        {
+            Debug.LogWarning("Choco con suelo");
+            Context.IsGrounded = false;
+        }
+    }
 
 }
     

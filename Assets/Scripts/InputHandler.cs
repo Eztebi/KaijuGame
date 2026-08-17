@@ -108,5 +108,10 @@ public class InputHandler : MonoBehaviour
                 
             }
         }
+
+        if (rightLegInput != ELegInput.Up)
+        {
+            rightLegMoveValue = rightLegMoveAction.ReadValue<Vector2>();
+        }
     }
 }

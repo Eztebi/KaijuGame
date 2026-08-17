@@ -10,10 +10,10 @@ public class RagdollLegState : LegInteractionState
 
     public override void EnterState()
     {
+        Context.IsGrounded = false;
         Context.LegActiveState = InputHandler.ELegActiveState.Ragdoll;
         Debug.Log(Context.LegType + " activando modo Ragdoll (Cae por gravedad)");
 
-        // 1. APAGAR EL IK
         if (Context.CurrentIkConstraint != null)
             Context.CurrentIkConstraint.weight = 0f;
 

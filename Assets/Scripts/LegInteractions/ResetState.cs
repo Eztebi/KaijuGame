@@ -14,6 +14,7 @@ public class ResetState : LegInteractionState
 
     public override void EnterState()
     {
+        Context.IsGrounded = true;
         timer = 0;
         targetFootPosGlobal = GetFloorPosition();
 

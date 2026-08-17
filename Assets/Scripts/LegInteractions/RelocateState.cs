@@ -79,7 +79,7 @@ public class RelocateState : LegInteractionState
 
     public override void OnCollisionEnter(Collision collision)
     {
-        Debug.LogWarning(Context.LegType + " ENTER chocó contra: " + collision.collider.name + " Tag: " + collision.collider.tag);
+        Debug.LogWarning("Choco con suelo");
 
         if (collision.collider.CompareTag("Ground"))
         {
@@ -90,7 +90,7 @@ public class RelocateState : LegInteractionState
     {
         if (collision.collider.CompareTag("Ground") && !Context.IsGrounded)
         {
-            Debug.LogWarning(Context.LegType + " STAY detectó el suelo a medio camino. ¡Deteniéndose!");
+            Debug.LogWarning("Choco con suelo");
             DetenerPie();
         }
     }
