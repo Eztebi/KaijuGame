@@ -1,6 +1,5 @@
 using UnityEngine;
 using static LegStateMachine;
-using static UnityEditor.VersionControl.Asset;
 
 public class BodyStateMachine : StateManager<BodyStateMachine.EBodyState>
 {

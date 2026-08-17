@@ -4,7 +4,6 @@ using static InputHandler;
 public class RiseState : LegInteractionState
 {
     private Vector3 targetBodyPos;
-    private Vector3 targetLegPos;
     private float moveSpeed = 3f;
 
     public RiseState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
@@ -20,13 +19,11 @@ public class RiseState : LegInteractionState
         Debug.Log("Enter Rise State");
         Context.IsGrounded = false;
 
-        targetLegPos = Context.LegUpPosition.position;
     }
 
     public override void ExitState()
     {
         targetBodyPos = Vector3.zero;
-        targetLegPos = Vector3.zero;
     }
 
     public override void UpdateState()
@@ -49,7 +46,7 @@ public class RiseState : LegInteractionState
             return LegStateMachine.ELegState.Ragdoll;
         }
 
-        float distanceToLeg = Vector3.Distance(Context.LegIKTargetTransform.position, targetLegPos);
+        float distanceToLeg = Vector3.Distance(Context.LegIKTargetTransform.position, Context.LegUpPosition.position);
         if (distanceToLeg < 0.1f)
             return LegStateMachine.ELegState.Move;
 
@@ -67,7 +64,7 @@ public class RiseState : LegInteractionState
     public override void MoveToPosition()
     {
         Context.FullBodyPos.position = Vector3.Lerp(Context.FullBodyPos.position, targetBodyPos, Time.deltaTime * moveSpeed);
-        Context.LegIKTargetTransform.position = Vector3.Lerp(Context.LegIKTargetTransform.position, targetLegPos, Time.deltaTime * moveSpeed);
+        Context.LegIKTargetTransform.position = Vector3.Lerp(Context.LegIKTargetTransform.position, Context.LegUpPosition.position, Time.deltaTime * moveSpeed);
         Context._currentLegPos = Context.LegIKTargetTransform.position;
     }
 }
