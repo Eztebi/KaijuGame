@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class IdleLegState : LegInteractionState
 {
+    private float moveSpeed = .1f;
+
     public IdleLegState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
         LegInteractionContext Context = context;
@@ -14,7 +16,6 @@ public class IdleLegState : LegInteractionState
         Context.LegActiveState = InputHandler.ELegActiveState.Down;
 
         Debug.Log("Enter Idle State");
-        Context.CurrentLegPos = Context.LegRestPosition.position;
         Context.LegIKTargetTransform.position = Context.CurrentLegPos;
     }
     public override void ExitState()
@@ -29,10 +30,6 @@ public class IdleLegState : LegInteractionState
     }
     public override LegStateMachine.ELegState GetNextState()
     {
-        if(Context.IsGrounded == false)
-        {
-
-        }
         if (Context.CurrentLegInput == InputHandler.ELegInput.Up)
         {
             return LegStateMachine.ELegState.Rise;
@@ -73,8 +70,13 @@ public class IdleLegState : LegInteractionState
     }
     public override void MoveToPosition()
     {
-        Context.CurrentLegPos = Context.LegRestPosition.position;
+        Context.CurrentLegPos = Vector3.Lerp(Context.CurrentLegPos, GetFloorPosition(), Time.deltaTime * moveSpeed);
         Context.LegIKTargetTransform.position = Context.CurrentLegPos;
+    }
+
+    private Vector3 GetFloorPosition()
+    {
+        return Context.LegRestPosition.position;
     }
 
 }

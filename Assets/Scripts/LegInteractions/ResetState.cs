@@ -36,7 +36,7 @@ public class ResetState : LegInteractionState
     public override LegStateMachine.ELegState GetNextState()
     {
         // Transición cuando pase el tiempo o cuando el pie ya haya llegado a su meta
-        if (timer > timeToReset || Vector3.Distance(Context.CurrentLegPos, targetFootPosGlobal) < 0.05f)
+        if (timer > timeToReset || Vector3.Distance(Context.CurrentLegPos, targetFootPosGlobal) < .1f)
         {
             return LegStateMachine.ELegState.Idle;
         }
@@ -54,7 +54,7 @@ public class ResetState : LegInteractionState
     public override void MoveToPosition()
     {
         targetFootPosGlobal = GetFloorPosition();
-        Context.CurrentLegPos = Vector3.Lerp(Context.CurrentLegPos, Context.LegUpPosition.position, Time.deltaTime * moveSpeed);
+        Context.CurrentLegPos = Vector3.Lerp(Context.CurrentLegPos, targetFootPosGlobal, Time.deltaTime * moveSpeed);
         Context.LegIKTargetTransform.position = Context.CurrentLegPos;
     }
 
