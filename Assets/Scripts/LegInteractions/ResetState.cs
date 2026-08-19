@@ -18,9 +18,9 @@ public class ResetState : LegInteractionState
         timer = 0;
         targetFootPosGlobal = GetFloorPosition();
 
-        if (Context._currentLegPos == Vector3.zero)
+        if (Context.CurrentLegPos == Vector3.zero)
         {
-            Context._currentLegPos = Context.LegIKTargetTransform.position;
+            Context.CurrentLegPos = Context.LegIKTargetTransform.position;
         }
 
         Debug.Log("Enter Reset State - Moviendo SOLO la pierna");
@@ -36,7 +36,7 @@ public class ResetState : LegInteractionState
     public override LegStateMachine.ELegState GetNextState()
     {
         // Transición cuando pase el tiempo o cuando el pie ya haya llegado a su meta
-        if (timer > timeToReset || Vector3.Distance(Context._currentLegPos, targetFootPosGlobal) < 0.05f)
+        if (timer > timeToReset || Vector3.Distance(Context.CurrentLegPos, targetFootPosGlobal) < 0.05f)
         {
             return LegStateMachine.ELegState.Idle;
         }
@@ -54,8 +54,8 @@ public class ResetState : LegInteractionState
     public override void MoveToPosition()
     {
         targetFootPosGlobal = GetFloorPosition();
-        Context._currentLegPos = Vector3.Lerp(Context._currentLegPos, targetFootPosGlobal, Time.deltaTime * moveSpeed);
-        Context.LegIKTargetTransform.position = Context._currentLegPos;
+        Context.CurrentLegPos = Vector3.Lerp(Context.CurrentLegPos, Context.LegUpPosition.position, Time.deltaTime * moveSpeed);
+        Context.LegIKTargetTransform.position = Context.CurrentLegPos;
     }
 
     private Vector3 GetFloorPosition()

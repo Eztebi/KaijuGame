@@ -37,7 +37,7 @@ public class ReleaseState : LegInteractionState
 
     public bool CheckHasGround()
     {
-        Vector3 pos = new Vector3(Context._currentLegPos.x, Context.FullBodyPos.position.y, Context._currentLegPos.z);
+        Vector3 pos = new Vector3(Context.CurrentLegPos.x, Context.FullBodyPos.position.y, Context.CurrentLegPos.z);
 
         float maxDistance = Mathf.Abs(Context.FullBodyPos.position.y - Context.LegRestPosition.position.y) + 2f;
 

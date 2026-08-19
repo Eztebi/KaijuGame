@@ -16,11 +16,8 @@ public class BodyStateMachine : StateManager<BodyStateMachine.EBodyState>
     private BodyStateMachineContext _context;
 
     [SerializeField] private InputHandler _handler;
-    [SerializeField] private Rigidbody[] _rigidbodies;
     [SerializeField] private Animator _animator;
     [SerializeField] private Transform _bodyPos;
-    [SerializeField] private StaticBoneFollower[] _bones;
-
     [SerializeField] public Rigidbody _hipsRB;
     [SerializeField] public Rigidbody _spineRB;
     [SerializeField] public Rigidbody _headRB;
@@ -34,7 +31,7 @@ public class BodyStateMachine : StateManager<BodyStateMachine.EBodyState>
     {
         ValidateConstraints();
         _handler = GetComponent<InputHandler>();
-        _context = new BodyStateMachineContext(_bodyPos, _bones,  _handler, _rigidbodies, _animator, _hipsRB, _spineRB, _headRB, 
+        _context = new BodyStateMachineContext(_bodyPos,  _handler, _animator, _hipsRB, _spineRB, _headRB, 
             _hipsJoint, _spineJoint, _headJoint, _camera, _orbitalFollow);
         InitializeStates();
     }

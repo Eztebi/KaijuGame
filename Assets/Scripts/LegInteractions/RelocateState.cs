@@ -101,7 +101,7 @@ public class RelocateState : LegInteractionState
     {
         Debug.Log(Context.LegType + " tocó el suelo. ¡Deteniéndose!");
         Context.IsGrounded = true;
-        Context._currentLegPos = Context.LegIKTargetTransform.position;
+        Context.CurrentLegPos = Context.LegIKTargetTransform.position;
     }
     public override void MoveToPosition()
     {
@@ -109,12 +109,12 @@ public class RelocateState : LegInteractionState
         if (!Context.IsGrounded)
         {
             Context.LegIKTargetTransform.position = Vector3.Lerp(Context.LegIKTargetTransform.position, legPos, Time.deltaTime * (moveSpeed * 1.5f));
-            Context._currentLegPos = Context.LegIKTargetTransform.position;
+            Context.CurrentLegPos = Context.LegIKTargetTransform.position;
         }
     }
     private bool CheckLegDistanceToRagdoll()
     {
-        float dist = Vector3.Distance(Context.RagdollLegPos.position, Context.OtherRagdollLegPos.position);
+        float dist = Vector3.Distance(Context.CurrentLegPos, Context.OtherRagdollLegPos.position);
         if (dist > ragdollDist)
         {
             return true;

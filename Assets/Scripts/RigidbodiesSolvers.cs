@@ -10,7 +10,7 @@ public class RigidbodiesSolvers : MonoBehaviour
 
     private void Start()
     {
-        
+        SetSolvers();
     }
     void SetSolvers()
     {

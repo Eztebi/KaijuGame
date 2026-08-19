@@ -14,7 +14,8 @@ public class IdleLegState : LegInteractionState
         Context.LegActiveState = InputHandler.ELegActiveState.Down;
 
         Debug.Log("Enter Idle State");
-        Context.LegIKTargetTransform.position = Context._currentLegPos;
+        Context.CurrentLegPos = Context.LegRestPosition.position;
+        Context.LegIKTargetTransform.position = Context.CurrentLegPos;
     }
     public override void ExitState()
     {
@@ -24,7 +25,7 @@ public class IdleLegState : LegInteractionState
     {
        // Context.LegIKTargetTransform.position = Context._currentLegPos;
         Debug.Log("Update Idle State");
-        Context.LegIKTargetTransform.position = Context._currentLegPos;
+        MoveToPosition();
     }
     public override LegStateMachine.ELegState GetNextState()
     {
@@ -69,6 +70,11 @@ public class IdleLegState : LegInteractionState
             Debug.LogWarning("Choco con suelo");
             Context.IsGrounded = false;
         }
+    }
+    public override void MoveToPosition()
+    {
+        Context.CurrentLegPos = Context.LegRestPosition.position;
+        Context.LegIKTargetTransform.position = Context.CurrentLegPos;
     }
 
 }

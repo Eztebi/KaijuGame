@@ -5,10 +5,8 @@ using UnityEngine.Animations.Rigging;
 public class BodyStateMachineContext 
 {
     private InputHandler _handler;
-    private Rigidbody[] _rigidbodies;
     private Animator _animator;
     private Transform _bodyPos;
-    private StaticBoneFollower[] _bones;
     private CinemachineCamera _camera;
     public Rigidbody HipsRB { get; private set; }
     public Rigidbody SpineRB { get; private set; }
@@ -18,15 +16,13 @@ public class BodyStateMachineContext
     public ConfigurableJoint HeadJoint { get; private set; }
     public ConfigurableJoint[] _armsJoints;
     private CinemachineOrbitalFollow _orbitalCamera;
-    public BodyStateMachineContext(Transform bodypos, StaticBoneFollower[] bones,InputHandler handler, Rigidbody[] rbs, Animator animator,
+    public BodyStateMachineContext(Transform bodypos,InputHandler handler, Animator animator,
         Rigidbody hipsRB, Rigidbody spineRB, Rigidbody headRB,
         ConfigurableJoint hipsJoint, ConfigurableJoint spineJoint, ConfigurableJoint headJoint, CinemachineCamera camera, CinemachineOrbitalFollow orbitalCamera)
     {
         _handler = handler;
-        _rigidbodies = rbs;
         _animator = animator;
         _bodyPos = bodypos;
-        _bones = bones;
         HipsRB = hipsRB;
         SpineRB = spineRB;
         HeadRB = headRB;
@@ -85,15 +81,6 @@ public void SetBodyToReset()
         SetHipsBalance(20000f, 1000f); 
         SetJointSlerp(SpineJoint, 10000f, 600f);
         SetJointSlerp(HeadJoint, 800f, 60f);
-    }
-    public void SetBoneStiffness(float spring, float damper)
-    {
-        if (_bones == null) return;
-
-        foreach (var muscle in _bones)
-        {
-            muscle.SetMuscleStrength(spring, damper);
-        }
     }
     public Transform FullBodyPos => _bodyPos;
     public InputHandler Handler => _handler;

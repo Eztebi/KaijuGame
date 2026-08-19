@@ -23,6 +23,7 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
 
     private LegInteractionContext _context;
     [SerializeField] private Transform _fullBody;
+    [SerializeField] public Vector3 currentLegPos;
     [SerializeField] private Transform _otherLeg;
     [SerializeField] private InputHandler _handler;
     [SerializeField] private TwoBoneIKConstraint _legIkConstraint;
@@ -43,7 +44,6 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
     [SerializeField] private bool isGrounded;
     [SerializeField] private LayerMask _groundLayerMask;
 
-    [SerializeField] private StaticBoneFollower[] _currentLegBones;
 
     [Header("Fisicas piernas")]
     [SerializeField] private Rigidbody _upperLegRB;
@@ -53,8 +53,7 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
     [SerializeField] private ConfigurableJoint _upperLegJoint;
     [SerializeField] private ConfigurableJoint _lowerLegJoint;
     [SerializeField] private ConfigurableJoint _feetJoint;
-    [SerializeField] private Transform _ragdollLegPos;
-    [SerializeField] private Transform _ragdollOtherLegPos;
+    [SerializeField] private Transform _ragdollOtherFeetPos;
     private void Awake()
     {
         ValidateConstraints();
@@ -69,8 +68,8 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
         _context = new LegInteractionContext(_legIkConstraint, _legMultiRotationConstraint,
             /*_rigidbody, _rootCollider,*/ _legRestPosition, _upLegPosition,
             _feetRestPosition, _legIKTargetTransform, _feetIKTargetTransform, _legCollider, _hipPosition, _hipNormalPos,
-            _groundLayerMask, _otherLeg, _fullBody, _currentLegBones, isGrounded, _eLegType,
-            _handler,_upperLegRB, _lowerLegRB, _feetRB, _upperLegJoint, _lowerLegJoint, _feetJoint,_ragdollLegPos, _ragdollOtherLegPos);
+            _groundLayerMask, _otherLeg, _fullBody, isGrounded, _eLegType,
+            _handler,_upperLegRB, _lowerLegRB, _feetRB, _upperLegJoint, _lowerLegJoint, _feetJoint, currentLegPos, _ragdollOtherFeetPos);
         InitializeStates();
     }
     private void ValidateConstraints()
@@ -78,8 +77,8 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
         Assert.IsNotNull(_legIkConstraint, "Left IK constraint is not assigned.");
         Assert.IsNotNull(_legMultiRotationConstraint, "Left multi rotation constraint is not assigned.");
         Assert.IsNotNull(_legCollider, "leg collider is not assigned.");
-        Assert.IsNotNull(_ragdollOtherLegPos, "ragdoll other leg is not assigned.");
-        Assert.IsNotNull(_ragdollLegPos, "ragdoll leg is not assigned.");
+        Assert.IsNotNull(_ragdollOtherFeetPos, "ragdoll other leg is not assigned.");
+        //Assert.IsNotNull(Curr, "ragdoll leg is not assigned.");
         Assert.IsNotNull(_handler, "Input Handler is not assigned.");
 
     }

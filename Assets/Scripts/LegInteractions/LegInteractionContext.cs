@@ -24,11 +24,9 @@ public class LegInteractionContext
     private LegStateMachine.ELegType _legType;
     private bool _isGrounded;
     private InputHandler.ELegInput _currentLegInput;
-    public Vector3 _currentLegPos;
     private LayerMask _groundMask;
-    private Transform _ragdollLegPos;
+    public Vector3 CurrentLegPos;
     private Transform _ragdollOtherLegPos;
-    private StaticBoneFollower[] _currentLegBones;
 
     public Rigidbody UpperLegRB { get; private set; }
     public Rigidbody LowerLegRB { get; private set; }
@@ -44,9 +42,8 @@ public class LegInteractionContext
             /*Rigidbody rigidbody, CapsuleCollider rootCollider,*/ Transform legRestPosition, Transform legUpPosition,
             Transform feetRestPosition, Transform legIKTargetTransform, Transform feetIKTargetTransform, BoxCollider legCollider,
             Transform hipPosition, Transform hipNormalPos, LayerMask groundMask, Transform otherLegPosition, Transform fullBodyPos,
-            StaticBoneFollower[] currentLegBones, bool isGrounded,
-            LegStateMachine.ELegType legType, InputHandler inputHandler, Rigidbody upLegRB, Rigidbody lowLegRB, Rigidbody feetRB,
-            ConfigurableJoint upLegJoint, ConfigurableJoint lowLegJoint, ConfigurableJoint feetJoint, Transform ragdollLegPos,
+            bool isGrounded,LegStateMachine.ELegType legType, InputHandler inputHandler, Rigidbody upLegRB, Rigidbody lowLegRB, Rigidbody feetRB,
+            ConfigurableJoint upLegJoint, ConfigurableJoint lowLegJoint, ConfigurableJoint feetJoint, Vector3 currentLegPos,
             Transform ragdollOtherLegPos)
     {
         _ikConstraint = ikConstraint;
@@ -67,14 +64,13 @@ public class LegInteractionContext
         _groundMask = groundMask;
         _otherLegPosition = otherLegPosition;
         _fullBodyPos = fullBodyPos;
-        _currentLegBones = currentLegBones;
         UpperLegRB = upLegRB;
         LowerLegRB = lowLegRB;
         FeetRB = feetRB;
         UpperLegJoint = upLegJoint;
         LowerLegJoint = lowLegJoint;
         FeetJoint = feetJoint;
-        _ragdollLegPos = ragdollLegPos;
+        CurrentLegPos = currentLegPos;
         _ragdollOtherLegPos = ragdollOtherLegPos;
 
         if (UpperLegRB != null) upperLegMass = UpperLegRB.mass;
@@ -139,17 +135,30 @@ public class LegInteractionContext
             return _legType == LegStateMachine.ELegType.LEFT ? _handler.RightLegActiveState : _handler.LeftLegActiveState;
         }
     }
+
+    private void SetJointSlerp(ConfigurableJoint joint, float spring, float damper)
+    {
+        if (joint == null) return;
+        JointDrive drive = joint.slerpDrive;
+        drive.positionSpring = spring;
+        drive.positionDamper = damper;
+        joint.slerpDrive = drive;
+    }
     public void SetLegStiffness(float spring, float damper)
     {
-        if (_currentLegBones == null) return;
-
-        foreach (var muscle in _currentLegBones)
-        {
-            muscle.SetMuscleStrength(spring, damper);
-        }
+        SetJointSlerp(UpperLegJoint, spring, damper);
+        SetJointSlerp(LowerLegJoint, spring, damper);
+        SetJointSlerp(FeetJoint, spring, damper);
+    }
+    public void SetIkWeight(float weight)
+    {
+        if (_ikConstraint != null) _ikConstraint.weight = weight;
+        if (_multiRotationConstraint != null) _multiRotationConstraint.weight = weight;
     }
     public void SetLegToIdle()
     {
+        SetIkWeight(1f); // Aseguramos que el IK controle la pose animada
+
         // 1. Restaurar masas pesadas
         if (UpperLegRB != null) UpperLegRB.mass = upperLegMass;
         if (LowerLegRB != null) LowerLegRB.mass = lowerLegMass;
@@ -163,24 +172,17 @@ public class LegInteractionContext
 
     public void SetLegToRise()
     {
-        // 1. Pierna de papel (súper ligera)
+        SetIkWeight(1f); // Aseguramos que el IK esté activo
+
+        // 1. Pierna liviana para que no colapse la cadera
         if (UpperLegRB != null) UpperLegRB.mass = 0.2f;
         if (LowerLegRB != null) LowerLegRB.mass = 0.1f;
         if (FeetRB != null) FeetRB.mass = 0.05f;
 
-        // 2. Músculos explosivos para que lleguen al target sin resistencia
+        // 2. Músculos hiper-reactivos para seguir al IK al instante
         SetJointSlerp(UpperLegJoint, 25000f, 50f);
         SetJointSlerp(LowerLegJoint, 15000f, 30f);
-        SetJointSlerp(FeetJoint, 2000f, 10f);
-    }
-
-    private void SetJointSlerp(ConfigurableJoint joint, float spring, float damper)
-    {
-        if (joint == null) return;
-        JointDrive drive = joint.slerpDrive;
-        drive.positionSpring = spring;
-        drive.positionDamper = damper;
-        joint.slerpDrive = drive;
+        SetJointSlerp(FeetJoint, 5000f, 10f);
     }
     public TwoBoneIKConstraint CurrentIkConstraint => _ikConstraint;
     public MultiRotationConstraint CurrentMultiRotationConstraint => _multiRotationConstraint;
@@ -200,7 +202,5 @@ public class LegInteractionContext
     public Transform FullBodyPos => _fullBodyPos;
     public Transform HipPosition => _hipPosition;
     public Transform HipNormalPos => _hipNormalPos;
-    public StaticBoneFollower[] CurrentLegBones => _currentLegBones;
-    public Transform RagdollLegPos => _ragdollLegPos;
     public Transform OtherRagdollLegPos => _ragdollOtherLegPos;
 }

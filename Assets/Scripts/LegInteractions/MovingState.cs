@@ -79,11 +79,11 @@ public class MovingState : LegInteractionState
             _calculatedPos = desiredPos;
         }
         Context.LegIKTargetTransform.position = _calculatedPos;
-        Context._currentLegPos = _calculatedPos;
+        Context.CurrentLegPos = _calculatedPos;
     }
     private bool CheckLegDistanceToRagdoll()
     {
-        float dist = Vector3.Distance(Context.RagdollLegPos.position, Context.OtherRagdollLegPos.position);
+        float dist = Vector3.Distance(Context.CurrentLegPos, Context.OtherRagdollLegPos.position);
         if (dist > ragdollDist)
         {
             return true;

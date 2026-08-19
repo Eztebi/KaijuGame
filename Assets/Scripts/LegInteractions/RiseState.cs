@@ -14,11 +14,12 @@ public class RiseState : LegInteractionState
     public override void EnterState()
     {
         Context.SetLegToRise();
-
         Context.LegActiveState = InputHandler.ELegActiveState.Up;
-        Debug.Log("Enter Rise State");
         Context.IsGrounded = false;
 
+        // Colocamos la meta inicial donde esté la pierna actualmente
+        Context.CurrentLegPos = Context.LegIKTargetTransform.position;
+        Debug.Log("Enter Rise State");
     }
 
     public override void ExitState()
@@ -28,15 +29,12 @@ public class RiseState : LegInteractionState
 
     public override void UpdateState()
     {
-
         float standingHeightOffset = Mathf.Abs(Context.feetRestPosition.localPosition.y);
         float targetY = Context.OtherLegPosition.position.y + standingHeightOffset;
 
-        targetBodyPos = new Vector3(Context.OtherLegPosition.position.x,targetY,Context.OtherLegPosition.position.z);
+        targetBodyPos = new Vector3(Context.OtherLegPosition.position.x, targetY, Context.OtherLegPosition.position.z);
 
         MoveToPosition();
-
-        Debug.Log("Update Rise State");
     }
 
     public override LegStateMachine.ELegState GetNextState()
@@ -63,8 +61,8 @@ public class RiseState : LegInteractionState
     public override void OnCollisionExit(Collision collision) { }
     public override void MoveToPosition()
     {
-        Context.FullBodyPos.position = Vector3.Lerp(Context.FullBodyPos.position, targetBodyPos, Time.deltaTime * moveSpeed);
-        Context.LegIKTargetTransform.position = Vector3.Lerp(Context.LegIKTargetTransform.position, Context.LegUpPosition.position, Time.deltaTime * moveSpeed);
-        Context._currentLegPos = Context.LegIKTargetTransform.position;
+        Context.CurrentLegPos= Vector3.Lerp(Context.CurrentLegPos,Context.LegUpPosition.position,Time.deltaTime * moveSpeed);
+
+        Context.LegIKTargetTransform.position = Context.CurrentLegPos;
     }
 }
