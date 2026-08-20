@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using static LegStateMachine;
 
@@ -19,20 +20,21 @@ public class BodyStateMachine : StateManager<BodyStateMachine.EBodyState>
     [SerializeField] private Transform _bodyPos;
     [SerializeField] private StaticBoneFollower[] _bones;
 
-    [SerializeField] public Rigidbody _hipsRB;
-    [SerializeField] public Rigidbody _spineRB;
-    [SerializeField] public Rigidbody _headRB;
+    [SerializeField] private Rigidbody _hipsRB;
+    [SerializeField] private Rigidbody _spineRB;
+    [SerializeField] private Rigidbody _headRB;
 
-    [SerializeField] public ConfigurableJoint _hipsJoint;
-    [SerializeField] public ConfigurableJoint _spineJoint;
-    [SerializeField] public ConfigurableJoint _headJoint;
+    [SerializeField] private ConfigurableJoint _hipsJoint;
+    [SerializeField] private ConfigurableJoint _spineJoint;
+    [SerializeField] private ConfigurableJoint _headJoint;
+    [SerializeField] private CinemachineOrbitalFollow _cinemachineOrbitalFollow;
 
     private void Awake()
     {
         ValidateConstraints();
         _handler = GetComponent<InputHandler>();
         _context = new BodyStateMachineContext(_bodyPos, _bones,  _handler, _rigidbodies, _animator, _hipsRB, _spineRB, _headRB, 
-            _hipsJoint, _spineJoint, _headJoint);
+            _hipsJoint, _spineJoint, _headJoint, _cinemachineOrbitalFollow);
         InitializeStates();
     }
     private void ValidateConstraints()

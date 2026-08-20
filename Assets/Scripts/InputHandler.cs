@@ -23,6 +23,8 @@ public class InputHandler : MonoBehaviour
     InputAction leftLegMoveAction;
     InputAction rightLegMoveAction;
     InputAction resetButtonAction;
+    InputAction CameraMoveAction;
+    InputAction BodyMoveAction;
     public Animator animator;
     public ELegInput LeftLegInput
     {

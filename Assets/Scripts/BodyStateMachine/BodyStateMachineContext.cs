@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
@@ -8,16 +9,18 @@ public class BodyStateMachineContext
     private Animator _animator;
     private Transform _bodyPos;
     private StaticBoneFollower[] _bones;
+    private CinemachineOrbitalFollow _cinemachineOrbitalFollow;
     public Rigidbody HipsRB { get; private set; }
     public Rigidbody SpineRB { get; private set; }
     public Rigidbody HeadRB { get; private set; }
-    public ConfigurableJoint HipsJoint { get; private set; } // El que NO tiene Connected Body
+    public ConfigurableJoint HipsJoint { get; private set; } 
     public ConfigurableJoint SpineJoint { get; private set; }
     public ConfigurableJoint HeadJoint { get; private set; }
-    public ConfigurableJoint[] _armsJoints;
+    private ConfigurableJoint[] _armsJoints;
+   
     public BodyStateMachineContext(Transform bodypos, StaticBoneFollower[] bones,InputHandler handler, Rigidbody[] rbs, Animator animator,
         Rigidbody hipsRB, Rigidbody spineRB, Rigidbody headRB,
-        ConfigurableJoint hipsJoint, ConfigurableJoint spineJoint, ConfigurableJoint headJoint)
+        ConfigurableJoint hipsJoint, ConfigurableJoint spineJoint, ConfigurableJoint headJoint, CinemachineOrbitalFollow cinemachineOrbitalFollow)
     {
         _handler = handler;
         _rigidbodies = rbs;
@@ -30,6 +33,7 @@ public class BodyStateMachineContext
         HipsJoint = hipsJoint;
         SpineJoint = spineJoint;
         HeadJoint = headJoint;
+        _cinemachineOrbitalFollow = cinemachineOrbitalFollow;
     }
     public void SetBodyToIdle()
     {
