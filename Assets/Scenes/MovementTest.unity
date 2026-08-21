@@ -1315,6 +1315,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1176260911645534829, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b2c2ad1e35dcbb746b409ccfdecfda52, type: 2}
     - target: {fileID: 1800978984694342864, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.009999752
@@ -3721,7 +3725,7 @@ MonoBehaviour:
     Value: -180
     Center: 178.74399
     Range: {x: -180, y: 180}
-    Wrap: 0
+    Wrap: 1
     Recentering:
       Enabled: 1
       Wait: 1
@@ -3731,7 +3735,7 @@ MonoBehaviour:
     Value: 17.5
     Center: 17.5
     Range: {x: -4, y: 45}
-    Wrap: 0
+    Wrap: 1
     Recentering:
       Enabled: 1
       Wait: 1

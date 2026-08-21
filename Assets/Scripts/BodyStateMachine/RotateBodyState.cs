@@ -1,11 +1,13 @@
 using UnityEngine;
 
-public class RotateBodyState : BodyState
+public class RotateRightBodyState : BodyState
 {
     private Vector3 bodyPos;
     private Vector3 legPos;
-    private float moveSpeed = 2f;
-    public RotateBodyState(BodyStateMachineContext context, BodyStateMachine.EBodyState estate) : base(context, estate)
+    private float moveSpeed = 50f;
+    private float currentYRotation;
+
+    public RotateRightBodyState(BodyStateMachineContext context, BodyStateMachine.EBodyState estate) : base(context, estate)
     {
         BodyStateMachineContext Context = context;
     }
@@ -13,8 +15,8 @@ public class RotateBodyState : BodyState
     public override void EnterState()
     {
         //Context.SetBoneStiffness(0f, 0f);
-        Context.SetBodyToRagdoll();
-        Debug.Log("Enter Falling State");
+        currentYRotation = Context.HipsJoint.targetRotation.eulerAngles.y;
+        Debug.Log("Enter RotateRight State");
     }
     public override void ExitState()
     {
@@ -22,13 +24,25 @@ public class RotateBodyState : BodyState
     }
     public override void UpdateState()
     {
-        Debug.Log("Update Falling State");
+        currentYRotation -= moveSpeed * Time.deltaTime;
+        Quaternion nuevaRotacion = Quaternion.Euler(0f, currentYRotation, 0f);
+        Context.HipsJoint.targetRotation = nuevaRotacion;
+
+        Debug.Log("Update RotateRight State");
     }
     public override BodyStateMachine.EBodyState GetNextState()
     {
-        if (Context.Handler.RightLegActiveState != InputHandler.EBodyActiveState.Ragdoll || Context.Handler.LeftLegActiveState != InputHandler.EBodyActiveState.Ragdoll)
+        if (Context.Handler.RightLegActiveState == InputHandler.EBodyActiveState.Ragdoll || Context.Handler.LeftLegActiveState == InputHandler.EBodyActiveState.Ragdoll)
         {
-            return BodyStateMachine.EBodyState.Reset;
+            return BodyStateMachine.EBodyState.Ragdoll;
+        }
+        if (Context.Handler.RightRotateInput == InputHandler.EControllerInput.Up)
+        {
+            return BodyStateMachine.EBodyState.Idle;
+        }
+        if(Context.Handler.LeftRotateInput == InputHandler.EControllerInput.Down)
+        {
+            return BodyStateMachine.EBodyState.RotatingLeft;
         }
         return StateKey;
     }

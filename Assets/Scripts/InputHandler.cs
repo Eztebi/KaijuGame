@@ -91,8 +91,8 @@ public class InputHandler : MonoBehaviour
         resetButtonAction = InputSystem.actions.FindAction("Restart");
         cameraMoveAction = InputSystem.actions.FindAction("CameraMove");
         bodyMoveAction = InputSystem.actions.FindAction("BodyMove");
-        rotateLeftAction = InputSystem.actions.FindAction("RotateLeftAction");
-        rotateRightAction = InputSystem.actions.FindAction("RotateRightAction");
+        rotateLeftAction = InputSystem.actions.FindAction("RotateLeft");
+        rotateRightAction = InputSystem.actions.FindAction("RotateRight");
 
         leftLegInput = EControllerInput.Down;
         rightLegInput = EControllerInput.Down;
@@ -121,6 +121,7 @@ public class InputHandler : MonoBehaviour
         else
         {
             leftLegInput = EControllerInput.Down;
+            leftLegMoveValue = Vector2.zero;
         }
         //Alzar pie
         if (rightLegUpAction.IsPressed())
@@ -133,6 +134,7 @@ public class InputHandler : MonoBehaviour
         else
         {
             rightLegInput = EControllerInput.Down;
+            rightLegMoveValue = Vector2.zero;
         }
 
         //Pararse

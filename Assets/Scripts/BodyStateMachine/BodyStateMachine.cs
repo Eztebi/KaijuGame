@@ -8,8 +8,9 @@ public class BodyStateMachine : StateManager<BodyStateMachine.EBodyState>
     {
         Idle,
         Ragdoll,
-        Falling,
-        StandingUp,
+        RotatingLeft,
+        RotatingRight,
+        Moving,
         Reset
     }
     private BodyStateMachineContext _context;
@@ -49,7 +50,8 @@ public class BodyStateMachine : StateManager<BodyStateMachine.EBodyState>
     {
         States.Add(EBodyState.Idle, new IdleBodyState(_context, EBodyState.Idle));
         States.Add(EBodyState.Ragdoll, new RagdollBodyState(_context, EBodyState.Ragdoll));
-        States.Add(EBodyState.StandingUp, new StandingUpBodyState(_context, EBodyState.StandingUp));
+        States.Add(EBodyState.RotatingLeft, new RotateLeftBodyState(_context, EBodyState.RotatingLeft));
+        States.Add(EBodyState.RotatingRight, new RotateRightBodyState(_context, EBodyState.RotatingRight));
         States.Add(EBodyState.Reset, new ResetBodyState(_context, EBodyState.Reset));
 
         currentState = States[EBodyState.Reset];

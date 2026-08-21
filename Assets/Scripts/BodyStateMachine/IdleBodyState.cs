@@ -30,6 +30,14 @@ public class IdleBodyState : BodyState
         {
             return BodyStateMachine.EBodyState.Ragdoll;
         }
+        if(Context.Handler.RightRotateInput == InputHandler.EControllerInput.Down)
+        {
+            return BodyStateMachine.EBodyState.RotatingRight;
+        }
+        if(Context.Handler.LeftRotateInput == InputHandler.EControllerInput.Down)
+        {
+            return BodyStateMachine.EBodyState.RotatingLeft;
+        }
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }
