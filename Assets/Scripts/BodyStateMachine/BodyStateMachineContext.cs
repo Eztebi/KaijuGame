@@ -17,10 +17,13 @@ public class BodyStateMachineContext
     public ConfigurableJoint SpineJoint { get; private set; }
     public ConfigurableJoint HeadJoint { get; private set; }
     private ConfigurableJoint[] _armsJoints;
-   
+    private Transform _rightLegPos;
+    private Transform _leftLegPos;
+    private Transform _spinePos;
     public BodyStateMachineContext(Transform bodypos, StaticBoneFollower[] bones,InputHandler handler, Rigidbody[] rbs, Animator animator,
         Rigidbody hipsRB, Rigidbody spineRB, Rigidbody headRB,
-        ConfigurableJoint hipsJoint, ConfigurableJoint spineJoint, ConfigurableJoint headJoint, CinemachineOrbitalFollow cinemachineOrbitalFollow)
+        ConfigurableJoint hipsJoint, ConfigurableJoint spineJoint, ConfigurableJoint headJoint,
+        Transform rightLegPos, Transform leftLegPos, Transform SpinePos)
     {
         _handler = handler;
         _rigidbodies = rbs;
@@ -33,7 +36,9 @@ public class BodyStateMachineContext
         HipsJoint = hipsJoint;
         SpineJoint = spineJoint;
         HeadJoint = headJoint;
-        _cinemachineOrbitalFollow = cinemachineOrbitalFollow;
+        _leftLegPos = leftLegPos;
+        _rightLegPos = rightLegPos;
+        _spinePos = SpinePos;
     }
     public void SetBodyToIdle()
     {
@@ -96,4 +101,7 @@ public void SetBodyToReset()
     }
     public Transform FullBodyPos => _bodyPos;
     public InputHandler Handler => _handler;
+    public Transform LeftLegPos => _leftLegPos;
+    public Transform RightLegPos => _rightLegPos;
+    public Transform SpinePos => _spinePos;
 }

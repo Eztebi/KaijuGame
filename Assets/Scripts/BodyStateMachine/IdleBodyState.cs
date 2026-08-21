@@ -26,7 +26,7 @@ public class IdleBodyState : BodyState
     }
     public override BodyStateMachine.EBodyState GetNextState()
     {
-        if(Context.Handler.RightLegActiveState == InputHandler.ELegActiveState.Ragdoll || Context.Handler.LeftLegActiveState == InputHandler.ELegActiveState.Ragdoll)
+        if(Context.Handler.RightLegActiveState == InputHandler.EBodyActiveState.Ragdoll || Context.Handler.LeftLegActiveState == InputHandler.EBodyActiveState.Ragdoll)
         {
             return BodyStateMachine.EBodyState.Ragdoll;
         }

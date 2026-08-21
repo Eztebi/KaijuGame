@@ -1,38 +1,65 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class InputHandler : MonoBehaviour
 {
-    public enum ELegInput
+    public enum EControllerInput
     {
         Down,
         Up,
         Reset
     }
-    public enum ELegActiveState
+    public enum EBodyActiveState
     {
         Down, Up, Ragdoll, Reset
     }
-    private ELegActiveState leftLegState;
-    private ELegActiveState rightLegState;
-    private ELegInput leftLegInput;
-    private ELegInput rightLegInput;
+    private EBodyActiveState bodyActiveState;
+    private EBodyActiveState leftLegState;
+    private EBodyActiveState rightLegState;
+    private EControllerInput leftLegInput;
+    private EControllerInput rightLegInput;
+    private EControllerInput rightRotateInput;
+    private EControllerInput leftRotateInput;
     public Vector2 leftLegMoveValue;
     public Vector2 rightLegMoveValue;
+    public Vector2 bodyMoveValue;
+    public Vector2 cameraMoveValue;
     InputAction leftLegUpAction;
     InputAction rightLegUpAction;
     InputAction leftLegMoveAction;
     InputAction rightLegMoveAction;
     InputAction resetButtonAction;
-    InputAction CameraMoveAction;
-    InputAction BodyMoveAction;
-    public Animator animator;
-    public ELegInput LeftLegInput
+    InputAction cameraMoveAction;
+    InputAction rotateRightAction;
+    InputAction rotateLeftAction;
+    InputAction bodyMoveAction;
+
+    [SerializeField] private CinemachineOrbitalFollow cameraOrbital;
+    private float cameraSpeed = 1f;
+
+    public CinemachineOrbitalFollow CameraOrbital
+    {
+        get { return cameraOrbital; }
+        set { cameraOrbital = value; }
+    }
+    public EControllerInput LeftRotateInput
+    {
+        get { return leftRotateInput; }
+        set { leftRotateInput = value; }
+    }
+    public EControllerInput RightRotateInput
+    {
+        get { return rightRotateInput; }
+        set { rightRotateInput = value; }
+    }
+
+    public EControllerInput LeftLegInput
     {
         get { return leftLegInput; }
         set { leftLegInput = value; }
     }
 
-    public ELegInput RightLegInput
+    public EControllerInput RightLegInput
     {
         get
         {
@@ -40,15 +67,20 @@ public class InputHandler : MonoBehaviour
         }
         set { rightLegInput = value; }
     }
-    public ELegActiveState RightLegActiveState
+    public EBodyActiveState RightLegActiveState
     {
         get { return rightLegState; }
         set { rightLegState = value; }
     }
-    public ELegActiveState LeftLegActiveState
+    public EBodyActiveState LeftLegActiveState
     {
         get { return leftLegState; }
         set { leftLegState = value; }
+    }
+    public EBodyActiveState BodyActiveState
+    {
+        get { return bodyActiveState; }
+        set {  bodyActiveState = value; }
     }
     private void Start()
     {
@@ -57,9 +89,16 @@ public class InputHandler : MonoBehaviour
         leftLegMoveAction = InputSystem.actions.FindAction("LeftLegMove");
         rightLegMoveAction = InputSystem.actions.FindAction("RightLegMove");
         resetButtonAction = InputSystem.actions.FindAction("Restart");
+        cameraMoveAction = InputSystem.actions.FindAction("CameraMove");
+        bodyMoveAction = InputSystem.actions.FindAction("BodyMove");
+        rotateLeftAction = InputSystem.actions.FindAction("RotateLeftAction");
+        rotateRightAction = InputSystem.actions.FindAction("RotateRightAction");
 
-        leftLegInput = ELegInput.Down;
-        rightLegInput = ELegInput.Down;
+        leftLegInput = EControllerInput.Down;
+        rightLegInput = EControllerInput.Down;
+        rightRotateInput = EControllerInput.Up;
+        leftRotateInput = EControllerInput.Up;
+
     }
 
     private void OnEnable()
@@ -68,9 +107,10 @@ public class InputHandler : MonoBehaviour
     }
     private void Update()
     {
+        //Alzar pie
         if (leftLegUpAction.IsPressed())
         {
-            leftLegInput = ELegInput.Up;
+            leftLegInput = EControllerInput.Up;
             leftLegMoveValue = leftLegMoveAction.ReadValue<Vector2>();
             //animator.enabled = true;
 
@@ -80,35 +120,58 @@ public class InputHandler : MonoBehaviour
         }
         else
         {
-            leftLegInput = ELegInput.Down;
-            //animator.enabled = false;
-            //Debug.Log("Left Leg Release");
+            leftLegInput = EControllerInput.Down;
         }
+        //Alzar pie
         if (rightLegUpAction.IsPressed())
         {
-            rightLegInput = ELegInput.Up;
+            rightLegInput = EControllerInput.Up;
             rightLegMoveValue = rightLegMoveAction.ReadValue<Vector2>();
-            // animator.enabled = true;
 
             Debug.Log("Right Leg Up");
-            //if(rightLegMoveValue != Vector2.zero) Debug.Log("Right Leg Moving");  
         }
         else
         {
-            rightLegInput = ELegInput.Down;
-            //animator.enabled = false;
-
-            //Debug.Log("Right Leg Realese");
+            rightLegInput = EControllerInput.Down;
         }
+
+        //Pararse
         if (resetButtonAction.IsPressed())
         {
-            if (LeftLegActiveState == ELegActiveState.Ragdoll || RightLegActiveState == ELegActiveState.Ragdoll)
+            if (LeftLegActiveState == EBodyActiveState.Ragdoll || RightLegActiveState == EBodyActiveState.Ragdoll)
             {
 
-                    rightLegInput = ELegInput.Reset;
-                    leftLegInput = ELegInput.Reset;
+                    rightLegInput = EControllerInput.Reset;
+                    leftLegInput = EControllerInput.Reset;
                 
             }
+        }
+        //ROtacion de cuerpo a derecha
+        if (rotateRightAction.IsPressed() && (RightLegActiveState != EBodyActiveState.Ragdoll || LeftLegActiveState != EBodyActiveState.Ragdoll)) {
+            rightRotateInput = EControllerInput.Down;
+        }
+        else rightRotateInput = EControllerInput.Up;
+
+        //Rotacion de cuerpo a izquierda
+        if (rotateLeftAction.IsPressed() && (RightLegActiveState != EBodyActiveState.Ragdoll || LeftLegActiveState != EBodyActiveState.Ragdoll))
+        {
+            leftRotateInput = EControllerInput.Down;
+        }
+        else leftRotateInput = EControllerInput.Up;
+        
+        //Movimiento de camara
+        if (rightLegInput != EControllerInput.Up)
+        {
+            cameraMoveValue = cameraMoveAction.ReadValue<Vector2>();
+            cameraOrbital.VerticalAxis.Value += cameraMoveValue.y * Time.deltaTime * cameraSpeed;
+            cameraOrbital.HorizontalAxis.Value += cameraMoveValue.x * Time.deltaTime * cameraSpeed;
+        }
+        else cameraMoveValue = Vector2.zero;
+
+        //Movimiento de cuerpo
+        if(leftLegInput != EControllerInput.Up || LeftLegActiveState != EBodyActiveState.Ragdoll)
+        {
+            bodyMoveValue = bodyMoveAction.ReadValue<Vector2>();
         }
     }
 }

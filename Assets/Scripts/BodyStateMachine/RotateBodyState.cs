@@ -1,30 +1,35 @@
 using UnityEngine;
 
-public class ActivateRagdollBodyState : BodyState
+public class RotateBodyState : BodyState
 {
     private Vector3 bodyPos;
     private Vector3 legPos;
     private float moveSpeed = 2f;
-    public ActivateRagdollBodyState(BodyStateMachineContext context, BodyStateMachine.EBodyState estate) : base(context, estate)
+    public RotateBodyState(BodyStateMachineContext context, BodyStateMachine.EBodyState estate) : base(context, estate)
     {
         BodyStateMachineContext Context = context;
     }
 
     public override void EnterState()
     {
+        //Context.SetBoneStiffness(0f, 0f);
         Context.SetBodyToRagdoll();
-        Debug.Log("Enter Activateragdoll State");
+        Debug.Log("Enter Falling State");
     }
     public override void ExitState()
     {
-
+        //Context.SetBoneStiffness(15000f, 500f);
     }
     public override void UpdateState()
     {
-        Debug.Log("Update Activate Ragdoll State");
+        Debug.Log("Update Falling State");
     }
     public override BodyStateMachine.EBodyState GetNextState()
     {
+        if (Context.Handler.RightLegActiveState != InputHandler.EBodyActiveState.Ragdoll || Context.Handler.LeftLegActiveState != InputHandler.EBodyActiveState.Ragdoll)
+        {
+            return BodyStateMachine.EBodyState.Reset;
+        }
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }
@@ -34,3 +39,4 @@ public class ActivateRagdollBodyState : BodyState
     public override void OnCollisionStay(Collision collision) { }
     public override void OnCollisionExit(Collision collision) { }
 }
+

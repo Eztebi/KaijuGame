@@ -15,7 +15,7 @@ public class RiseState : LegInteractionState
     {
         Context.SetLegToRise();
 
-        Context.LegActiveState = InputHandler.ELegActiveState.Up;
+        Context.LegActiveState = InputHandler.EBodyActiveState.Up;
         Debug.Log("Enter Rise State");
         Context.IsGrounded = false;
 
@@ -41,7 +41,7 @@ public class RiseState : LegInteractionState
 
     public override LegStateMachine.ELegState GetNextState()
     {
-        if (Context.OtherLegActiveState == InputHandler.ELegActiveState.Up || Context.OtherLegActiveState == InputHandler.ELegActiveState.Ragdoll)
+        if (Context.OtherLegActiveState == InputHandler.EBodyActiveState.Up || Context.OtherLegActiveState == InputHandler.EBodyActiveState.Ragdoll)
         {
             return LegStateMachine.ELegState.Ragdoll;
         }
@@ -50,7 +50,7 @@ public class RiseState : LegInteractionState
         if (distanceToLeg < 0.1f)
             return LegStateMachine.ELegState.Move;
 
-        if (Context.CurrentLegInput == InputHandler.ELegInput.Down)
+        if (Context.CurrentLegInput == InputHandler.EControllerInput.Down)
             return LegStateMachine.ELegState.Release;
 
         return StateKey;

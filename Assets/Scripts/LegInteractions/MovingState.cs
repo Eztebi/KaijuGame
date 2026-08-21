@@ -15,7 +15,7 @@ public class MovingState : LegInteractionState
 
     //public override void AwakeState() { }
     public override void EnterState() {
-        Context.LegActiveState = ELegActiveState.Up;
+        Context.LegActiveState = EBodyActiveState.Up;
 
         if (Context.LegIKTargetTransform != null)
         {
@@ -30,18 +30,18 @@ public class MovingState : LegInteractionState
     }
     public override LegStateMachine.ELegState GetNextState()
     {
-        if (Context.OtherLegActiveState == InputHandler.ELegActiveState.Up || Context.OtherLegActiveState == InputHandler.ELegActiveState.Ragdoll)
+        if (Context.OtherLegActiveState == InputHandler.EBodyActiveState.Up || Context.OtherLegActiveState == InputHandler.EBodyActiveState.Ragdoll)
         {
             return LegStateMachine.ELegState.Ragdoll;
         }
 
-        if (Context.CurrentLegInput == InputHandler.ELegInput.Down)
+        if (Context.CurrentLegInput == InputHandler.EControllerInput.Down)
         {
             return LegStateMachine.ELegState.Release;
         }
         if (CheckLegDistanceToRagdoll())
         {
-            Context.LegActiveState = ELegActiveState.Ragdoll;
+            Context.LegActiveState = EBodyActiveState.Ragdoll;
             return LegStateMachine.ELegState.Ragdoll;
         }
         return StateKey;

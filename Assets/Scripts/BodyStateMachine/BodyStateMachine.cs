@@ -29,12 +29,15 @@ public class BodyStateMachine : StateManager<BodyStateMachine.EBodyState>
     [SerializeField] private ConfigurableJoint _headJoint;
     [SerializeField] private CinemachineOrbitalFollow _cinemachineOrbitalFollow;
 
+    [SerializeField] private Transform _rightLegPos;
+    [SerializeField] private Transform _leftLegPos;
+    [SerializeField] private Transform _SpinePos;
     private void Awake()
     {
         ValidateConstraints();
         _handler = GetComponent<InputHandler>();
         _context = new BodyStateMachineContext(_bodyPos, _bones,  _handler, _rigidbodies, _animator, _hipsRB, _spineRB, _headRB, 
-            _hipsJoint, _spineJoint, _headJoint, _cinemachineOrbitalFollow);
+            _hipsJoint, _spineJoint, _headJoint, _rightLegPos, _leftLegPos, _SpinePos);
         InitializeStates();
     }
     private void ValidateConstraints()

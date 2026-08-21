@@ -23,7 +23,7 @@ public class LegInteractionContext
     private Transform _feetIKTargetTransform;
     private LegStateMachine.ELegType _legType;
     private bool _isGrounded;
-    private InputHandler.ELegInput _currentLegInput;
+    private InputHandler.EControllerInput _currentLegInput;
     public Vector3 _currentLegPos;
     private LayerMask _groundMask;
     private Transform _ragdollLegPos;
@@ -89,11 +89,11 @@ public class LegInteractionContext
             return _legType == LegStateMachine.ELegType.LEFT ? _handler.leftLegMoveValue : _handler.rightLegMoveValue;
         }
     }
-    public InputHandler.ELegInput CurrentLegInput
+    public InputHandler.EControllerInput CurrentLegInput
     {
         get
         {
-            if (_handler == null) return InputHandler.ELegInput.Down;
+            if (_handler == null) return InputHandler.EControllerInput.Down;
             return _legType == LegStateMachine.ELegType.LEFT ? _handler.LeftLegInput : _handler.RightLegInput;
         }
         set
@@ -109,11 +109,11 @@ public class LegInteractionContext
             }
         }
     }
-    public InputHandler.ELegActiveState LegActiveState
+    public InputHandler.EBodyActiveState LegActiveState
     {
         get
         {
-            if (_handler == null) return InputHandler.ELegActiveState.Down;
+            if (_handler == null) return InputHandler.EBodyActiveState.Down;
             return _legType == LegStateMachine.ELegType.LEFT ? _handler.LeftLegActiveState : _handler.RightLegActiveState;
         }
         set
@@ -131,11 +131,11 @@ public class LegInteractionContext
         }
 
     }
-    public InputHandler.ELegActiveState OtherLegActiveState
+    public InputHandler.EBodyActiveState OtherLegActiveState
     {
         get
         {
-            if (_handler == null) return InputHandler.ELegActiveState.Down;
+            if (_handler == null) return InputHandler.EBodyActiveState.Down;
             return _legType == LegStateMachine.ELegType.LEFT ? _handler.RightLegActiveState : _handler.LeftLegActiveState;
         }
     }

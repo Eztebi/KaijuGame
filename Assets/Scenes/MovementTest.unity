@@ -768,6 +768,11 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!4 &432418095 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5533234725799456065, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+  m_PrefabInstance: {fileID: 614506264}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &456019824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1288,11 +1293,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1011894087259923964, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.0032720894
+      value: 0.0032720598
       objectReference: {fileID: 0}
     - target: {fileID: 1011894087259923964, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.00041955273
+      value: 0.00041954895
       objectReference: {fileID: 0}
     - target: {fileID: 1011894087259923964, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
       propertyPath: m_LocalRotation.y
@@ -1324,11 +1329,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1800978984694342864, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.003272089
+      value: 0.0032720594
       objectReference: {fileID: 0}
     - target: {fileID: 1800978984694342864, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.00041955258
+      value: 0.0004195488
       objectReference: {fileID: 0}
     - target: {fileID: 1800978984694342864, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
       propertyPath: m_LocalRotation.y
@@ -1422,10 +1427,30 @@ PrefabInstance:
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4424636061805773200, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: _SpinePos
+      value: 
+      objectReference: {fileID: 2025891558}
+    - target: {fileID: 4424636061805773200, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: _leftLegPos
+      value: 
+      objectReference: {fileID: 1578590728}
+    - target: {fileID: 4424636061805773200, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: _rightLegPos
+      value: 
+      objectReference: {fileID: 432418095}
+    - target: {fileID: 4424636061805773200, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: _cinemachineOrbitalFollow
+      value: 
+      objectReference: {fileID: 1109405035}
     - target: {fileID: 5254510643045830171, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
       propertyPath: m_Weight
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6317754422616855014, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: cameraOrbital
+      value: 
+      objectReference: {fileID: 1109405035}
     - target: {fileID: 7490756736293438965, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
@@ -1439,8 +1464,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8318627528293289247, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: CenterOnActivate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8318627528293289247, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
       propertyPath: Composition.DeadZone.Enabled
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8318627528293289247, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: Composition.ScreenPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8318627528293289247, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: Composition.ScreenPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8536886338379802621, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
       propertyPath: field of view
@@ -2564,6 +2601,9 @@ MonoBehaviour:
   _spineJoint: {fileID: 1126868054}
   _headJoint: {fileID: 1977969628}
   _cinemachineOrbitalFollow: {fileID: 0}
+  _rightLegPos: {fileID: 0}
+  _leftLegPos: {fileID: 0}
+  _SpinePos: {fileID: 0}
 --- !u!114 &775541099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2578,7 +2618,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InputHandler
   leftLegMoveValue: {x: 0, y: 0}
   rightLegMoveValue: {x: 0, y: 0}
-  animator: {fileID: 775541095}
+  bodyMoveValue: {x: 0, y: 0}
+  cameraMoveValue: {x: 0, y: 0}
+  cameraOrbital: {fileID: 0}
 --- !u!114 &775541100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4502,6 +4544,11 @@ MonoBehaviour:
     m_HintWeight: 1
     m_MaintainTargetPositionOffset: 0
     m_MaintainTargetRotationOffset: 0
+--- !u!4 &1578590728 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2789774012298586705, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+  m_PrefabInstance: {fileID: 614506264}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1669151122
 GameObject:
   m_ObjectHideFlags: 0
@@ -6583,6 +6630,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1570813517}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &2025891558 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5871357224862875712, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+  m_PrefabInstance: {fileID: 614506264}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2036899870
 GameObject:
   m_ObjectHideFlags: 0

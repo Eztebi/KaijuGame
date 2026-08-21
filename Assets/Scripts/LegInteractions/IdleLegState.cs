@@ -11,7 +11,7 @@ public class IdleLegState : LegInteractionState
     public override void EnterState()
     {
         Context.SetLegToIdle();
-        Context.LegActiveState = InputHandler.ELegActiveState.Down;
+        Context.LegActiveState = InputHandler.EBodyActiveState.Down;
 
         Debug.Log("Enter Idle State");
         Context.LegIKTargetTransform.position = Context._currentLegPos;
@@ -28,11 +28,11 @@ public class IdleLegState : LegInteractionState
     }
     public override LegStateMachine.ELegState GetNextState()
     {
-        if (Context.CurrentLegInput == InputHandler.ELegInput.Up)
+        if (Context.CurrentLegInput == InputHandler.EControllerInput.Up)
         {
             return LegStateMachine.ELegState.Rise;
         }
-        if(Context.OtherLegActiveState == InputHandler.ELegActiveState.Ragdoll)
+        if(Context.OtherLegActiveState == InputHandler.EBodyActiveState.Ragdoll)
         {
             return LegStateMachine.ELegState.Ragdoll;
         }

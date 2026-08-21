@@ -58,16 +58,16 @@ public class RelocateState : LegInteractionState
 
     public override LegStateMachine.ELegState GetNextState()
     {
-        if (Context.OtherLegActiveState == ELegActiveState.Up) return LegStateMachine.ELegState.Ragdoll;
+        if (Context.OtherLegActiveState == EBodyActiveState.Up) return LegStateMachine.ELegState.Ragdoll;
 
         if (Context.IsGrounded)
         {
-            Context.LegActiveState = ELegActiveState.Down;
+            Context.LegActiveState = EBodyActiveState.Down;
             return LegStateMachine.ELegState.Touch;
         }
         if (CheckLegDistanceToRagdoll())
         {
-            Context.LegActiveState = ELegActiveState.Ragdoll;
+            Context.LegActiveState = EBodyActiveState.Ragdoll;
             return LegStateMachine.ELegState.Ragdoll;
         }
         return StateKey;

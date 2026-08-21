@@ -24,7 +24,7 @@ public class ReleaseState : LegInteractionState
     }
     public override LegStateMachine.ELegState GetNextState()
     {
-        if (Context.OtherLegActiveState == ELegActiveState.Up) return LegStateMachine.ELegState.Ragdoll;
+        if (Context.OtherLegActiveState == EBodyActiveState.Up) return LegStateMachine.ELegState.Ragdoll;
         return LegStateMachine.ELegState.Relocate;
         return StateKey;
     }

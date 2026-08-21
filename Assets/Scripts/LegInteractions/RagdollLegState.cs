@@ -10,7 +10,7 @@ public class RagdollLegState : LegInteractionState
 
     public override void EnterState()
     {
-        Context.LegActiveState = InputHandler.ELegActiveState.Ragdoll;
+        Context.LegActiveState = InputHandler.EBodyActiveState.Ragdoll;
         Debug.Log(Context.LegType + " activando modo Ragdoll (Cae por gravedad)");
 
         // 1. APAGAR EL IK
@@ -38,7 +38,7 @@ public class RagdollLegState : LegInteractionState
 
     public override LegStateMachine.ELegState GetNextState()
     {
-        if (Context.CurrentLegInput == InputHandler.ELegInput.Reset)
+        if (Context.CurrentLegInput == InputHandler.EControllerInput.Reset)
         {
             return LegStateMachine.ELegState.Reset;
         }
