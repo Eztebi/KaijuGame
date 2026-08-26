@@ -513,10 +513,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1800978984694342864}
   - {fileID: 8362200149148273318}
   - {fileID: 1011894087259923964}
   - {fileID: 3603006000152049411}
+  - {fileID: 1800978984694342864}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3496889432117262575
@@ -1428,7 +1428,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1011894087259923964}
   - component: {fileID: 7490756736293438965}
-  - component: {fileID: 302803913962839601}
   - component: {fileID: 8318627528293289247}
   m_Layer: 0
   m_Name: CinemachineCamera
@@ -1495,25 +1494,6 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
---- !u!114 &302803913962839601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7563045934437469949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b617507da6d07e749b7efdb34e1173e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineFollow
-  TrackerSettings:
-    BindingMode: 3
-    PositionDamping: {x: 1, y: 1, z: 1}
-    AngularDampingMode: 0
-    RotationDamping: {x: 1, y: 1, z: 1}
-    QuaternionDamping: 1
-  FollowOffset: {x: 0, y: 5.32, z: -10}
 --- !u!114 &8318627528293289247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6630,6 +6610,10 @@ MonoBehaviour:
   _hipsJoint: {fileID: 3569409120606410930}
   _spineJoint: {fileID: 8114560221115685165}
   _headJoint: {fileID: 2090358461390762477}
+  _cinemachineOrbitalFollow: {fileID: 0}
+  _rightLegPos: {fileID: 0}
+  _leftLegPos: {fileID: 0}
+  _SpinePos: {fileID: 0}
 --- !u!114 &6760443733030224995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6728,7 +6712,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InputHandler
   leftLegMoveValue: {x: 0, y: 0}
   rightLegMoveValue: {x: 0, y: 0}
-  animator: {fileID: 7268913198300147065}
+  bodyMoveValue: {x: 0, y: 0}
+  cameraMoveValue: {x: 0, y: 0}
+  cameraOrbital: {fileID: 0}
 --- !u!4 &4179050700017760314 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9174895883783867166, guid: a8de8b9022f877e428726eb12a253ecf, type: 3}
