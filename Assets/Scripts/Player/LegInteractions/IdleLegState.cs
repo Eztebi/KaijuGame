@@ -37,6 +37,10 @@ public class IdleLegState : LegInteractionState
         {
             return LegStateMachine.ELegState.Ragdoll;
         }
+        if (!Context.IsGrounded)
+        {
+            return LegStateMachine.ELegState.Relocate;
+        }
         //if (Context.LegActiveState == InputHandler.ELegActiveState.Ragdoll) return LegStateMachine.ELegState.Ragdoll;
         //return CheckToReturnToReset();
         return StateKey;
@@ -58,11 +62,17 @@ public class IdleLegState : LegInteractionState
             Context.IsGrounded = true;
         }
     }
-    public override void OnCollisionExit(Collision collision) { }
+    public override void OnCollisionExit(Collision collision) {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            Context.IsGrounded = false;
+        }
+    }
     private void ShakeCamera(float value)
     {
         Context.CameraShake.AmplitudeGain = value;
         Context.CameraShake.FrequencyGain = value;
     }
+
 }
     

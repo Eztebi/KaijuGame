@@ -84,7 +84,7 @@ public class RelocateState : LegInteractionState
 
         if (collision.collider.CompareTag("Ground"))
         {
-            ShakeCamera(1.0f);
+            //ShakeCamera(1.0f);
             DetenerPie();
         }
     }
