@@ -1,16 +1,17 @@
-using UnityEngine;
 using PrimeTween;
 using Unity.Cinemachine;
+using UnityEngine;
+using UnityEngine.UIElements;
 class FeetCollisionMessenger : MonoBehaviour
 {
-    [Header("VFX")]
-    [SerializeField] private ParticleSystem _rumbleVFX;
+    [SerializeField] private ParticleSystem _rumbleVFXPrefab; 
+    private ParticleSystem _rumbleVFXInstance;
 
     [Header("Camera")]
     [SerializeField] private Camera _camera;
 
     [Header("Damage")]
-    [SerializeField] private float _damageMultiplier = 10f;
+    [SerializeField] private float _damageMultiplier = 20f;
     [SerializeField] private float _minimumImpactSpeed = .2f;
 
     public LegStateMachine stateMachine;
@@ -34,17 +35,17 @@ class FeetCollisionMessenger : MonoBehaviour
             return;
         }
 
-        Debug.Log("CHOCOOOOOOOOOOOOOOOOOOOOOOOOO");
 
         stateMachine.OnCollisionEnter(collision);
 
         if (collision.collider.CompareTag("Ground"))
         {
-            ContactPoint contact = collision.contacts[0];
+            
 
-        Tween.ShakeCamera(_camera,strengthFactor: 1.0f,duration: 0.5f,frequency: 10);
+            Tween.ShakeCamera(_camera,strengthFactor: 1.0f,duration: 0.5f,frequency: 10);
+            Debug.Log("Choco on suelo//////////");
 
-        PlayRumbleVFX(contact.point);
+            PlayRumbleVFX(this.transform.position);
 
         }
         else if(collision.gameObject.GetComponent<HealthComponent>() != null)
@@ -79,13 +80,24 @@ class FeetCollisionMessenger : MonoBehaviour
 
     private void PlayRumbleVFX(Vector3 position)
     {
-        _rumbleVFX.transform.position = position;
-        _rumbleVFX.Stop(true,ParticleSystemStopBehavior.StopEmittingAndClear);
-
-        _rumbleVFX.Play();
+        if (_rumbleVFXInstance == null)
+        {
+            if (_rumbleVFXPrefab == null)
+            {
+                Debug.LogWarning("No hay prefab asignado en _rumbleVFXPrefab.");
+                return;
+            }
+            _rumbleVFXInstance = Instantiate(_rumbleVFXPrefab, position, this.transform.rotation);
+        }
+        else
+        {
+            _rumbleVFXInstance.transform.position = position;
+            _rumbleVFXInstance.transform.rotation = this.transform.rotation;
+            _rumbleVFXInstance.Stop();
+        }
+        _rumbleVFXInstance.Play();
     }
-
-    private void OnCollisionStay(Collision collision)
+private void OnCollisionStay(Collision collision)
     {
         if (stateMachine != null)
         {

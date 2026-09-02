@@ -39,7 +39,7 @@ public class HealthComponent : MonoBehaviour, IHealth
 
         Instantiate(damageEffect, transform.localPosition, transform.rotation);
         damageEffect.Play();
-        Tween.Delay(damageEffect.main.duration, () => {Destroy(gameObject);});
-        Debug.Log("Character has died.");
+        Destroy(this.gameObject);
+        Debug.Log("block has died.");
     }
 }

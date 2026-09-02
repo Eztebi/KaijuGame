@@ -13,7 +13,6 @@ public class RagdollLegState : LegInteractionState
         Context.LegActiveState = InputHandler.EBodyActiveState.Ragdoll;
         Debug.Log(Context.LegType + " activando modo Ragdoll (Cae por gravedad)");
 
-        // 1. APAGAR EL IK
         if (Context.CurrentIkConstraint != null)
             Context.CurrentIkConstraint.weight = 0f;
 
@@ -28,7 +27,6 @@ public class RagdollLegState : LegInteractionState
     {
         Debug.Log(Context.LegType + " saliendo de Ragdoll, recuperando postura.");
 
-        // 1. ENCENDER IK
         if (Context.CurrentIkConstraint != null) Context.CurrentIkConstraint.weight = 1f;
         if (Context.CurrentMultiRotationConstraint != null) Context.CurrentMultiRotationConstraint.weight = 1f;
 
