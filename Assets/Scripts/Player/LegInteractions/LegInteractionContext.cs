@@ -39,6 +39,7 @@ public class LegInteractionContext
     public ConfigurableJoint UpperLegJoint { get; private set; }
     public ConfigurableJoint LowerLegJoint { get; private set; }
     public ConfigurableJoint FeetJoint { get; private set; }
+    public ConfigurableJoint HipJoint { get; private set; }
 
     private float upperLegMass, lowerLegMass, FeetMass;
 
@@ -49,7 +50,7 @@ public class LegInteractionContext
             StaticBoneFollower[] currentLegBones, bool isGrounded,
             LegStateMachine.ELegType legType, InputHandler inputHandler, Rigidbody upLegRB, Rigidbody lowLegRB, Rigidbody feetRB,
             ConfigurableJoint upLegJoint, ConfigurableJoint lowLegJoint, ConfigurableJoint feetJoint, Transform ragdollLegPos,
-            Transform ragdollOtherLegPos, CinemachineBasicMultiChannelPerlin cameraShake)
+            Transform ragdollOtherLegPos, CinemachineBasicMultiChannelPerlin cameraShake, ConfigurableJoint hipJoint)
     {
         _ikConstraint = ikConstraint;
         _multiRotationConstraint = legMultiRotationConstraint;
@@ -76,6 +77,7 @@ public class LegInteractionContext
         UpperLegJoint = upLegJoint;
         LowerLegJoint = lowLegJoint;
         FeetJoint = feetJoint;
+        HipJoint = hipJoint;
         _ragdollLegPos = ragdollLegPos;
         _ragdollOtherLegPos = ragdollOtherLegPos;
         _cameraShake = cameraShake;
@@ -166,18 +168,16 @@ public class LegInteractionContext
 
     public void SetLegToRise()
     {
-        // 1. Pierna de papel (súper ligera)
         if (UpperLegRB != null) UpperLegRB.mass = 0.2f;
         if (LowerLegRB != null) LowerLegRB.mass = 0.1f;
         if (FeetRB != null) FeetRB.mass = 0.05f;
 
-        // 2. Músculos explosivos para que lleguen al target sin resistencia
         SetJointSlerp(UpperLegJoint, 25000f, 50f);
         SetJointSlerp(LowerLegJoint, 15000f, 30f);
         SetJointSlerp(FeetJoint, 2000f, 10f);
     }
 
-    private void SetJointSlerp(ConfigurableJoint joint, float spring, float damper)
+    public void SetJointSlerp(ConfigurableJoint joint, float spring, float damper)
     {
         if (joint == null) return;
         JointDrive drive = joint.slerpDrive;

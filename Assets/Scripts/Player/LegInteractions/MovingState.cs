@@ -6,7 +6,7 @@ public class MovingState : LegInteractionState
     private Vector3 _calculatedPos;
     private float speed = 2;
     private float maxLegDistance = .9f;
-    private float ragdollDist = 1.4f;
+    private float ragdollDist = 1.5f;
 
     public MovingState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {

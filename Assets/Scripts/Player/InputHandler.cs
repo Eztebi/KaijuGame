@@ -35,8 +35,10 @@ public class InputHandler : MonoBehaviour
     InputAction bodyMoveAction;
 
     [SerializeField] private CinemachineOrbitalFollow cameraOrbital;
+    private Camera mainCamera;
     private float cameraSpeed = 1f;
 
+    
     public CinemachineOrbitalFollow CameraOrbital
     {
         get { return cameraOrbital; }
@@ -99,6 +101,7 @@ public class InputHandler : MonoBehaviour
         rightRotateInput = EControllerInput.Up;
         leftRotateInput = EControllerInput.Up;
 
+        mainCamera = Camera.main;
     }
 
     private void OnEnable()
@@ -111,12 +114,9 @@ public class InputHandler : MonoBehaviour
         if (leftLegUpAction.IsPressed())
         {
             leftLegInput = EControllerInput.Up;
+
             leftLegMoveValue = leftLegMoveAction.ReadValue<Vector2>();
-            //animator.enabled = true;
-
-            Debug.Log("Left Leg Up");
-            //if (leftLegMoveValue != Vector2.zero) Debug.Log("Left Leg Moving");
-
+             
         }
         else
         {
@@ -127,9 +127,8 @@ public class InputHandler : MonoBehaviour
         if (rightLegUpAction.IsPressed())
         {
             rightLegInput = EControllerInput.Up;
-            rightLegMoveValue = rightLegMoveAction.ReadValue<Vector2>();
 
-            Debug.Log("Right Leg Up");
+            rightLegMoveValue = rightLegMoveAction.ReadValue<Vector2>();
         }
         else
         {

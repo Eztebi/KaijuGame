@@ -7,6 +7,7 @@ public class CamaraTriggerZone : MonoBehaviour
     [SerializeField] private string targetTag = "Player";
     [SerializeField] private bool triggerOnlyOnce = false;
     private bool hasTriggered = false;
+    private bool hasTriggeredOnce = false;
 
     [Header("EventoOnEnter")]
     public UnityEvent OnEnterEvent;
@@ -16,28 +17,24 @@ public class CamaraTriggerZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(targetTag) && !hasTriggered) return;
+        if(!other.CompareTag(targetTag)) return;
 
-        OnEnterEvent.Invoke();
-        hasTriggered = true;
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag(targetTag) && !hasTriggered) return;
 
-        OnEnterEvent.Invoke();
-        hasTriggered = true;
+        if(triggerOnlyOnce && hasTriggeredOnce) return;
+
+        if(!hasTriggered)
+        {
+            OnEnterEvent.Invoke();
+            hasTriggered = true;
+            hasTriggeredOnce = true;
+        }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag(targetTag) && triggerOnlyOnce)
-        {
-            hasTriggered = true;
-        }
-        else if (other.CompareTag(targetTag))
-        {
-            OnExitEvent.Invoke();
-            hasTriggered = false;
-        }
+        if (!other.CompareTag(targetTag)) return;
+
+        OnExitEvent.Invoke();
+
+        hasTriggered = false;
     }
 }
