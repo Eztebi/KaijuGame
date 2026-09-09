@@ -8,6 +8,7 @@ public class CamaraTriggerZone : MonoBehaviour
     [SerializeField] private bool triggerOnlyOnce = false;
     private bool hasTriggered = false;
     private bool hasTriggeredOnce = false;
+    private int collidersInZone = 0;
 
     [Header("EventoOnEnter")]
     public UnityEvent OnEnterEvent;
@@ -17,24 +18,32 @@ public class CamaraTriggerZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!other.CompareTag(targetTag)) return;
+        if (!other.CompareTag(targetTag)) return;
 
 
-        if(triggerOnlyOnce && hasTriggeredOnce) return;
+        if (triggerOnlyOnce && hasTriggeredOnce) return;
 
-        if(!hasTriggered)
+        collidersInZone++;
+
+        if (collidersInZone == 1)
         {
             OnEnterEvent.Invoke();
-            hasTriggered = true;
             hasTriggeredOnce = true;
+            Debug.Log("Kaiju entró a la zona (Cámara activada)");
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag(targetTag)) return;
 
-        OnExitEvent.Invoke();
+        collidersInZone--;
+        if (collidersInZone < 0) collidersInZone = 0;
 
-        hasTriggered = false;
+        if (collidersInZone == 0)
+        {
+            hasTriggered = false;
+            OnExitEvent.Invoke();
+        }
+
     }
 }

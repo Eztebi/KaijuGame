@@ -1,11 +1,6 @@
 ﻿using UnityEngine;
 public class ResetBodyState : BodyState
 {
-    private Vector3 targetFootPosGlobal;
-    private float moveSpeed = 5f;
-    private float timeToReset = 2f;
-    private float timer = 0f;
-
     public ResetBodyState(BodyStateMachineContext context, BodyStateMachine.EBodyState estate) : base(context, estate)
     {
 
@@ -14,7 +9,7 @@ public class ResetBodyState : BodyState
     public override void EnterState()
     {
         Context.SetBodyToReset();
-        //Context.SetBoneStiffness(15000f, 50f);
+        Context.currentLaunchTimer = 0;
         Debug.Log("Enter Body Reset State ");
     }
 

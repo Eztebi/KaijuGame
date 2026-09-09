@@ -42,7 +42,7 @@ public class LegInteractionContext
     public ConfigurableJoint HipJoint { get; private set; }
 
     private float upperLegMass, lowerLegMass, FeetMass;
-
+    private float ragdollDistance = 1.6f;
     public LegInteractionContext(TwoBoneIKConstraint ikConstraint, MultiRotationConstraint legMultiRotationConstraint,
             /*Rigidbody rigidbody, CapsuleCollider rootCollider,*/ Transform legRestPosition, Transform legUpPosition,
             Transform feetRestPosition, Transform legIKTargetTransform, Transform feetIKTargetTransform, BoxCollider legCollider,
@@ -207,4 +207,5 @@ public class LegInteractionContext
     public Transform RagdollLegPos => _ragdollLegPos;
     public Transform OtherRagdollLegPos => _ragdollOtherLegPos;
     public CinemachineBasicMultiChannelPerlin CameraShake => _cameraShake;
+    public float RagdollDistance => ragdollDistance;
 }

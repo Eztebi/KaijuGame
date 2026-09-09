@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class RagdollBodyState : BodyState
 {
-    private Vector3 bodyPos;
-    private Vector3 legPos;
-    private float moveSpeed = 2f;
     public RagdollBodyState(BodyStateMachineContext context, BodyStateMachine.EBodyState estate) : base(context, estate)
     {
         BodyStateMachineContext Context = context;
@@ -18,7 +15,8 @@ public class RagdollBodyState : BodyState
     }
     public override void ExitState()
     {
-        //Context.SetBoneStiffness(15000f, 500f);
+        Context.SetBoneStiffness(15000f, 500f);
+        Context.Handler.BodyActiveState = InputHandler.EBodyActiveState.Reset;
     }
     public override void UpdateState()
     {
@@ -26,7 +24,11 @@ public class RagdollBodyState : BodyState
     }
     public override BodyStateMachine.EBodyState GetNextState()
     {
-        if (Context.Handler.RightLegActiveState != InputHandler.EBodyActiveState.Ragdoll || Context.Handler.LeftLegActiveState != InputHandler.EBodyActiveState.Ragdoll)
+        if (Context.Handler.RightLegActiveState != InputHandler.EBodyActiveState.Ragdoll || Context.Handler.LeftLegActiveState != InputHandler.EBodyActiveState.Ragdoll || Context.Handler.BodyActiveState != InputHandler.EBodyActiveState.Ragdoll)
+        {
+            return BodyStateMachine.EBodyState.Reset;
+        }
+        if(Context.Handler.BodyActiveState == InputHandler.EBodyActiveState.Reset)
         {
             return BodyStateMachine.EBodyState.Reset;
         }

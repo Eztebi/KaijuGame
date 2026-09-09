@@ -1,4 +1,5 @@
 using Unity.Cinemachine;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class InputHandler : MonoBehaviour
@@ -11,7 +12,7 @@ public class InputHandler : MonoBehaviour
     }
     public enum EBodyActiveState
     {
-        Down, Up, Ragdoll, Reset
+        Down, Up, Ragdoll, Reset, Launch
     }
     private EBodyActiveState bodyActiveState;
     private EBodyActiveState leftLegState;
@@ -20,19 +21,22 @@ public class InputHandler : MonoBehaviour
     private EControllerInput rightLegInput;
     private EControllerInput rightRotateInput;
     private EControllerInput leftRotateInput;
+    private EControllerInput launchInput;
     public Vector2 leftLegMoveValue;
     public Vector2 rightLegMoveValue;
     public Vector2 bodyMoveValue;
     public Vector2 cameraMoveValue;
-    InputAction leftLegUpAction;
-    InputAction rightLegUpAction;
-    InputAction leftLegMoveAction;
-    InputAction rightLegMoveAction;
-    InputAction resetButtonAction;
-    InputAction cameraMoveAction;
-    InputAction rotateRightAction;
-    InputAction rotateLeftAction;
-    InputAction bodyMoveAction;
+    private InputAction leftLegUpAction;
+    private InputAction rightLegUpAction;
+    private InputAction leftLegMoveAction;
+    private InputAction rightLegMoveAction;
+    private InputAction resetButtonAction;
+    private InputAction cameraMoveAction;
+    private InputAction rotateRightAction;
+    private InputAction rotateLeftAction;
+    private InputAction bodyMoveAction;
+    private InputAction restartGameAction;
+    private InputAction launchAction;
 
     [SerializeField] private CinemachineOrbitalFollow cameraOrbital;
     private Camera mainCamera;
@@ -69,6 +73,14 @@ public class InputHandler : MonoBehaviour
         }
         set { rightLegInput = value; }
     }
+    public EControllerInput LaunchInput
+    {
+        get
+        {
+            return launchInput;
+        }
+        set { launchInput = value; }
+    }
     public EBodyActiveState RightLegActiveState
     {
         get { return rightLegState; }
@@ -84,7 +96,7 @@ public class InputHandler : MonoBehaviour
         get { return bodyActiveState; }
         set {  bodyActiveState = value; }
     }
-    private void Start()
+    private void Awake()
     {
         leftLegUpAction = InputSystem.actions.FindAction("LeftLegUp");
         rightLegUpAction = InputSystem.actions.FindAction("RightLegUp");
@@ -95,6 +107,8 @@ public class InputHandler : MonoBehaviour
         bodyMoveAction = InputSystem.actions.FindAction("BodyMove");
         rotateLeftAction = InputSystem.actions.FindAction("RotateLeft");
         rotateRightAction = InputSystem.actions.FindAction("RotateRight");
+        restartGameAction = InputSystem.actions.FindAction("ResetGame");
+        launchAction = InputSystem.actions.FindAction("Launch");
 
         leftLegInput = EControllerInput.Down;
         rightLegInput = EControllerInput.Down;
@@ -139,12 +153,11 @@ public class InputHandler : MonoBehaviour
         //Pararse
         if (resetButtonAction.IsPressed())
         {
-            if (LeftLegActiveState == EBodyActiveState.Ragdoll || RightLegActiveState == EBodyActiveState.Ragdoll)
+            if (LeftLegActiveState == EBodyActiveState.Ragdoll || RightLegActiveState == EBodyActiveState.Ragdoll || BodyActiveState == EBodyActiveState.Ragdoll)
             {
 
                     rightLegInput = EControllerInput.Reset;
                     leftLegInput = EControllerInput.Reset;
-                
             }
         }
         //ROtacion de cuerpo a derecha
@@ -174,5 +187,13 @@ public class InputHandler : MonoBehaviour
         {
             bodyMoveValue = bodyMoveAction.ReadValue<Vector2>();
         }
+
+        //Launch
+
+        if(launchAction.IsPressed() && (RightLegActiveState != EBodyActiveState.Ragdoll || LeftLegActiveState != EBodyActiveState.Ragdoll || bodyActiveState != EBodyActiveState.Launch || bodyActiveState != EBodyActiveState.Ragdoll))
+        {
+            launchInput = EControllerInput.Down;
+        }
+        else launchInput = EControllerInput.Up;
     }
 }

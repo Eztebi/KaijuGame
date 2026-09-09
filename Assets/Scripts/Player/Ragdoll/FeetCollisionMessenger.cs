@@ -1,10 +1,11 @@
 using PrimeTween;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 class FeetCollisionMessenger : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem _rumbleVFXPrefab; 
+    [SerializeField] private ParticleSystem _rumbleVFXPrefab;
     private ParticleSystem _rumbleVFXInstance;
 
     [Header("Camera")]
@@ -40,15 +41,14 @@ class FeetCollisionMessenger : MonoBehaviour
 
         if (collision.collider.CompareTag("Ground"))
         {
-            
 
-            Tween.ShakeCamera(_camera,strengthFactor: 1.0f,duration: 0.5f,frequency: 10);
-            Debug.Log("Choco on suelo//////////");
+
+            Tween.ShakeCamera(_camera, strengthFactor: 1.0f, duration: 0.5f, frequency: 10);
 
             PlayRumbleVFX(this.transform.position);
 
         }
-        else if(collision.gameObject.GetComponent<HealthComponent>() != null)
+        else if (collision.gameObject.GetComponent<HealthComponent>() != null)
         {
             ContactPoint contact = collision.contacts[0];
             Vector3 velocity = _rbFeet.GetPointVelocity(contact.point);
@@ -57,7 +57,7 @@ class FeetCollisionMessenger : MonoBehaviour
             impactSpeed = Mathf.Abs(impactSpeed);
             Debug.Log("Velocidad de impacto: " + impactSpeed);
 
-            Tween.ShakeCamera(_camera,strengthFactor: 1.0f,duration: 0.5f,frequency: 10);
+            Tween.ShakeCamera(_camera, strengthFactor: 1.0f, duration: 0.5f, frequency: 10);
 
             PlayRumbleVFX(contact.point);
 
@@ -76,6 +76,21 @@ class FeetCollisionMessenger : MonoBehaviour
                 health.TakeDamage(damage);
             }
         }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (stateMachine == null)
+        {
+            Debug.LogError(
+                "MESSENGER ERROR: " + gameObject.name +
+                " no tiene StateMachine asignada."
+            );
+
+            return;
+        }
+
+
+        stateMachine.OnCollisionExit(collision);
     }
 
     private void PlayRumbleVFX(Vector3 position)
@@ -97,7 +112,7 @@ class FeetCollisionMessenger : MonoBehaviour
         }
         _rumbleVFXInstance.Play();
     }
-private void OnCollisionStay(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if (stateMachine != null)
         {
@@ -105,11 +120,4 @@ private void OnCollisionStay(Collision collision)
         }
     }
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (stateMachine != null)
-        {
-            stateMachine.OnCollisionExit(collision);
-        }
-    }
 }

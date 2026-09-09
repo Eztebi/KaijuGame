@@ -11,7 +11,7 @@ public class RagdollLegState : LegInteractionState
     public override void EnterState()
     {
         Context.LegActiveState = InputHandler.EBodyActiveState.Ragdoll;
-        Debug.Log(Context.LegType + " activando modo Ragdoll (Cae por gravedad)");
+        Debug.Log(" activando modo Ragdoll (Cae por gravedad)");
 
         if (Context.CurrentIkConstraint != null)
             Context.CurrentIkConstraint.weight = 0f;
@@ -25,7 +25,6 @@ public class RagdollLegState : LegInteractionState
 
     public override void ExitState()
     {
-        Debug.Log(Context.LegType + " saliendo de Ragdoll, recuperando postura.");
 
         if (Context.CurrentIkConstraint != null) Context.CurrentIkConstraint.weight = 1f;
         if (Context.CurrentMultiRotationConstraint != null) Context.CurrentMultiRotationConstraint.weight = 1f;

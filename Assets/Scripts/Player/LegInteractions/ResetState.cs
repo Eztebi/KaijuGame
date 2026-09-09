@@ -4,8 +4,7 @@ public class ResetState : LegInteractionState
 {
     private Vector3 targetFootPosGlobal;
     private float moveSpeed = 5f;
-    private float timeToReset = 2f;
-    private float timer = 0f;
+
 
     public ResetState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
@@ -14,32 +13,28 @@ public class ResetState : LegInteractionState
 
     public override void EnterState()
     {
-        timer = 0;
+
+
+        Context._currentLegPos = Context.LegIKTargetTransform.position;
+        
         targetFootPosGlobal = GetFloorPosition();
 
-        if (Context._currentLegPos == Vector3.zero)
-        {
-            Context._currentLegPos = Context.LegIKTargetTransform.position;
-        }
-
-        Debug.Log("Enter Reset State - Moviendo SOLO la pierna");
+        Debug.Log("Enter Reset State");
     }
 
     public override void ExitState() { }
 
     public override void UpdateState()
     {
-        MoveToPosition();
+        //MoveToPosition();
     }
 
     public override LegStateMachine.ELegState GetNextState()
     {
-        // Transición cuando pase el tiempo o cuando el pie ya haya llegado a su meta
-        if (timer > timeToReset || Vector3.Distance(Context._currentLegPos, targetFootPosGlobal) < 0.05f)
+        if ( Vector3.Distance(Context._currentLegPos, targetFootPosGlobal) < 0.05f)
         {
-            return LegStateMachine.ELegState.Idle;
         }
-        timer += Time.deltaTime;
+        return LegStateMachine.ELegState.Idle;
         return StateKey;
     }
 
@@ -53,7 +48,7 @@ public class ResetState : LegInteractionState
     public override void MoveToPosition()
     {
         targetFootPosGlobal = GetFloorPosition();
-        Context._currentLegPos = Vector3.Lerp(Context._currentLegPos, targetFootPosGlobal, Time.deltaTime * moveSpeed);
+        Context._currentLegPos = Vector3.MoveTowards(Context._currentLegPos, targetFootPosGlobal,Time.deltaTime * moveSpeed);
         Context.LegIKTargetTransform.position = Context._currentLegPos;
     }
 

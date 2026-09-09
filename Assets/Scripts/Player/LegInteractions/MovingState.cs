@@ -6,7 +6,6 @@ public class MovingState : LegInteractionState
     private Vector3 _calculatedPos;
     private float speed = 2;
     private float maxLegDistance = .9f;
-    private float ragdollDist = 1.5f;
 
     public MovingState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
@@ -84,7 +83,7 @@ public class MovingState : LegInteractionState
     private bool CheckLegDistanceToRagdoll()
     {
         float dist = Vector3.Distance(Context.RagdollLegPos.position, Context.OtherRagdollLegPos.position);
-        if (dist > ragdollDist)
+        if (dist > Context.RagdollDistance)
         {
             return true;
         }

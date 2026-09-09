@@ -19,7 +19,6 @@ public class CinemachineCameraSwitcher : MonoBehaviour
     public void ActivateCamera()
     {
         vCam.Priority = activePriority;
-        Debug.Log("camara Activa: " + gameObject.name);
     }
 
     public void DeactivateCamera()

@@ -33,11 +33,11 @@ public class IdleLegState : LegInteractionState
         {
             return LegStateMachine.ELegState.Rise;
         }
-        if(Context.OtherLegActiveState == InputHandler.EBodyActiveState.Ragdoll)
+        else if(Context.OtherLegActiveState == InputHandler.EBodyActiveState.Ragdoll || Context.InputHandler.BodyActiveState == InputHandler.EBodyActiveState.Ragdoll)
         {
             return LegStateMachine.ELegState.Ragdoll;
         }
-        if (!Context.IsGrounded)
+        else if (!Context.IsGrounded)
         {
             return LegStateMachine.ELegState.Relocate;
         }

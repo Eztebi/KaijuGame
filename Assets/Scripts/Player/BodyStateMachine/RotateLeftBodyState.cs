@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class RotateLeftBodyState : BodyState
 {
-    private Vector3 bodyPos;
-    private Vector3 legPos;
     private float moveSpeed = 50f;
     private float currentYRotation;
 
@@ -24,6 +22,7 @@ public class RotateLeftBodyState : BodyState
     }
     public override void UpdateState()
     {
+        Context.currentLaunchTimer += Time.deltaTime;
         currentYRotation += moveSpeed * Time.deltaTime;
         Quaternion nuevaRotacion = Quaternion.Euler(0f, currentYRotation, 0f);
         Context.HipsJoint.targetRotation = nuevaRotacion;
@@ -43,6 +42,10 @@ public class RotateLeftBodyState : BodyState
         if (Context.Handler.RightRotateInput == InputHandler.EControllerInput.Down)
         {
             return BodyStateMachine.EBodyState.RotatingRight;
+        }
+        if (Context.Handler.LaunchInput == InputHandler.EControllerInput.Down && Context.TimerToLaunch <= Context.currentLaunchTimer)
+        {
+            return BodyStateMachine.EBodyState.Launch;
         }
         return StateKey;
     }

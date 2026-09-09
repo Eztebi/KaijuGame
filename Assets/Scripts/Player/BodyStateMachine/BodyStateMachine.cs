@@ -1,4 +1,5 @@
 using Unity.Cinemachine;
+using UnityEditorInternal;
 using UnityEngine;
 using static LegStateMachine;
 
@@ -11,7 +12,8 @@ public class BodyStateMachine : StateManager<BodyStateMachine.EBodyState>
         RotatingLeft,
         RotatingRight,
         Moving,
-        Reset
+        Reset,
+        Launch
     }
     private BodyStateMachineContext _context;
 
@@ -53,7 +55,7 @@ public class BodyStateMachine : StateManager<BodyStateMachine.EBodyState>
         States.Add(EBodyState.RotatingLeft, new RotateLeftBodyState(_context, EBodyState.RotatingLeft));
         States.Add(EBodyState.RotatingRight, new RotateRightBodyState(_context, EBodyState.RotatingRight));
         States.Add(EBodyState.Reset, new ResetBodyState(_context, EBodyState.Reset));
-
+        States.Add(EBodyState.Launch, new LaunchBody(_context, EBodyState.Launch));
         currentState = States[EBodyState.Reset];
     }
    

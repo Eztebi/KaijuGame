@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class TouchState : LegInteractionState
 {
-    private float moveSpeed = 6f;
-    private Vector3 targetGroundPos;
     public TouchState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
         LegInteractionContext Context = context;
@@ -12,7 +10,7 @@ public class TouchState : LegInteractionState
     //public override void AwakeState() { }
     public override void EnterState()
     {
-        Context.SetLegStiffness(15000f, 10f);
+        Context.SetLegToIdle();
 
         Context.LegActiveState = InputHandler.EBodyActiveState.Down;
         Context.IsGrounded = true;
@@ -26,7 +24,7 @@ public class TouchState : LegInteractionState
     }
     public override LegStateMachine.ELegState GetNextState()
     {
-        return LegStateMachine.ELegState.Idle;
+        return LegStateMachine.ELegState.Reset;
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

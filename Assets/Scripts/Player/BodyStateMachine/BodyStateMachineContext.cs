@@ -20,6 +20,9 @@ public class BodyStateMachineContext
     private Transform _rightLegPos;
     private Transform _leftLegPos;
     private Transform _spinePos;
+
+    private float timerToLaunch = 2f;
+    public float currentLaunchTimer { get; set; }
     public BodyStateMachineContext(Transform bodypos, StaticBoneFollower[] bones,InputHandler handler, Rigidbody[] rbs, Animator animator,
         Rigidbody hipsRB, Rigidbody spineRB, Rigidbody headRB,
         ConfigurableJoint hipsJoint, ConfigurableJoint spineJoint, ConfigurableJoint headJoint,
@@ -104,4 +107,6 @@ public void SetBodyToReset()
     public Transform LeftLegPos => _leftLegPos;
     public Transform RightLegPos => _rightLegPos;
     public Transform SpinePos => _spinePos;
+    public float TimerToLaunch => timerToLaunch;
+    public Rigidbody[] Rigidbodies => _rigidbodies;
 }

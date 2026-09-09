@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using static InputHandler;
 
@@ -8,7 +9,6 @@ public class RelocateState : LegInteractionState
     private float moveSpeed = 2f;
 
     private float bodyHeightTweak = -0.1f;
-    private float ragdollDist = 1.4f;
 
     public RelocateState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
@@ -17,7 +17,7 @@ public class RelocateState : LegInteractionState
 
     public override void EnterState()
     {
-
+        Context.LegActiveState = InputHandler.EBodyActiveState.Up;
         Debug.Log("Enter Relocate State");
     }
 
@@ -59,18 +59,19 @@ public class RelocateState : LegInteractionState
 
     public override LegStateMachine.ELegState GetNextState()
     {
-        if (Context.OtherLegActiveState == EBodyActiveState.Up) return LegStateMachine.ELegState.Ragdoll;
+        //if (Context.OtherLegActiveState == EBodyActiveState.Up) return LegStateMachine.ELegState.Ragdoll;
 
         if (Context.IsGrounded)
         {
             Context.LegActiveState = EBodyActiveState.Down;
             return LegStateMachine.ELegState.Touch;
         }
-        if (CheckLegDistanceToRagdoll())
+        else if (CheckLegDistanceToRagdoll())
         {
             Context.LegActiveState = EBodyActiveState.Ragdoll;
             return LegStateMachine.ELegState.Ragdoll;
         }
+
         return StateKey;
     }
 
@@ -80,7 +81,6 @@ public class RelocateState : LegInteractionState
 
     public override void OnCollisionEnter(Collision collision)
     {
-        Debug.LogWarning(Context.LegType + " ENTER chocó contra: " + collision.collider.name + " Tag: " + collision.collider.tag);
 
         if (collision.collider.CompareTag("Ground"))
         {
@@ -90,14 +90,10 @@ public class RelocateState : LegInteractionState
     }
     public override void OnCollisionStay(Collision collision)
     {
-        if (collision.collider.CompareTag("Ground") && !Context.IsGrounded)
-        {
-            Debug.LogWarning(Context.LegType + " STAY detectó el suelo a medio camino. ¡Deteniéndose!");
-            DetenerPie();
-        }
     }
+    public override void OnCollisionExit(Collision collision) {
 
-    public override void OnCollisionExit(Collision collision) { }
+    }
     private void ShakeCamera(float value)
     {
         Context.CameraShake.AmplitudeGain = value;
@@ -105,8 +101,8 @@ public class RelocateState : LegInteractionState
     }
     private void DetenerPie()
     {
-        Debug.Log(Context.LegType + " tocó el suelo. ¡Deteniéndose!");
         Context.IsGrounded = true;
+        Context.LegActiveState = InputHandler.EBodyActiveState.Down;
         Context._currentLegPos = Context.LegIKTargetTransform.position;
     }
     public override void MoveToPosition()
@@ -121,7 +117,7 @@ public class RelocateState : LegInteractionState
     private bool CheckLegDistanceToRagdoll()
     {
         float dist = Vector3.Distance(Context.RagdollLegPos.position, Context.OtherRagdollLegPos.position);
-        if (dist > ragdollDist)
+        if (dist > Context.RagdollDistance)
         {
             return true;
         }

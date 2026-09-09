@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class IdleBodyState : BodyState
 {
-    private Vector3 bodyPos;
-    private Vector3 legPos;
-    private float moveSpeed = 2f;
     public IdleBodyState(BodyStateMachineContext context, BodyStateMachine.EBodyState estate) : base(context, estate)
     {
         BodyStateMachineContext Context = context;
@@ -21,6 +18,7 @@ public class IdleBodyState : BodyState
     }
     public override void UpdateState()
     {
+        Context.currentLaunchTimer += Time.deltaTime;
         //Context.HipsJoint.targetPosition = new Vector3(0, -alturaDeseada, 0);
         Debug.Log("Update Idle State");
     }
@@ -38,6 +36,11 @@ public class IdleBodyState : BodyState
         {
             return BodyStateMachine.EBodyState.RotatingLeft;
         }
+        if(Context.Handler.LaunchInput == InputHandler.EControllerInput.Down && Context.TimerToLaunch <= Context.currentLaunchTimer)
+        {
+            return BodyStateMachine.EBodyState.Launch;
+        }
+        
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }
