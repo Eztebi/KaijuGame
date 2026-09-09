@@ -6971,6 +6971,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 67099450503730696, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: m_Height
+      value: 0.43073195
+      objectReference: {fileID: 0}
+    - target: {fileID: 67099450503730696, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: m_Radius
+      value: 0.10768299
+      objectReference: {fileID: 0}
+    - target: {fileID: 67099450503730696, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 67099450503730696, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: m_Center.y
+      value: 0.21536598
+      objectReference: {fileID: 0}
+    - target: {fileID: 67099450503730696, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2953094094493883738, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.65
@@ -7019,11 +7039,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: ---Monkey---
       objectReference: {fileID: 0}
+    - target: {fileID: 6359912578140148178, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: m_Data.m_MaintainTargetRotationOffset
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7921251833368719115, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
       propertyPath: _camera
       value: 
       objectReference: {fileID: 904641321}
-    m_RemovedComponents: []
+    - target: {fileID: 8145395860278845214, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: m_Height
+      value: 0.3782089
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145395860278845214, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: m_Radius
+      value: 0.11346268
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145395860278845214, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145395860278845214, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: m_Center.y
+      value: 0.18910445
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145395860278845214, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5977105831180067352, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -12073,7 +12118,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 54
+  field of view: 67.878746
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -12099,8 +12144,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 904641317}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00047871043, y: 0.999062, z: -0.041758638, w: 0.011452993}
-  m_LocalPosition: {x: 3.576379, y: 6.6750994, z: 36.190952}
+  m_LocalRotation: {x: -0.044927023, y: 0, z: 0, w: 0.9989903}
+  m_LocalPosition: {x: 3.5260003, y: 6.258, z: 28.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

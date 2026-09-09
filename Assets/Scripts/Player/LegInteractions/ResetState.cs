@@ -4,7 +4,7 @@ public class ResetState : LegInteractionState
 {
     private Vector3 targetFootPosGlobal;
     private float moveSpeed = 5f;
-
+    private float timer;
 
     public ResetState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
@@ -14,10 +14,12 @@ public class ResetState : LegInteractionState
     public override void EnterState()
     {
 
-
-        Context._currentLegPos = Context.LegIKTargetTransform.position;
-        
+        timer = 0;
         targetFootPosGlobal = GetFloorPosition();
+        if (Context._currentLegPos == Vector3.zero)
+        {
+            Context._currentLegPos = Context.LegIKTargetTransform.position;
+        }
 
         Debug.Log("Enter Reset State");
     }
@@ -26,15 +28,20 @@ public class ResetState : LegInteractionState
 
     public override void UpdateState()
     {
-        //MoveToPosition();
+        timer += Time.deltaTime;
+        MoveToPosition();
     }
 
     public override LegStateMachine.ELegState GetNextState()
     {
         if ( Vector3.Distance(Context._currentLegPos, targetFootPosGlobal) < 0.05f)
         {
+            return LegStateMachine.ELegState.Idle;
         }
-        return LegStateMachine.ELegState.Idle;
+        if(timer > 1f)
+        {
+            return LegStateMachine.ELegState.Idle;
+        }
         return StateKey;
     }
 
