@@ -1291,6 +1291,7 @@ GameObject:
   - component: {fileID: 1529077275085846020}
   - component: {fileID: 8318627528293289247}
   - component: {fileID: 4814968457182610714}
+  - component: {fileID: 7456038582496576376}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -1306,13 +1307,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7563045934437469949}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00041955127, y: 0.9918743, z: -0.12717977, w: 0.0032720787}
-  m_LocalPosition: {x: 0.009999752, y: 3.139805, z: 4.7785854}
+  m_LocalRotation: {x: 0.0004787105, y: 0.999062, z: -0.041758634, w: 0.011452994}
+  m_LocalPosition: {x: -0.073621035, y: 1.3390992, z: 3.8239536}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2953094094493883738}
-  m_LocalEulerAnglesHint: {x: 33.57, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -3.526, y: 178.4, z: 0}
 --- !u!114 &7490756736293438965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1326,8 +1327,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
-    Enabled: 0
-    m_Value: 0
+    Enabled: 1
+    m_Value: 20
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -1337,7 +1338,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 52.8
+    FieldOfView: 54
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -1368,7 +1369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5d7c088409d9a40b7b09aa707777f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineOrbitalFollow
-  TargetOffset: {x: 0, y: 1, z: 0}
+  TargetOffset: {x: 0, y: -0.5, z: 0}
   TrackerSettings:
     BindingMode: 4
     PositionDamping: {x: 1, y: 1, z: 1}
@@ -1376,7 +1377,7 @@ MonoBehaviour:
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
   OrbitStyle: 0
-  Radius: 5
+  Radius: 4
   Orbits:
     Top:
       Radius: 2
@@ -1390,7 +1391,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 2
   HorizontalAxis:
-    Value: -180
+    Value: 178.74399
     Center: 178.74399
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -1441,7 +1442,7 @@ MonoBehaviour:
       Size: {x: 0.8, y: 0.8}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 0
-  TargetOffset: {x: 0, y: 1, z: 1}
+  TargetOffset: {x: 0, y: 0.3, z: 1}
   Damping: {x: 0.5, y: 0.5}
   Lookahead:
     Enabled: 0
@@ -1462,9 +1463,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineBasicMultiChannelPerlin
   NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
   PivotOffset: {x: 0, y: 0, z: 0}
-  AmplitudeGain: 1
-  FrequencyGain: 1
+  AmplitudeGain: 0
+  FrequencyGain: 0
   m_NoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!114 &7456038582496576376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7563045934437469949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7de3aefa901374ba29464584a3109a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineDecollider
+  CameraRadius: 1
+  Decollision:
+    Enabled: 1
+    ObstacleLayers:
+      serializedVersion: 2
+      m_Bits: 1
+    UseFollowTarget:
+      Enabled: 1
+      YOffset: -0.5
+    Damping: 10
+    SmoothingTime: 2
+  TerrainResolution:
+    Enabled: 0
+    TerrainLayers:
+      serializedVersion: 2
+      m_Bits: 1
+    MaximumRaycast: 10
+    Damping: 0.5
 --- !u!1 &7742236192906007781
 GameObject:
   m_ObjectHideFlags: 0
@@ -2303,7 +2334,7 @@ Rigidbody:
   m_GameObject: {fileID: 782680990427902780}
   serializedVersion: 5
   m_Mass: 0.1
-  m_LinearDamping: 0.5
+  m_LinearDamping: 1
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -2624,8 +2655,8 @@ Rigidbody:
   m_GameObject: {fileID: 1974850737113957350}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_LinearDamping: 3
+  m_AngularDamping: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -2678,7 +2709,7 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 40
+    limit: 70
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
@@ -2790,6 +2821,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b263ef1645b87df4497b514d2297849c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  _rumbleVFXPrefab: {fileID: 4323349681431901417, guid: 5470bc08474bef149a9752915314a472, type: 3}
+  _camera: {fileID: 0}
+  _damageMultiplier: 20
+  _minimumImpactSpeed: 0.2
   stateMachine: {fileID: 6760443733030224995}
 --- !u!4 &2071706280998335488 stripped
 Transform:
@@ -3135,8 +3170,8 @@ Rigidbody:
   m_GameObject: {fileID: 2603118246585392117}
   serializedVersion: 5
   m_Mass: 1.875
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_LinearDamping: 3
+  m_AngularDamping: 0.1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -3320,8 +3355,8 @@ Rigidbody:
   m_GameObject: {fileID: 2888164581197188427}
   serializedVersion: 5
   m_Mass: 1.875
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_LinearDamping: 3
+  m_AngularDamping: 0.1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -3500,8 +3535,8 @@ Rigidbody:
   m_GameObject: {fileID: 3050477035309313115}
   serializedVersion: 5
   m_Mass: 1.875
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_LinearDamping: 3
+  m_AngularDamping: 0.1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -4133,7 +4168,7 @@ Rigidbody:
   m_GameObject: {fileID: 4413267213434726261}
   serializedVersion: 5
   m_Mass: 0.1
-  m_LinearDamping: 0.5
+  m_LinearDamping: 1
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -4737,8 +4772,8 @@ Rigidbody:
   m_GameObject: {fileID: 6262136795140965942}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_LinearDamping: 3
+  m_AngularDamping: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -4791,7 +4826,7 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 40
+    limit: 70
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
@@ -4903,6 +4938,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b263ef1645b87df4497b514d2297849c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FeetCollisionMessenger
+  _rumbleVFXPrefab: {fileID: 4323349681431901417, guid: 5470bc08474bef149a9752915314a472, type: 3}
+  _camera: {fileID: 0}
+  _damageMultiplier: 30
+  _minimumImpactSpeed: 0.2
   stateMachine: {fileID: 6760443733030224995}
 --- !u!4 &6496016288510571691 stripped
 Transform:
@@ -4966,8 +5005,8 @@ Rigidbody:
   m_GameObject: {fileID: 7004878298065585920}
   serializedVersion: 5
   m_Mass: 1.875
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_LinearDamping: 3
+  m_AngularDamping: 0.1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -5156,7 +5195,7 @@ Rigidbody:
   m_GameObject: {fileID: 7801272748877459366}
   serializedVersion: 5
   m_Mass: 0.1
-  m_LinearDamping: 0.5
+  m_LinearDamping: 1
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -5782,7 +5821,7 @@ Rigidbody:
   m_GameObject: {fileID: 8335942156024067353}
   serializedVersion: 5
   m_Mass: 0.1
-  m_LinearDamping: 0.5
+  m_LinearDamping: 1
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -6591,7 +6630,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BodyStateMachine
   _handler: {fileID: 6317754422616855014}
-  _rigidbodies: []
+  _rigidbodies:
+  - {fileID: 4635130607002622876}
+  - {fileID: 5246213337233275607}
+  - {fileID: 7557869712523406196}
+  - {fileID: 1617566233178812579}
+  - {fileID: 8973551503689555612}
+  - {fileID: 7680068574819974335}
+  - {fileID: 2755103518802216312}
+  - {fileID: 3333079790746174161}
+  - {fileID: 1751053053772736116}
+  - {fileID: 8313995369867920820}
+  - {fileID: 8354144602743269944}
+  - {fileID: 6389328173426229914}
+  - {fileID: 3935378959400023584}
   _animator: {fileID: 7268913198300147065}
   _bodyPos: {fileID: 3603006000152049411}
   _bones:
@@ -6651,6 +6703,7 @@ MonoBehaviour:
   _upperLegJoint: {fileID: 4295669267334694919}
   _lowerLegJoint: {fileID: 7957818550085129655}
   _feetJoint: {fileID: 7031373637642943907}
+  _hipJoint: {fileID: 3569409120606410930}
   _ragdollLegPos: {fileID: 5533234725799456065}
   _ragdollOtherLegPos: {fileID: 2789774012298586705}
   _cameraShake: {fileID: 4814968457182610714}
@@ -6694,6 +6747,7 @@ MonoBehaviour:
   _upperLegJoint: {fileID: 3168335123035814156}
   _lowerLegJoint: {fileID: 5908193770295727247}
   _feetJoint: {fileID: 291953985311361027}
+  _hipJoint: {fileID: 3569409120606410930}
   _ragdollLegPos: {fileID: 2789774012298586705}
   _ragdollOtherLegPos: {fileID: 5533234725799456065}
   _cameraShake: {fileID: 4814968457182610714}
