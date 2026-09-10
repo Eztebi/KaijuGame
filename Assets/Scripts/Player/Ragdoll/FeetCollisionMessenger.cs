@@ -76,6 +76,7 @@ class FeetCollisionMessenger : MonoBehaviour
                 health.TakeDamage(damage);
             }
         }
+        if (!collision.collider.CompareTag("Player")) Tween.ShakeCamera(Camera.main, 5.0f, 0.5f, 5f);
     }
     private void OnCollisionExit(Collision collision)
     {

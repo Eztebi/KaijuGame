@@ -9,14 +9,14 @@ public class RagdollBodyState : BodyState
 
     public override void EnterState()
     {
-        //Context.SetBoneStiffness(0f, 0f);
+        Context.SetBoneStiffness(0f, 0f);
         Context.SetBodyToRagdoll();
         Debug.Log("Enter Falling State");
+        Context.Handler.BodyActiveState = InputHandler.EBodyActiveState.Ragdoll;
     }
     public override void ExitState()
     {
         Context.SetBoneStiffness(15000f, 500f);
-        Context.Handler.BodyActiveState = InputHandler.EBodyActiveState.Reset;
     }
     public override void UpdateState()
     {
@@ -24,14 +24,19 @@ public class RagdollBodyState : BodyState
     }
     public override BodyStateMachine.EBodyState GetNextState()
     {
-        if (Context.Handler.RightLegActiveState != InputHandler.EBodyActiveState.Ragdoll || Context.Handler.LeftLegActiveState != InputHandler.EBodyActiveState.Ragdoll || Context.Handler.BodyActiveState != InputHandler.EBodyActiveState.Ragdoll)
+        if (Context.Handler.LeftLegInput == InputHandler.EControllerInput.Reset || Context.Handler.RightLegInput == InputHandler.EControllerInput.Reset)
         {
             return BodyStateMachine.EBodyState.Reset;
         }
-        if(Context.Handler.BodyActiveState == InputHandler.EBodyActiveState.Reset)
+
+        bool rightLegReady = Context.Handler.RightLegActiveState != InputHandler.EBodyActiveState.Ragdoll;
+        bool leftLegReady = Context.Handler.LeftLegActiveState != InputHandler.EBodyActiveState.Ragdoll;
+
+        if (rightLegReady && leftLegReady)
         {
             return BodyStateMachine.EBodyState.Reset;
         }
+
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

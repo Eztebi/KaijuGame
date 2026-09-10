@@ -40,9 +40,10 @@ public class LegInteractionContext
     public ConfigurableJoint LowerLegJoint { get; private set; }
     public ConfigurableJoint FeetJoint { get; private set; }
     public ConfigurableJoint HipJoint { get; private set; }
+    public Rigidbody _hipRB;
 
     private float upperLegMass, lowerLegMass, FeetMass;
-    private float ragdollDistance = 1.6f;
+    private float ragdollDistance = 1.5f;
     public LegInteractionContext(TwoBoneIKConstraint ikConstraint, MultiRotationConstraint legMultiRotationConstraint,
             /*Rigidbody rigidbody, CapsuleCollider rootCollider,*/ Transform legRestPosition, Transform legUpPosition,
             Transform feetRestPosition, Transform legIKTargetTransform, Transform feetIKTargetTransform, BoxCollider legCollider,
@@ -50,7 +51,7 @@ public class LegInteractionContext
             StaticBoneFollower[] currentLegBones, bool isGrounded,
             LegStateMachine.ELegType legType, InputHandler inputHandler, Rigidbody upLegRB, Rigidbody lowLegRB, Rigidbody feetRB,
             ConfigurableJoint upLegJoint, ConfigurableJoint lowLegJoint, ConfigurableJoint feetJoint, Transform ragdollLegPos,
-            Transform ragdollOtherLegPos, CinemachineBasicMultiChannelPerlin cameraShake, ConfigurableJoint hipJoint)
+            Transform ragdollOtherLegPos, CinemachineBasicMultiChannelPerlin cameraShake, ConfigurableJoint hipJoint, Rigidbody hipRB)
     {
         _ikConstraint = ikConstraint;
         _multiRotationConstraint = legMultiRotationConstraint;
@@ -81,6 +82,7 @@ public class LegInteractionContext
         _ragdollLegPos = ragdollLegPos;
         _ragdollOtherLegPos = ragdollOtherLegPos;
         _cameraShake = cameraShake;
+        _hipRB = hipRB;
 
         if (UpperLegRB != null) upperLegMass = UpperLegRB.mass;
         if (LowerLegRB != null) lowerLegMass = LowerLegRB.mass;
@@ -205,6 +207,7 @@ public class LegInteractionContext
     public Transform HipNormalPos => _hipNormalPos;
     public StaticBoneFollower[] CurrentLegBones => _currentLegBones;
     public Transform RagdollLegPos => _ragdollLegPos;
+    public Rigidbody HipRB => _hipRB;
     public Transform OtherRagdollLegPos => _ragdollOtherLegPos;
     public CinemachineBasicMultiChannelPerlin CameraShake => _cameraShake;
     public float RagdollDistance => ragdollDistance;

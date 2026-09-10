@@ -7039,10 +7039,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ---Monkey---
       objectReference: {fileID: 0}
+    - target: {fileID: 4148250126633156768, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: _hipsRB
+      value: 
+      objectReference: {fileID: 1674470346}
     - target: {fileID: 6359912578140148178, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
       propertyPath: m_Data.m_MaintainTargetRotationOffset
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6760443733030224995, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: _hipsRB
+      value: 
+      objectReference: {fileID: 1674470346}
     - target: {fileID: 7921251833368719115, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
       propertyPath: _camera
       value: 
@@ -7066,6 +7074,18 @@ PrefabInstance:
     - target: {fileID: 8145395860278845214, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
       propertyPath: m_Center.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921941314924949019, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: solverVelocity
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921941314924949019, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: solverIterations
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8921941314924949019, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+      propertyPath: maxAngularVelocity
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5977105831180067352, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
@@ -26309,6 +26329,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
   maxHealth: 50
   damageEffect: {fileID: 4323349681431901417, guid: 5470bc08474bef149a9752915314a472, type: 3}
+--- !u!54 &1674470346 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 5246213337233275607, guid: dd0f95b59eb70dc4fa00d131af637bc4, type: 3}
+  m_PrefabInstance: {fileID: 614506264}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1690091456
 GameObject:
   m_ObjectHideFlags: 0

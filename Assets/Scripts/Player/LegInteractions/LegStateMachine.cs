@@ -58,6 +58,7 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
     [SerializeField] private Transform _ragdollLegPos;
     [SerializeField] private Transform _ragdollOtherLegPos;
     [SerializeField] private CinemachineBasicMultiChannelPerlin _cameraShake;
+    [SerializeField] private Rigidbody _hipsRB;
     private void Awake()
     {
         ValidateConstraints();
@@ -74,7 +75,7 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
             _feetRestPosition, _legIKTargetTransform, _feetIKTargetTransform, _legCollider, _hipPosition, _hipNormalPos,
             _groundLayerMask, _otherLeg, _fullBody, _currentLegBones, isGrounded, _eLegType,
             _handler,_upperLegRB, _lowerLegRB, _feetRB, _upperLegJoint, _lowerLegJoint, _feetJoint,_ragdollLegPos, _ragdollOtherLegPos,
-            _cameraShake, _hipJoint);
+            _cameraShake, _hipJoint, _hipsRB);
         InitializeStates();
     }
     private void ValidateConstraints()

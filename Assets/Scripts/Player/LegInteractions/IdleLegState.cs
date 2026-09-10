@@ -10,6 +10,7 @@ public class IdleLegState : LegInteractionState
     //public override void AwakeState() { }
     public override void EnterState()
     {
+        
         Context.SetLegToIdle();
         Context.LegActiveState = InputHandler.EBodyActiveState.Down;
 
@@ -19,13 +20,14 @@ public class IdleLegState : LegInteractionState
     }
     public override void ExitState()
     {
-
+        
     }
     public override void UpdateState()
     {
        // Context.LegIKTargetTransform.position = Context._currentLegPos;
         Debug.Log("Update Idle State");
         Context.LegIKTargetTransform.position = Context._currentLegPos;
+
     }
     public override LegStateMachine.ELegState GetNextState()
     {
@@ -33,17 +35,20 @@ public class IdleLegState : LegInteractionState
         {
             return LegStateMachine.ELegState.Rise;
         }
-        else if(Context.OtherLegActiveState == InputHandler.EBodyActiveState.Ragdoll || Context.InputHandler.BodyActiveState == InputHandler.EBodyActiveState.Ragdoll)
+
+        bool bodyIsRagdoll = Context.InputHandler.BodyActiveState == InputHandler.EBodyActiveState.Ragdoll;
+        bool otherIsRagdoll = Context.OtherLegActiveState == InputHandler.EBodyActiveState.Ragdoll;
+
+        if (bodyIsRagdoll || (otherIsRagdoll && Context.CurrentLegInput != InputHandler.EControllerInput.Reset))
         {
             return LegStateMachine.ELegState.Ragdoll;
         }
-        else if (!Context.IsGrounded)
+
+        if (!Context.IsGrounded)
         {
             return LegStateMachine.ELegState.Relocate;
         }
 
-        //if (Context.LegActiveState == InputHandler.ELegActiveState.Ragdoll) return LegStateMachine.ELegState.Ragdoll;
-        //return CheckToReturnToReset();
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

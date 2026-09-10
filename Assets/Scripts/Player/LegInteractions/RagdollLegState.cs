@@ -1,3 +1,4 @@
+using PrimeTween;
 using UnityEngine;
 public class RagdollLegState : LegInteractionState
 {
@@ -47,11 +48,10 @@ public class RagdollLegState : LegInteractionState
 
     public override void OnCollisionEnter(Collision collision)
     {
-        if (!collision.collider.CompareTag("Player")) ShakeCamera(1.0f);
     }
 
     public override void OnCollisionStay(Collision collision) {
-        if (!collision.collider.CompareTag("Player")) ShakeCamera(1.0f); ShakeCamera(0.0f);
+        
     }
     public override void OnCollisionExit(Collision collision) { }
     private void ShakeCamera(float value)

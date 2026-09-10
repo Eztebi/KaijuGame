@@ -10,6 +10,7 @@ public class ResetBodyState : BodyState
     {
         Context.SetBodyToReset();
         Context.currentLaunchTimer = 0;
+        Context.Handler.BodyActiveState = InputHandler.EBodyActiveState.Reset;
         Debug.Log("Enter Body Reset State ");
     }
 

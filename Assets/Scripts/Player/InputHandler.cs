@@ -153,13 +153,10 @@ public class InputHandler : MonoBehaviour
         //Pararse
         if (resetButtonAction.IsPressed())
         {
-            if (LeftLegActiveState == EBodyActiveState.Ragdoll || RightLegActiveState == EBodyActiveState.Ragdoll || BodyActiveState == EBodyActiveState.Ragdoll)
-            {
-
-                    rightLegInput = EControllerInput.Reset;
-                    leftLegInput = EControllerInput.Reset;
-            }
+            leftLegInput = EControllerInput.Reset;
+            rightLegInput = EControllerInput.Reset;
         }
+
         //ROtacion de cuerpo a derecha
         if (rotateRightAction.IsPressed() && (RightLegActiveState != EBodyActiveState.Ragdoll || LeftLegActiveState != EBodyActiveState.Ragdoll)) {
             rightRotateInput = EControllerInput.Down;

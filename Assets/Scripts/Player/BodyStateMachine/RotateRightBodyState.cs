@@ -12,12 +12,14 @@ public class RotateRightBodyState : BodyState
 
     public override void EnterState()
     {
+        Context.HipsRB.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         //Context.SetBoneStiffness(0f, 0f);
         currentYRotation = Context.HipsJoint.targetRotation.eulerAngles.y;
         Debug.Log("Enter RotateRight State");
     }
     public override void ExitState()
     {
+        Context.HipsRB.constraints &= ~RigidbodyConstraints.FreezeRotation;
         //Context.SetBoneStiffness(15000f, 500f);
     }
     public override void UpdateState()

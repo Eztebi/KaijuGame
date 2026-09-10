@@ -11,9 +11,9 @@ public class LaunchBody : BodyState
 
     public override void EnterState()
     {
+        pushDirection = Context.SpinePos.forward;
         //Conte.xt.SetBoneStiffness(0f, 0f);
         Context.Handler.BodyActiveState = InputHandler.EBodyActiveState.Ragdoll;
-        pushDirection = Context.SpinePos.forward;
         Context.SetBodyToRagdoll();
         Launch();
         Debug.Log("Enter Falling State");

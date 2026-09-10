@@ -38,7 +38,7 @@ public class ResetState : LegInteractionState
         {
             return LegStateMachine.ELegState.Idle;
         }
-        if(timer > 1f)
+        if(timer >= 1f)
         {
             return LegStateMachine.ELegState.Idle;
         }

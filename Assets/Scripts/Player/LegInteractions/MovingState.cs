@@ -4,8 +4,8 @@ using static InputHandler;
 public class MovingState : LegInteractionState
 {
     private Vector3 _calculatedPos;
-    private float speed = 2;
-    private float maxLegDistance = .9f;
+    private float speed = 2.5f;
+    private float maxLegDistance = .85f;
 
     public MovingState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
