@@ -4,8 +4,6 @@ using static InputHandler;
 public class MovingState : LegInteractionState
 {
     private Vector3 _calculatedPos;
-    private float speed = 2.5f;
-    private float maxLegDistance = .85f;
 
     public MovingState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
@@ -56,15 +54,15 @@ public class MovingState : LegInteractionState
     public override void MoveToPosition()
     {
         Vector3 desiredPos = _calculatedPos;
-        desiredPos.x -= Time.deltaTime * speed * Context.CurrentLegMoveValue.x;
-        desiredPos.z -= Time.deltaTime * speed * Context.CurrentLegMoveValue.y;
+        desiredPos.x -= Time.deltaTime * Context.MovingSpeed * Context.CurrentLegMoveValue.x;
+        desiredPos.z -= Time.deltaTime * Context.MovingSpeed * Context.CurrentLegMoveValue.y;
 
         Vector3 _anchorPoint = new Vector3(Context.LegRestPosition.position.x, desiredPos.y, Context.LegRestPosition.position.z);
         Vector3 offset = desiredPos - _anchorPoint;
 
-        if (offset.magnitude > maxLegDistance)
+        if (offset.magnitude > Context.MaxLegMovingDistance)
         {
-            Vector3 clampedOffset = Vector3.ClampMagnitude(offset, maxLegDistance);
+            Vector3 clampedOffset = Vector3.ClampMagnitude(offset, Context.MaxLegMovingDistance);
 
             Vector3 movebod = offset - clampedOffset;
             if (Context.FullBodyPos != null)

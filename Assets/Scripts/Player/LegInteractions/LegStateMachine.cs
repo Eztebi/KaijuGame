@@ -59,6 +59,8 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
     [SerializeField] private Transform _ragdollOtherLegPos;
     [SerializeField] private CinemachineBasicMultiChannelPerlin _cameraShake;
     [SerializeField] private Rigidbody _hipsRB;
+
+
     private void Awake()
     {
         ValidateConstraints();

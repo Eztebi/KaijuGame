@@ -5,6 +5,7 @@ using UnityEngine.Animations.Rigging;
 public class BodyStateMachineContext 
 {
     private InputHandler _handler;
+    private GrowManager _growthManager;
     private Rigidbody[] _rigidbodies;
     private Animator _animator;
     private Transform _bodyPos;
