@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CamaraTriggerZone : MonoBehaviour
+public class TriggerZone : MonoBehaviour
 {
     [Header("Configuration")]
     [SerializeField] private string targetTag = "Player";
