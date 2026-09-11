@@ -1,27 +1,79 @@
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public abstract class TurretComponent : MonoBehaviour
 {
-    [Header("Turret Properties")]
-    protected float shootRange;
-    protected float shootCooldown;
-    protected float fireTime;
-    protected int ammo;
-    protected bool isShooting;
-    protected Vector3 targetPos;
-
+    [Header("Propiedades de Torreta")]
+    [SerializeField] protected float shootCooldown = 1f;
+    [SerializeField] protected float rotationSpeed = 5f;
+    [SerializeField] protected Transform turretHead;
+    [SerializeField] protected Transform firePoint;
     [SerializeField] protected GameObject bulletPrefab;
 
-    virtual protected void Shoot()
+    [Header("Health Component")]
+    [SerializeField] protected HealthComponent healthComponent;
+    
+    protected float fireTime;
+    protected Transform playerTarget;
+    protected Transform target;
+    protected bool canShoot = false;
+
+    protected virtual void Start()
     {
-        if (bulletPrefab != null)
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player != null)
         {
-            bulletPrefab.SetActive(false);
+            playerTarget = player.transform;
+        }
+
+
+        if (healthComponent == null)
+        {
+            healthComponent = GetComponent<HealthComponent>();
+        }
+
+        if (turretHead == null)
+        {
+            turretHead = transform;
         }
     }
-    virtual protected void Reloading()
-    {
 
+    protected virtual void Update()
+    {
+        if (!canShoot || playerTarget == null || (healthComponent != null && healthComponent.CurrentHealth <= 0)) return;
+
+        LookAtPlayer();
+
+        if (Time.time >= fireTime)
+        {
+            fireTime = Time.time + shootCooldown;
+            Shoot();
+        }
+    }
+
+    protected virtual void LookAtPlayer()
+    {
+        Vector3 direction = playerTarget.position - turretHead.position;
+
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            turretHead.rotation = Quaternion.Slerp(turretHead.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
+    }
+
+    public void StartShooting() => canShoot = true;
+    public void StopShooting() => canShoot = false;
+
+    public abstract void Shoot();
+
+    public virtual void TakeDamage(float damage)
+    {
+        if (healthComponent != null)
+        {
+            healthComponent.TakeDamage(damage);
+        }
     }
 }
-

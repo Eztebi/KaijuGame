@@ -6,7 +6,6 @@ public class TriggerZone : MonoBehaviour
     [Header("Configuration")]
     [SerializeField] private string targetTag = "Player";
     [SerializeField] private bool triggerOnlyOnce = false;
-    private bool hasTriggered = false;
     private bool hasTriggeredOnce = false;
     private int collidersInZone = 0;
 
@@ -29,7 +28,6 @@ public class TriggerZone : MonoBehaviour
         {
             OnEnterEvent.Invoke();
             hasTriggeredOnce = true;
-            Debug.Log("Kaiju entró a la zona (Cámara activada)");
         }
     }
     private void OnTriggerExit(Collider other)
@@ -41,7 +39,6 @@ public class TriggerZone : MonoBehaviour
 
         if (collidersInZone == 0)
         {
-            hasTriggered = false;
             OnExitEvent.Invoke();
         }
 

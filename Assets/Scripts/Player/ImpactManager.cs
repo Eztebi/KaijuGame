@@ -17,11 +17,17 @@ public class PlayerImpactHandler : MonoBehaviour
 
     public void ProcessCollision(Collision collision)
     {
-        if (!collision.collider.CompareTag(bulletTag)) return;
-        
-        OnPlayerHit.Invoke();
+        if (collision.collider.CompareTag(bulletTag))
+        {
 
-        if (collision.relativeVelocity.magnitude >= minVelocityToRagdoll)
+            OnPlayerHit.Invoke();
+
+            if (collision.relativeVelocity.magnitude >= minVelocityToRagdoll)
+            {
+                ForceRagdollState();
+            }
+        }
+        if (collision.collider.CompareTag(hazardTag))
         {
             ForceRagdollState();
         }
