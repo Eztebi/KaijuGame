@@ -166,9 +166,9 @@ public class LegInteractionContext
         if (FeetRB != null) FeetRB.mass = FeetMass;
 
         // 2. Fuerza fuerte y estable
-        SetJointSlerp(UpperLegJoint, 15000f, 500f);
+        SetJointSlerp(UpperLegJoint, 20000f, 500f);
         SetJointSlerp(LowerLegJoint, 10000f, 300f);
-        SetJointSlerp(FeetJoint, 5000f, 200f);
+        SetJointSlerp(FeetJoint, 10000f, 200f);
     }
 
     public void SetLegToRise()

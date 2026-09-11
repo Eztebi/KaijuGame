@@ -6,7 +6,7 @@ public class PlayerImpactHandler : MonoBehaviour
 {
     [Header("Configuración de Impacto")]
     [SerializeField] private string bulletTag = "Bullet";
-    [SerializeField] private string hazardTag = "Hazard";
+    [SerializeField] private string hazardTag = "Hazzard";
     [SerializeField] private float minVelocityToRagdoll = 12f;
 
     [Header("Referencias")]

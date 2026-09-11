@@ -1,6 +1,7 @@
 using Unity.Cinemachine;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 public class InputHandler : MonoBehaviour
 {
@@ -37,6 +38,10 @@ public class InputHandler : MonoBehaviour
     private InputAction bodyMoveAction;
     private InputAction restartGameAction;
     private InputAction launchAction;
+    private string lastUsedDevice = "";
+
+    [Header("Eventos de UI / HUD")]
+    public UnityEvent<string> OnControlSchemeChanged;
 
     [SerializeField] private CinemachineOrbitalFollow cameraOrbital;
     private Camera mainCamera;
@@ -96,6 +101,16 @@ public class InputHandler : MonoBehaviour
         get { return bodyActiveState; }
         set {  bodyActiveState = value; }
     }
+    private void OnEnable()
+    {
+        InputSystem.onActionChange += OnActionChange;
+    }
+
+    private void OnDisable()
+    {
+        InputSystem.onActionChange -= OnActionChange;
+    }
+
     private void Awake()
     {
         leftLegUpAction = InputSystem.actions.FindAction("LeftLegUp");
@@ -117,11 +132,41 @@ public class InputHandler : MonoBehaviour
 
         mainCamera = Camera.main;
     }
-
-    private void OnEnable()
+    private void OnActionChange(object obj, InputActionChange change)
     {
+        if (change == InputActionChange.ActionPerformed)
+        {
+            InputAction action = (InputAction)obj;
+            InputControl control = action.activeControl;
 
+            if (control == null) return;
+            if (control.EvaluateMagnitude() < 0.25f) return;
+
+            DetectDeviceType(control.device);
+        }
     }
+
+    private void DetectDeviceType(InputDevice device)
+    {
+        string currentDevice = "";
+
+        if (device is Gamepad)
+        {
+            currentDevice = "Gamepad";
+        }
+        else if (device is Keyboard || device is Mouse)
+        {
+            currentDevice = "Keyboard";
+        }
+
+        if (!string.IsNullOrEmpty(currentDevice) && currentDevice != lastUsedDevice)
+        {
+            lastUsedDevice = currentDevice;
+            OnControlSchemeChanged?.Invoke(lastUsedDevice);
+            Debug.Log($"Dispositivo cambiado a: {lastUsedDevice}");
+        }
+    }
+
     private void Update()
     {
         //Alzar pie

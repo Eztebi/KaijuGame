@@ -20,13 +20,18 @@ public class IdleLegState : LegInteractionState
     }
     public override void ExitState()
     {
-        
+        Context.HipRB.constraints &= ~(RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ);
+
     }
     public override void UpdateState()
     {
        // Context.LegIKTargetTransform.position = Context._currentLegPos;
         Debug.Log("Update Idle State");
         Context.LegIKTargetTransform.position = Context._currentLegPos;
+        if(Context.OtherLegActiveState == InputHandler.EBodyActiveState.Down || Context.InputHandler.BodyActiveState == InputHandler.EBodyActiveState.Up)
+        {
+            Context.HipRB.constraints |= RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+        }
 
     }
     public override LegStateMachine.ELegState GetNextState()
