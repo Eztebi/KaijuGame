@@ -53,6 +53,7 @@ public class IdleLegState : LegInteractionState
         {
             return LegStateMachine.ELegState.Relocate;
         }
+        if (Context.InputHandler.DebugMoveToolInput == InputHandler.EControllerInput.Down) return LegStateMachine.ELegState.DebugMode; 
 
         return StateKey;
     }

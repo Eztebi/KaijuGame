@@ -40,6 +40,8 @@ public class RagdollLegState : LegInteractionState
         {
             return LegStateMachine.ELegState.Reset;
         }
+        if (Context.InputHandler.DebugMoveToolInput == InputHandler.EControllerInput.Down) return LegStateMachine.ELegState.DebugMode;
+
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

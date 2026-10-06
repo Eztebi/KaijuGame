@@ -24,6 +24,8 @@ public class TouchState : LegInteractionState
     }
     public override LegStateMachine.ELegState GetNextState()
     {
+        if (Context.InputHandler.DebugMoveToolInput == InputHandler.EControllerInput.Down) return LegStateMachine.ELegState.DebugMode;
+
         return LegStateMachine.ELegState.Reset;
         return StateKey;
     }

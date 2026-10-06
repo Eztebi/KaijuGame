@@ -57,6 +57,7 @@ public class RiseState : LegInteractionState
 
         if (Context.CurrentLegInput == InputHandler.EControllerInput.Down)
             return LegStateMachine.ELegState.Release;
+        if (Context.InputHandler.DebugMoveToolInput == InputHandler.EControllerInput.Down) return LegStateMachine.ELegState.DebugMode;
 
         return StateKey;
     }

@@ -43,6 +43,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "MoveTool",
+                    "type": "Button",
+                    "id": "6d01ef0d-7fc4-493c-90fc-28df30b7da6c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "ResetGame",
                     "type": "Button",
                     "id": "ab3ae05b-1269-4cb0-a9a0-e00e5bba34f3",
@@ -192,6 +201,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Launch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9fa064e3-c08f-4a5d-bbf5-f5ae5563a6bf",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "MultiTap(tapCount=3)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveTool",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c72afb46-ea86-4273-a843-33ffb6b6d5fa",
+                    "path": "<Keyboard>/t",
+                    "interactions": "MultiTap(tapCount=3)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveTool",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -12,7 +12,8 @@ public class BodyStateMachine : StateManager<BodyStateMachine.EBodyState>
         RotatingRight,
         Moving,
         Reset,
-        Launch
+        Launch,
+        DebugMode
     }
     private BodyStateMachineContext _context;
 
@@ -29,7 +30,8 @@ public class BodyStateMachine : StateManager<BodyStateMachine.EBodyState>
     [SerializeField] private ConfigurableJoint _hipsJoint;
     [SerializeField] private ConfigurableJoint _spineJoint;
     [SerializeField] private ConfigurableJoint _headJoint;
-    [SerializeField] private CinemachineOrbitalFollow _cinemachineOrbitalFollow;
+    [SerializeField] private CinemachineOrbitalFollow _movingCinemachine;
+    [SerializeField] private CinemachineOrbitalFollow _fallingCinemachine;
 
     [SerializeField] private Transform _rightLegPos;
     [SerializeField] private Transform _leftLegPos;
@@ -39,7 +41,7 @@ public class BodyStateMachine : StateManager<BodyStateMachine.EBodyState>
         ValidateConstraints();
         _handler = GetComponent<InputHandler>();
         _context = new BodyStateMachineContext(_bodyPos, _bones,  _handler, _rigidbodies, _animator, _hipsRB, _spineRB, _headRB, 
-            _hipsJoint, _spineJoint, _headJoint, _rightLegPos, _leftLegPos, _SpinePos);
+            _hipsJoint, _spineJoint, _headJoint, _rightLegPos, _leftLegPos, _SpinePos, _fallingCinemachine);
         InitializeStates();
     }
     private void ValidateConstraints()
@@ -55,6 +57,7 @@ public class BodyStateMachine : StateManager<BodyStateMachine.EBodyState>
         States.Add(EBodyState.RotatingRight, new RotateRightBodyState(_context, EBodyState.RotatingRight));
         States.Add(EBodyState.Reset, new ResetBodyState(_context, EBodyState.Reset));
         States.Add(EBodyState.Launch, new LaunchBody(_context, EBodyState.Launch));
+        States.Add(EBodyState.DebugMode, new DebugMoveBodyState(_context, EBodyState.DebugMode));
         currentState = States[EBodyState.Reset];
     }
    

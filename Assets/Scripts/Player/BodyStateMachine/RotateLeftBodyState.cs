@@ -38,22 +38,24 @@ public class RotateLeftBodyState : BodyState
     }
     public override BodyStateMachine.EBodyState GetNextState()
     {
-        if (Context.Handler.RightLegActiveState == InputHandler.EBodyActiveState.Ragdoll || Context.Handler.LeftLegActiveState == InputHandler.EBodyActiveState.Ragdoll)
+        if (Context.InputHandler.RightLegActiveState == InputHandler.EBodyActiveState.Ragdoll || Context.InputHandler.LeftLegActiveState == InputHandler.EBodyActiveState.Ragdoll)
         {
             return BodyStateMachine.EBodyState.Ragdoll;
         }
-        if (Context.Handler.LeftRotateInput == InputHandler.EControllerInput.Up)
+        if (Context.InputHandler.LeftRotateInput == InputHandler.EControllerInput.Up)
         {
             return BodyStateMachine.EBodyState.Idle;
         }
-        if (Context.Handler.RightRotateInput == InputHandler.EControllerInput.Down)
+        if (Context.InputHandler.RightRotateInput == InputHandler.EControllerInput.Down)
         {
             return BodyStateMachine.EBodyState.RotatingRight;
         }
-        if (Context.Handler.LaunchInput == InputHandler.EControllerInput.Down && Context.TimerToLaunch <= Context.currentLaunchTimer)
+        if (Context.InputHandler.LaunchInput == InputHandler.EControllerInput.Down && Context.TimerToLaunch <= Context.currentLaunchTimer)
         {
             return BodyStateMachine.EBodyState.Launch;
         }
+        if (Context.InputHandler.DebugMoveToolInput == InputHandler.EControllerInput.Down) return BodyStateMachine.EBodyState.DebugMode;
+
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

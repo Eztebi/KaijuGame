@@ -25,6 +25,8 @@ public class ReleaseState : LegInteractionState
     public override LegStateMachine.ELegState GetNextState()
     {
         if (Context.OtherLegActiveState == EBodyActiveState.Up) return LegStateMachine.ELegState.Ragdoll;
+        if (Context.InputHandler.DebugMoveToolInput == InputHandler.EControllerInput.Down) return LegStateMachine.ELegState.DebugMode;
+
         return LegStateMachine.ELegState.Relocate;
         return StateKey;
     }

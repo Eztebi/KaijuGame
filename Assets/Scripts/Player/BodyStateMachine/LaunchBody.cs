@@ -13,7 +13,7 @@ public class LaunchBody : BodyState
     {
         pushDirection = Context.SpinePos.forward;
         //Conte.xt.SetBoneStiffness(0f, 0f);
-        Context.Handler.BodyActiveState = InputHandler.EBodyActiveState.Ragdoll;
+        Context.InputHandler.BodyActiveState = InputHandler.EBodyActiveState.Ragdoll;
         Context.SetBodyToRagdoll();
         Launch();
         Debug.Log("Enter Falling State");
@@ -29,6 +29,7 @@ public class LaunchBody : BodyState
     public override BodyStateMachine.EBodyState GetNextState()
     {
         return BodyStateMachine.EBodyState.Ragdoll;
+        if (Context.InputHandler.DebugMoveToolInput == InputHandler.EControllerInput.Down) return BodyStateMachine.EBodyState.DebugMode;
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

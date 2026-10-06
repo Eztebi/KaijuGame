@@ -23,6 +23,7 @@ public class InputHandler : MonoBehaviour
     private EControllerInput rightRotateInput;
     private EControllerInput leftRotateInput;
     private EControllerInput launchInput;
+    private EControllerInput debugMoveToolInput = EControllerInput.Up;
     public Vector2 leftLegMoveValue;
     public Vector2 rightLegMoveValue;
     public Vector2 bodyMoveValue;
@@ -38,6 +39,7 @@ public class InputHandler : MonoBehaviour
     private InputAction bodyMoveAction;
     private InputAction restartGameAction;
     private InputAction launchAction;
+    private InputAction debugMoveToolAction;
     private string lastUsedDevice = "";
 
     [Header("Eventos de UI / HUD")]
@@ -47,7 +49,7 @@ public class InputHandler : MonoBehaviour
     private Camera mainCamera;
     private float cameraSpeed = 1f;
 
-    
+    private bool isOnDebugMode = false;
     public CinemachineOrbitalFollow CameraOrbital
     {
         get { return cameraOrbital; }
@@ -77,6 +79,14 @@ public class InputHandler : MonoBehaviour
             return rightLegInput;
         }
         set { rightLegInput = value; }
+    }
+    public EControllerInput DebugMoveToolInput
+    {
+        get
+        {
+            return debugMoveToolInput;
+        }
+        set { debugMoveToolInput = value; }
     }
     public EControllerInput LaunchInput
     {
@@ -124,6 +134,7 @@ public class InputHandler : MonoBehaviour
         rotateRightAction = InputSystem.actions.FindAction("RotateRight");
         restartGameAction = InputSystem.actions.FindAction("ResetGame");
         launchAction = InputSystem.actions.FindAction("Launch");
+        debugMoveToolAction = InputSystem.actions.FindAction("MoveTool");
 
         leftLegInput = EControllerInput.Down;
         rightLegInput = EControllerInput.Down;
@@ -132,6 +143,7 @@ public class InputHandler : MonoBehaviour
 
         mainCamera = Camera.main;
     }
+    #region Device Detection 
     private void OnActionChange(object obj, InputActionChange change)
     {
         if (change == InputActionChange.ActionPerformed)
@@ -145,7 +157,6 @@ public class InputHandler : MonoBehaviour
             DetectDeviceType(control.device);
         }
     }
-
     private void DetectDeviceType(InputDevice device)
     {
         string currentDevice = "";
@@ -166,7 +177,7 @@ public class InputHandler : MonoBehaviour
             Debug.Log($"Dispositivo cambiado a: {lastUsedDevice}");
         }
     }
-
+    #endregion
     private void Update()
     {
         //Alzar pie
@@ -237,5 +248,14 @@ public class InputHandler : MonoBehaviour
             launchInput = EControllerInput.Down;
         }
         else launchInput = EControllerInput.Up;
+
+        //Tool move
+        if (debugMoveToolAction.IsPressed())
+        {
+            if(debugMoveToolInput == EControllerInput.Down) debugMoveToolInput = EControllerInput.Up;
+            else debugMoveToolInput = EControllerInput.Down;
+        }
+        if(debugMoveToolInput == EControllerInput.Down) bodyMoveValue = bodyMoveAction.ReadValue<Vector2>();
+
     }
 }

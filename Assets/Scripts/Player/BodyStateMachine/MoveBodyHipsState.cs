@@ -26,7 +26,7 @@ public class MoveBodyHipsState : BodyState
     }
     public override BodyStateMachine.EBodyState GetNextState()
     {
-        if (Context.Handler.RightLegActiveState != InputHandler.EBodyActiveState.Ragdoll || Context.Handler.LeftLegActiveState != InputHandler.EBodyActiveState.Ragdoll)
+        if (Context.InputHandler.RightLegActiveState != InputHandler.EBodyActiveState.Ragdoll || Context.InputHandler.LeftLegActiveState != InputHandler.EBodyActiveState.Ragdoll)
         {
             return BodyStateMachine.EBodyState.Reset;
         }

@@ -4,13 +4,14 @@ using UnityEngine.Animations.Rigging;
 
 public class BodyStateMachineContext 
 {
-    private InputHandler _handler;
+    private InputHandler _inputHandler;
     private GrowManager _growthManager;
     private Rigidbody[] _rigidbodies;
     private Animator _animator;
     private Transform _bodyPos;
     private StaticBoneFollower[] _bones;
-    private CinemachineOrbitalFollow _cinemachineOrbitalFollow;
+    private CinemachineOrbitalFollow _movingCinemachine;
+    private CinemachineOrbitalFollow _fallingCinemachine;
     public Rigidbody HipsRB { get; private set; }
     public Rigidbody SpineRB { get; private set; }
     public Rigidbody HeadRB { get; private set; }
@@ -27,9 +28,9 @@ public class BodyStateMachineContext
     public BodyStateMachineContext(Transform bodypos, StaticBoneFollower[] bones,InputHandler handler, Rigidbody[] rbs, Animator animator,
         Rigidbody hipsRB, Rigidbody spineRB, Rigidbody headRB,
         ConfigurableJoint hipsJoint, ConfigurableJoint spineJoint, ConfigurableJoint headJoint,
-        Transform rightLegPos, Transform leftLegPos, Transform SpinePos)
+        Transform rightLegPos, Transform leftLegPos, Transform SpinePos, CinemachineOrbitalFollow fallingCinemachine)
     {
-        _handler = handler;
+        _inputHandler = handler;
         _rigidbodies = rbs;
         _animator = animator;
         _bodyPos = bodypos;
@@ -43,6 +44,7 @@ public class BodyStateMachineContext
         _leftLegPos = leftLegPos;
         _rightLegPos = rightLegPos;
         _spinePos = SpinePos;
+        _fallingCinemachine = fallingCinemachine;
     }
     public void SetBodyToIdle()
     {
@@ -104,10 +106,12 @@ public void SetBodyToReset()
         }
     }
     public Transform FullBodyPos => _bodyPos;
-    public InputHandler Handler => _handler;
+    public InputHandler InputHandler => _inputHandler;
     public Transform LeftLegPos => _leftLegPos;
     public Transform RightLegPos => _rightLegPos;
     public Transform SpinePos => _spinePos;
     public float TimerToLaunch => timerToLaunch;
     public Rigidbody[] Rigidbodies => _rigidbodies;
+    public CinemachineOrbitalFollow MovingCinemachine => _movingCinemachine;
+    public CinemachineOrbitalFollow FallingCinemachine => _fallingCinemachine;
 }

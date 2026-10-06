@@ -15,6 +15,7 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
         Relocate,
         Ragdoll,
         Reset,
+        DebugMode
     }
     public enum ELegType
     {
@@ -73,8 +74,8 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
         forwarder.stateMachine = this;
 
         _context = new LegInteractionContext(_legIkConstraint, _legMultiRotationConstraint,
-            /*_rigidbody, _rootCollider,*/ _legRestPosition, _upLegPosition,
-            _feetRestPosition, _legIKTargetTransform, _feetIKTargetTransform, _legCollider, _hipPosition, _hipNormalPos,
+             _legRestPosition, _upLegPosition,
+             _legIKTargetTransform, _legCollider, _hipPosition,
             _groundLayerMask, _otherLeg, _fullBody, _currentLegBones, isGrounded, _eLegType,
             _handler,_upperLegRB, _lowerLegRB, _feetRB, _upperLegJoint, _lowerLegJoint, _feetJoint,_ragdollLegPos, _ragdollOtherLegPos,
             _cameraShake, _hipJoint, _hipsRB);
@@ -100,6 +101,7 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
         States.Add(ELegState.Relocate, new RelocateState(_context, ELegState.Relocate));
         States.Add(ELegState.Reset, new ResetState(_context, ELegState.Reset));
         States.Add(ELegState.Ragdoll, new RagdollLegState(_context, ELegState.Ragdoll));
+        States.Add(ELegState.DebugMode, new DebugMoveLegState(_context, ELegState.DebugMode));
         currentState = States[ELegState.Reset];
     }
     public bool Isgrounded => isGrounded;

@@ -10,7 +10,7 @@ public class ResetBodyState : BodyState
     {
         Context.SetBodyToReset();
         Context.currentLaunchTimer = 0;
-        Context.Handler.BodyActiveState = InputHandler.EBodyActiveState.Reset;
+        Context.InputHandler.BodyActiveState = InputHandler.EBodyActiveState.Reset;
         Debug.Log("Enter Body Reset State ");
     }
 
@@ -24,6 +24,8 @@ public class ResetBodyState : BodyState
     public override BodyStateMachine.EBodyState GetNextState()
     {
         return BodyStateMachine.EBodyState.Idle;
+        if (Context.InputHandler.DebugMoveToolInput == InputHandler.EControllerInput.Down) return BodyStateMachine.EBodyState.DebugMode;
+
         return StateKey;
     }
 

@@ -37,7 +37,7 @@ public class RelocateState : LegInteractionState
         float midX = (Context.LegIKTargetTransform.position.x + Context.OtherLegPosition.position.x) / 2f;
         float midZ = (Context.LegIKTargetTransform.position.z + Context.OtherLegPosition.position.z) / 2f;
 
-        float fixedBodyOffset = Mathf.Abs(Context.feetRestPosition.localPosition.y);
+        float fixedBodyOffset = Mathf.Abs(Context.LegRestPosition.localPosition.y);
         float targetY;
 
         if (!bajarCuerpo)
@@ -71,6 +71,7 @@ public class RelocateState : LegInteractionState
             Context.LegActiveState = EBodyActiveState.Ragdoll;
             return LegStateMachine.ELegState.Ragdoll;
         }
+        if (Context.InputHandler.DebugMoveToolInput == InputHandler.EControllerInput.Down) return LegStateMachine.ELegState.DebugMode;
 
         return StateKey;
     }

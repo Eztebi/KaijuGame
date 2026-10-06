@@ -42,6 +42,8 @@ public class ResetState : LegInteractionState
         {
             return LegStateMachine.ELegState.Idle;
         }
+        if (Context.InputHandler.DebugMoveToolInput == InputHandler.EControllerInput.Down) return LegStateMachine.ELegState.DebugMode;
+
         return StateKey;
     }
 
