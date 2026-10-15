@@ -17,8 +17,9 @@ public class DebugMoveBodyState : BodyState
             rb.useGravity = false;
             rb.detectCollisions = false;
         }
-        //Context.MovingCinemachine.HorizontalAxis.Recentering.Enabled = false;
-        //Context.MovingCinemachine.VerticalAxis.Recentering.Enabled = false;
+        Context.MovingCinemachine.VirtualCamera.Priority = 40;
+        Context.MovingCinemachine.HorizontalAxis.Recentering.Enabled = false;
+        Context.MovingCinemachine.VerticalAxis.Recentering.Enabled = false;
     }
     public override void ExitState()
     {
@@ -27,8 +28,10 @@ public class DebugMoveBodyState : BodyState
             rb.useGravity = true;
             rb.detectCollisions = true;
         }
-        //Context.MovingCinemachine.HorizontalAxis.Recentering.Enabled = true;
-        //Context.MovingCinemachine.VerticalAxis.Recentering.Enabled = true;
+        Context.MovingCinemachine.HorizontalAxis.Recentering.Enabled = true;
+        Context.MovingCinemachine.VerticalAxis.Recentering.Enabled = true;
+        Context.MovingCinemachine.VirtualCamera.Priority = 20;
+
 
     }
     public override void UpdateState()
@@ -56,7 +59,7 @@ public class DebugMoveBodyState : BodyState
         Vector3 moveDirection = cam.forward * Context.InputHandler.bodyMoveValue.y + cam.right * Context.InputHandler.bodyMoveValue.x;
         if (moveDirection.sqrMagnitude > 1f) moveDirection.Normalize();
 
-        Context.FullBodyPos.transform.position += moveDirection * Time.deltaTime;  
+        Context.FullBodyPos.transform.position += moveDirection * Time.deltaTime * moveSpeed;  
     }
 }
 

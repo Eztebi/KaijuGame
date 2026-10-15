@@ -9,9 +9,9 @@ public class RagdollBodyState : BodyState
 
     public override void EnterState()
     {
-        //Context.FallingCinemachine.HorizontalAxis.Value = Context.MovingCinemachine.HorizontalAxis.Center;
-        //Context.FallingCinemachine.VirtualCamera.Priority = 20;
-        //Context.MovingCinemachine.VirtualCamera.Priority = 10;
+        Context.FallingCinemachine.HorizontalAxis.Value = Context.MovingCinemachine.HorizontalAxis.Center;
+        Context.FallingCinemachine.VirtualCamera.Priority = 20;
+        Context.MovingCinemachine.VirtualCamera.Priority = 10;
         Context.SetBoneStiffness(0f, 0f);
         Context.SetBodyToRagdoll();
         Debug.Log("Enter Falling State");

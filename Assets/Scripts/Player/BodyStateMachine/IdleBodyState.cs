@@ -10,9 +10,9 @@ public class IdleBodyState : BodyState
     public override void EnterState()
     {
         Context.SetBodyToIdle();
-        //Context.FallingCinemachine.HorizontalAxis.Value = Context.MovingCinemachine.HorizontalAxis.Center;
-        //Context.FallingCinemachine.VirtualCamera.Priority = 10;
-        //Context.MovingCinemachine.VirtualCamera.Priority = 20;
+        Context.FallingCinemachine.HorizontalAxis.Value = Context.MovingCinemachine.HorizontalAxis.Center;
+        Context.FallingCinemachine.VirtualCamera.Priority = 10;
+        Context.MovingCinemachine.VirtualCamera.Priority = 20;
         Debug.Log("Enter Idle State");
     }
     public override void ExitState()

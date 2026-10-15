@@ -41,7 +41,7 @@ public class BodyStateMachine : StateManager<BodyStateMachine.EBodyState>
         ValidateConstraints();
         _handler = GetComponent<InputHandler>();
         _context = new BodyStateMachineContext(_bodyPos, _bones,  _handler, _rigidbodies, _animator, _hipsRB, _spineRB, _headRB, 
-            _hipsJoint, _spineJoint, _headJoint, _rightLegPos, _leftLegPos, _SpinePos, _fallingCinemachine);
+            _hipsJoint, _spineJoint, _headJoint, _rightLegPos, _leftLegPos, _SpinePos, _fallingCinemachine, _movingCinemachine);
         InitializeStates();
     }
     private void ValidateConstraints()

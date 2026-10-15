@@ -682,7 +682,7 @@
                     "id": "8c7b16d7-ce24-4498-9388-e0b9e5746117",
                     "path": "<Mouse>/delta",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "ScaleVector2(x=10,y=10)",
                     "groups": "Joystick",
                     "action": "CameraMove",
                     "isComposite": false,

@@ -28,7 +28,7 @@ public class BodyStateMachineContext
     public BodyStateMachineContext(Transform bodypos, StaticBoneFollower[] bones,InputHandler handler, Rigidbody[] rbs, Animator animator,
         Rigidbody hipsRB, Rigidbody spineRB, Rigidbody headRB,
         ConfigurableJoint hipsJoint, ConfigurableJoint spineJoint, ConfigurableJoint headJoint,
-        Transform rightLegPos, Transform leftLegPos, Transform SpinePos, CinemachineOrbitalFollow fallingCinemachine)
+        Transform rightLegPos, Transform leftLegPos, Transform SpinePos, CinemachineOrbitalFollow fallingCinemachine, CinemachineOrbitalFollow movingCinemachine)
     {
         _inputHandler = handler;
         _rigidbodies = rbs;
@@ -45,6 +45,7 @@ public class BodyStateMachineContext
         _rightLegPos = rightLegPos;
         _spinePos = SpinePos;
         _fallingCinemachine = fallingCinemachine;
+        _movingCinemachine = movingCinemachine;
     }
     public void SetBodyToIdle()
     {
