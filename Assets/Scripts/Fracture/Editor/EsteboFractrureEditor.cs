@@ -11,7 +11,7 @@ namespace EsteboFracture.Editor
     {
         [Header("Mesh Configuration")]
         [SerializeField] private GameObject mesh;
-        [SerializeField] private FractureType fractureType = FractureType.Voronoi;
+        [SerializeField] private EFractureType fractureType = EFractureType.Voronoi;
 
         [SerializeField] private float objectMass = 1f;
         [SerializeField] private float fragmentHealth = 100f;
@@ -36,8 +36,8 @@ namespace EsteboFracture.Editor
             {
                 return fractureType switch
                 {
-                    FractureType.Voronoi => voronoiParams,
-                    FractureType.Clustered => clusteredParams,
+                    EFractureType.Voronoi => voronoiParams,
+                    EFractureType.Clustered => clusteredParams,
                     _ => throw new NotImplementedException($"Selected FractureType not implemented yet.")
                 };
             }
@@ -94,8 +94,8 @@ namespace EsteboFracture.Editor
 
             bool canCreate = fractureType switch
             {
-                FractureType.Voronoi => VoronoiGUI(),
-                FractureType.Clustered => VoronoiGUI(),
+                EFractureType.Voronoi => VoronoiGUI(),
+                EFractureType.Clustered => VoronoiGUI(),
                 _ => false
             };
 

@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class VoronoiCell 
+namespace EsteboFracture
 {
-    Point site;
-    Point []vertices;
-
-    public VoronoiCell(Point site)
+    public class VoronoiCell
     {
-        this.site = site;
+        Point site;
+        Point[] vertices;
+
+        public VoronoiCell(Point site)
+        {
+            this.site = site;
+        }
     }
 }
