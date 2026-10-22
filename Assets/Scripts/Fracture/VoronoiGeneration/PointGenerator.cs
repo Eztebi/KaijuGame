@@ -1,31 +1,44 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
+using System.Drawing;
 
 namespace EsteboFracture
 {
     public class PointGenerator : MonoBehaviour
     {
-        Vector3[] pointArray;
+        VoronoiCell[] cellArray;
         void GeneratePoints(EPointGenerationType type, int totalPoints, Mesh mesh)
         {
-            Vector3[] points = type switch
+            VoronoiCell[] points = type switch
             {
                 EPointGenerationType.Random => RandomPointGeneration(totalPoints, mesh),
-                _ => System.Array.Empty<Vector3>() 
+                _ => System.Array.Empty<VoronoiCell>() 
             };
         }
-        Vector3[] RandomPointGeneration(int points, Mesh mesh)
+        VoronoiCell[] RandomPointGeneration(int points, Mesh mesh)
         {
             for (int i = 0; i< points; i++)
             {
-                Vector3 randomPos = new Vector3(
-                    Random.Range(mesh.bounds.min.x, mesh.bounds.max.x),
+
+                Point point = new Point(new Vector3(Random.Range(mesh.bounds.min.x, mesh.bounds.max.x),
                     Random.Range(mesh.bounds.min.y, mesh.bounds.max.y),
-                    Random.Range(mesh.bounds.min.z, mesh.bounds.max.z)
-                );
-                pointArray[i] = randomPos;
+                    Random.Range(mesh.bounds.min.z, mesh.bounds.max.z)));
+                VoronoiCell randomPos = new VoronoiCell(point);
+                cellArray[i] = randomPos;
             }
-            return pointArray;
+            return cellArray;
+        }
+
+        void OnDrawGizmos()
+        {
+
+            for(int i = 0; i<cellArray.Length; i++)
+            {
+                Gizmos.color = UnityEngine.Color.yellow;
+                Gizmos.DrawSphere(cellArray[i].GetSite.Position, 1);
+            }
         }
     }
+    
 }

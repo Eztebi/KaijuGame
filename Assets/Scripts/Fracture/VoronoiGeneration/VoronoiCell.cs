@@ -6,10 +6,11 @@ namespace EsteboFracture
     {
         Point site;
         Point[] vertices;
-
+        Color color;
         public VoronoiCell(Point site)
         {
             this.site = site;
         }
+        public Point GetSite => site;
     }
 }

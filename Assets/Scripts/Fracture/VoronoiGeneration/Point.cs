@@ -6,10 +6,13 @@ public class Point
     double y;
     double z;
 
-    public Point(double x, double y, double z)
+    Vector3 position;
+    public Point(Vector3 pos)
     {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this.x = pos.x;
+        this.y = pos.y;
+        this.z = pos.z;
+        this.position = pos;
     }
+    public Vector3 Position => position;
 }

@@ -105,7 +105,7 @@ namespace EsteboFracture.Editor
 
                 if (GUILayout.Button("Generate", GUILayout.Height(30)))
                 {
-                    // MODO PRUEBA: Duplicamos el objeto para simular el objeto fracturado generado
+                    //MODO PRUEBA guarda y borra el mesh
                     if (fracturedResultMesh != null)
                     {
                         DestroyImmediate(fracturedResultMesh);
@@ -113,7 +113,7 @@ namespace EsteboFracture.Editor
 
                     fracturedResultMesh = Instantiate(mesh);
                     fracturedResultMesh.name = $"{mesh.name}_Fractured_Preview";
-                    mesh.SetActive(false); // Ocultamos el original mientras probamos
+                    mesh.SetActive(false); //Ocultamos el original mientras probamos
                     Debug.Log("Objeto de prueba generado en la escena.");
                 }
 
@@ -184,6 +184,7 @@ namespace EsteboFracture.Editor
 
             if (GUILayout.Button("Visualize Points"))
             {
+
                 // Visualización de puntos
             }
             return true;
