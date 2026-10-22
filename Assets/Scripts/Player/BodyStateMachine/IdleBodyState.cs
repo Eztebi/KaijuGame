@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class IdleBodyState : BodyState
 {
+    private Transform tempTarget;
+
     public IdleBodyState(BodyStateMachineContext context, BodyStateMachine.EBodyState estate) : base(context, estate)
     {
         BodyStateMachineContext Context = context;

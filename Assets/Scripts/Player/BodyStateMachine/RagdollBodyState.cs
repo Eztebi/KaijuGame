@@ -13,7 +13,7 @@ public class RagdollBodyState : BodyState
         tempTarget = Context.FallingCinemachine.FollowTarget;
         Context.FallingCinemachine.HorizontalAxis.Value = Context.MovingCinemachine.HorizontalAxis.Center;
         Context.FallingCinemachine.VerticalAxis.Value = Context.MovingCinemachine.VerticalAxis.Center;
-        //Context.FallingCinemachine.FollowTarget = null;
+        Context.FallingCinemachine.VirtualCamera.Follow = null;
         Context.FallingCinemachine.VirtualCamera.Priority = 20;
         Context.MovingCinemachine.VirtualCamera.Priority = 10;
         Context.SetBoneStiffness(0f, 0f);
@@ -24,12 +24,14 @@ public class RagdollBodyState : BodyState
     public override void ExitState()
     {
         Context.SetBoneStiffness(15000f, 500f);
-        Context.MovingCinemachine.HorizontalAxis.Value = Context.FallingCinemachine.HorizontalAxis.Value;
-        Context.MovingCinemachine.VerticalAxis.Value = Context.FallingCinemachine.VerticalAxis.Value;
-
+        Context.FallingCinemachine.VirtualCamera.Follow = tempTarget;
+        Context.FallingCinemachine.HorizontalAxis.Value = Context.MovingCinemachine.HorizontalAxis.Value;
+        Context.FallingCinemachine.VerticalAxis.Value = Context.MovingCinemachine.VerticalAxis.Value;
     }
     public override void UpdateState()
     {
+        Context.MovingCinemachine.HorizontalAxis.Value = Context.FallingCinemachine.HorizontalAxis.Value;
+        Context.MovingCinemachine.VerticalAxis.Value = Context.FallingCinemachine.VerticalAxis.Value;
         Debug.Log("Update Falling State");
     }
     public override BodyStateMachine.EBodyState GetNextState()
