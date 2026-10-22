@@ -12,7 +12,6 @@ public class ReleaseState : LegInteractionState
     public override void EnterState() {
 
         Debug.Log("Enter Release State");
-
     }
     public override void ExitState() {
         //Context.HipJoint.xMotion = ConfigurableJointMotion.Free;

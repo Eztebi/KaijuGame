@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class RagdollBodyState : BodyState
 {
+    private Transform tempTarget;
     public RagdollBodyState(BodyStateMachineContext context, BodyStateMachine.EBodyState estate) : base(context, estate)
     {
         BodyStateMachineContext Context = context;
@@ -9,7 +10,10 @@ public class RagdollBodyState : BodyState
 
     public override void EnterState()
     {
+        tempTarget = Context.FallingCinemachine.FollowTarget;
         Context.FallingCinemachine.HorizontalAxis.Value = Context.MovingCinemachine.HorizontalAxis.Center;
+        Context.FallingCinemachine.VerticalAxis.Value = Context.MovingCinemachine.VerticalAxis.Center;
+        //Context.FallingCinemachine.FollowTarget = null;
         Context.FallingCinemachine.VirtualCamera.Priority = 20;
         Context.MovingCinemachine.VirtualCamera.Priority = 10;
         Context.SetBoneStiffness(0f, 0f);
@@ -20,6 +24,9 @@ public class RagdollBodyState : BodyState
     public override void ExitState()
     {
         Context.SetBoneStiffness(15000f, 500f);
+        Context.MovingCinemachine.HorizontalAxis.Value = Context.FallingCinemachine.HorizontalAxis.Value;
+        Context.MovingCinemachine.VerticalAxis.Value = Context.FallingCinemachine.VerticalAxis.Value;
+
     }
     public override void UpdateState()
     {

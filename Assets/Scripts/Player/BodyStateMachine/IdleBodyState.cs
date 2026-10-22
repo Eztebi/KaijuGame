@@ -11,6 +11,7 @@ public class IdleBodyState : BodyState
     {
         Context.SetBodyToIdle();
         Context.FallingCinemachine.HorizontalAxis.Value = Context.MovingCinemachine.HorizontalAxis.Center;
+        Context.FallingCinemachine.VerticalAxis.Value = Context.MovingCinemachine.VerticalAxis.Center;
         Context.FallingCinemachine.VirtualCamera.Priority = 10;
         Context.MovingCinemachine.VirtualCamera.Priority = 20;
         Debug.Log("Enter Idle State");

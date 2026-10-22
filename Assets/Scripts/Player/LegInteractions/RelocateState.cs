@@ -17,7 +17,7 @@ public class RelocateState : LegInteractionState
 
     public override void EnterState()
     {
-        Context.LegActiveState = InputHandler.EBodyActiveState.Up;
+        Context.LegActiveState = InputHandler.EBodyActiveState.Down;
         Debug.Log("Enter Relocate State");
     }
 
