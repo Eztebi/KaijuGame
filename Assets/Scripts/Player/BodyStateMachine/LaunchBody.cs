@@ -24,6 +24,8 @@ public class LaunchBody : BodyState
     }
     public override void UpdateState()
     {
+        Context.FallingCinemachine.HorizontalAxis.Value = Context.MovingCinemachine.HorizontalAxis.Value;
+        Context.FallingCinemachine.VerticalAxis.Value = Context.MovingCinemachine.VerticalAxis.Value;
         Debug.Log("Update Falling State");
     }
     public override BodyStateMachine.EBodyState GetNextState()

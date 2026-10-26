@@ -33,7 +33,10 @@ public class RotateLeftBodyState : BodyState
         currentYRotation += moveSpeed * Time.deltaTime;
         Quaternion nuevaRotacion = Quaternion.Euler(0f, currentYRotation, 0f);
         Context.HipsJoint.targetRotation = nuevaRotacion;
-
+        Context.FallingCinemachine.HorizontalAxis.Value = Context.MovingCinemachine.HorizontalAxis.Value;
+        Context.FallingCinemachine.VerticalAxis.Value = Context.MovingCinemachine.VerticalAxis.Value;
+        Context.MovingCinemachine.HorizontalAxis.Value = Context.MovingCinemachine.HorizontalAxis.Center;
+        Context.MovingCinemachine.VerticalAxis.Value = Context.MovingCinemachine.VerticalAxis.Center;
         Debug.Log("Update RotateLeft State");
     }
     public override BodyStateMachine.EBodyState GetNextState()

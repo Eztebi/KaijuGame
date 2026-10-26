@@ -1,4 +1,3 @@
-using PrimeTween;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -7,9 +6,6 @@ class FeetCollisionMessenger : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _rumbleVFXPrefab;
     private ParticleSystem _rumbleVFXInstance;
-
-    [Header("Camera")]
-    [SerializeField] private Camera _camera;
 
     [Header("Damage")]
     [SerializeField] private float _damageMultiplier = 20f;
@@ -43,7 +39,6 @@ class FeetCollisionMessenger : MonoBehaviour
         {
 
 
-            Tween.ShakeCamera(_camera, strengthFactor: 1.0f, duration: 0.5f, frequency: 10);
 
             PlayRumbleVFX(this.transform.position);
 
@@ -56,9 +51,6 @@ class FeetCollisionMessenger : MonoBehaviour
             float impactSpeed = Vector3.Dot(-velocity, contact.normal);
             impactSpeed = Mathf.Abs(impactSpeed);
             Debug.Log("Velocidad de impacto: " + impactSpeed);
-
-            Tween.ShakeCamera(_camera, strengthFactor: 1.0f, duration: 0.5f, frequency: 10);
-
             PlayRumbleVFX(contact.point);
 
             HealthComponent health = collision.gameObject.GetComponent<HealthComponent>();
@@ -76,7 +68,6 @@ class FeetCollisionMessenger : MonoBehaviour
                 health.TakeDamage(damage);
             }
         }
-        if (!collision.collider.CompareTag("Player")) Tween.ShakeCamera(Camera.main, 5.0f, 0.5f, 5f);
     }
     private void OnCollisionExit(Collision collision)
     {

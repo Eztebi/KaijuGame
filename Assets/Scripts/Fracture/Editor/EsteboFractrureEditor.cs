@@ -18,37 +18,38 @@ namespace EsteboFracture.Editor
 
         [SerializeField] private Material insideMaterial;
 
-        [SerializeField] private FractureParameters voronoiParams;
-        [SerializeField] private FractureParameters clusteredParams;
+        [SerializeField] private FractureParameters parameters;
 
         private GameObject tempMesh;
         private GameObject fracturedResultMesh;
 
-        private enum EGenerateType
-        {
-            Generate,
-            CreatePrefab,
-        }
-
+        private VoronoiFracture voronoiFracture;
         private FractureParameters CurrentSelectedParams
         {
             get
             {
                 return fractureType switch
                 {
-                    EFractureType.Voronoi => voronoiParams,
-                    EFractureType.Clustered => clusteredParams,
+                    EFractureType.Voronoi => parameters,
+                    EFractureType.Clustered => parameters,
                     _ => throw new NotImplementedException($"Selected FractureType not implemented yet.")
                 };
             }
         }
-
+       
         private const string _prefabsFolderName = "DestructibleMeshes";
 
         [MenuItem("Tools/Estebo Fracture")]
         public static void OpenEditor()
         {
             GetWindow<EsteboFractrureEditor>("Estebo Fracture Editor");
+        }
+        private void OnEnable()
+        {
+            if (parameters == null)
+            {
+                parameters = new FractureParameters();
+            }
         }
 
         private void OnGUI()
@@ -161,9 +162,14 @@ namespace EsteboFracture.Editor
             objectMass = EditorGUILayout.FloatField("Object Mass", objectMass);
             fragmentHealth = EditorGUILayout.FloatField("Fragments Health", fragmentHealth);
 
+            parameters.generationType = (EPointGenerationType)EditorGUILayout.EnumPopup("Point Generation Type", parameters.generationType);
+
+            parameters.fractureType = (EFractureType)EditorGUILayout.EnumPopup("Fracture Generation Type", parameters.fractureType);
+            parameters.points = EditorGUILayout.IntSlider("Number of Points", parameters.points, 2, 100);
+
             if (EditorGUI.EndChangeCheck())
             {
-                //AssignParams();
+                // Execute logic needed when properties change (e.g., EditorUtility.SetDirty(target))
             }
 
             EditorGUI.BeginChangeCheck();

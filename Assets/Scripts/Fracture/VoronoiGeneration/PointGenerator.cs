@@ -7,16 +7,15 @@ namespace EsteboFracture
 {
     public class PointGenerator : MonoBehaviour
     {
-        VoronoiCell[] cellArray;
-        void GeneratePoints(EPointGenerationType type, int totalPoints, Mesh mesh)
+        public static void GeneratePoints(EPointGenerationType type, VoronoiCell[] cellArray, int totalPoints, Mesh mesh)
         {
             VoronoiCell[] points = type switch
             {
-                EPointGenerationType.Random => RandomPointGeneration(totalPoints, mesh),
+                EPointGenerationType.Random => RandomPointGeneration(cellArray, totalPoints, mesh),
                 _ => System.Array.Empty<VoronoiCell>() 
             };
         }
-        VoronoiCell[] RandomPointGeneration(int points, Mesh mesh)
+        public static VoronoiCell[] RandomPointGeneration(VoronoiCell[] cellArray, int points, Mesh mesh)
         {
             for (int i = 0; i< points; i++)
             {
@@ -30,15 +29,7 @@ namespace EsteboFracture
             return cellArray;
         }
 
-        void OnDrawGizmos()
-        {
 
-            for(int i = 0; i<cellArray.Length; i++)
-            {
-                Gizmos.color = UnityEngine.Color.yellow;
-                Gizmos.DrawSphere(cellArray[i].GetSite.Position, 1);
-            }
-        }
     }
     
 }

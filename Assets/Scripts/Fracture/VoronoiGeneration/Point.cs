@@ -6,7 +6,7 @@ public class Point
     double y;
     double z;
 
-    Vector3 position;
+    private Vector3 position;
     public Point(Vector3 pos)
     {
         this.x = pos.x;

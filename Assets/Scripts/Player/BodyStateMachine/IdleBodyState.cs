@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class IdleBodyState : BodyState
 {
-    private Transform tempTarget;
 
     public IdleBodyState(BodyStateMachineContext context, BodyStateMachine.EBodyState estate) : base(context, estate)
     {
@@ -12,10 +11,17 @@ public class IdleBodyState : BodyState
     public override void EnterState()
     {
         Context.SetBodyToIdle();
-        Context.FallingCinemachine.HorizontalAxis.Value = Context.MovingCinemachine.HorizontalAxis.Center;
-        Context.FallingCinemachine.VerticalAxis.Value = Context.MovingCinemachine.VerticalAxis.Center;
+
+        if (!Context.TempFallingCameraPos)
+        {
+            Context.TempFallingCameraPos = Context.FallingCinemachine.VirtualCamera.Follow;
+        }
+        Context.MovingCinemachine.HorizontalAxis.Value = Context.FallingCinemachine.HorizontalAxis.Value;
+        Context.MovingCinemachine.VerticalAxis.Value = Context.FallingCinemachine.VerticalAxis.Value;
+        Context.MovingCinemachine.VirtualCamera.Follow = Context.TempFallingCameraPos;
         Context.FallingCinemachine.VirtualCamera.Priority = 10;
         Context.MovingCinemachine.VirtualCamera.Priority = 20;
+        Context.FallingCinemachine.VirtualCamera.Follow = Context.TempFallingCameraPos;
         Debug.Log("Enter Idle State");
     }
     public override void ExitState()

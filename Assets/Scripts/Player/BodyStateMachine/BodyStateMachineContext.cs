@@ -22,6 +22,7 @@ public class BodyStateMachineContext
     private Transform _rightLegPos;
     private Transform _leftLegPos;
     private Transform _spinePos;
+    public Transform TempFallingCameraPos{ get;  set; }
 
     private float timerToLaunch = 2f;
     public float currentLaunchTimer { get; set; }
