@@ -32,6 +32,9 @@ public class IdleBodyState : BodyState
     {
         Context.currentLaunchTimer += Time.deltaTime;
         //Context.HipsJoint.targetPosition = new Vector3(0, -alturaDeseada, 0);
+        Context.FallingCinemachine.HorizontalAxis.Value = Context.MovingCinemachine.HorizontalAxis.Value;
+        Context.FallingCinemachine.VerticalAxis.Value = Context.MovingCinemachine.VerticalAxis.Value;
+
         Debug.Log("Update Idle State");
     }
     public override BodyStateMachine.EBodyState GetNextState()

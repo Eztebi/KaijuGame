@@ -35,8 +35,8 @@ public class RotateLeftBodyState : BodyState
         Context.HipsJoint.targetRotation = nuevaRotacion;
         Context.FallingCinemachine.HorizontalAxis.Value = Context.MovingCinemachine.HorizontalAxis.Value;
         Context.FallingCinemachine.VerticalAxis.Value = Context.MovingCinemachine.VerticalAxis.Value;
-        Context.MovingCinemachine.HorizontalAxis.Value = Context.MovingCinemachine.HorizontalAxis.Center;
-        Context.MovingCinemachine.VerticalAxis.Value = Context.MovingCinemachine.VerticalAxis.Center;
+        //Context.MovingCinemachine.HorizontalAxis.Value = Context.MovingCinemachine.HorizontalAxis.Center;
+        //Context.MovingCinemachine.VerticalAxis.Value = Context.MovingCinemachine.VerticalAxis.Center;
         Debug.Log("Update RotateLeft State");
     }
     public override BodyStateMachine.EBodyState GetNextState()
