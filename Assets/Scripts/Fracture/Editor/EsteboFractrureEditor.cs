@@ -23,7 +23,7 @@ namespace EsteboFracture.Editor
         private GameObject tempMesh;
         private GameObject fracturedResultMesh;
 
-        private VoronoiFracture voronoiFracture;
+        private Fracture fracture;
         private FractureParameters CurrentSelectedParams
         {
             get
@@ -152,15 +152,15 @@ namespace EsteboFracture.Editor
             fracturedResultMesh.name = $"{mesh.name}_Fractured";
             mesh.SetActive(false);
 
-            voronoiFracture = fracturedResultMesh.GetComponent<VoronoiFracture>();
-            if (voronoiFracture == null)
+            fracture = fracturedResultMesh.GetComponent<Fracture>();
+            if (fracture == null)
             {
-                voronoiFracture = fracturedResultMesh.AddComponent<VoronoiFracture>();
+                fracture = fracturedResultMesh.AddComponent<Fracture>();
             }
 
-            voronoiFracture.Parameters = parameters;
+            fracture.Parameters = parameters;
 
-            voronoiFracture.GenerateFracture();
+            fracture.GenerateFracture();
 
             SceneView.RepaintAll();
         }

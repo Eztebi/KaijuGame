@@ -7,6 +7,7 @@ namespace EsteboFracture
     {
         Voronoi,
         Clustered,
+        Slicer
     }
     public enum EPointGenerationType
     {

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace EsteboFracture
 {
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-    public class VoronoiFracture : MonoBehaviour
+    public class Fracture : MonoBehaviour
     {
         [SerializeField]private FractureParameters parameters = new FractureParameters();
         public FractureParameters Parameters
@@ -27,6 +27,18 @@ namespace EsteboFracture
             }
 
             parameters.cells = PointGenerator.GeneratePoints(parameters.generationType, parameters.points, mesh);
+
+            switch (parameters.fractureType)
+            {
+                case EFractureType.Voronoi:
+                    EsteboFracture.FractureGenerator.VoronoiFracture();
+                    break;
+                case EFractureType.Slicer:
+                    EsteboFracture.FractureGenerator.SliceFracture(mesh, parameters.cells);
+                    break;
+                default:
+                    break;
+            }
         }
         private void OnDrawGizmos()
         {
