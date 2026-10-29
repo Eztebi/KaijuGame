@@ -81,10 +81,8 @@ namespace EsteboFracture.Editor
 
             GUILayout.Space(15);
 
-            // 1. Mostrar parámetros generales
             GeneralGUIParams();
 
-            // 2. Validación de mesh
             if (!mesh)
             {
                 EditorGUILayout.HelpBox("Asigna un objeto GameObject en 'Source' para poder generar o crear prefabs.", MessageType.Info);
@@ -106,16 +104,7 @@ namespace EsteboFracture.Editor
 
                 if (GUILayout.Button("Generate", GUILayout.Height(30)))
                 {
-                    //MODO PRUEBA guarda y borra el mesh
-                    if (fracturedResultMesh != null)
-                    {
-                        DestroyImmediate(fracturedResultMesh);
-                    }
-
-                    fracturedResultMesh = Instantiate(mesh);
-                    fracturedResultMesh.name = $"{mesh.name}_Fractured_Preview";
-                    mesh.SetActive(false); //Ocultamos el original mientras probamos
-                    Debug.Log("Objeto de prueba generado en la escena.");
+                    ExecuteGeneration();
                 }
 
                 if (GUILayout.Button("Create Prefab", GUILayout.Height(30)))
@@ -123,7 +112,7 @@ namespace EsteboFracture.Editor
                     if (fracturedResultMesh != null)
                     {
                         SaveFracturedPrefab(mesh, fracturedResultMesh);
-                        fracturedResultMesh = null; // Limpiamos la referencia
+                        fracturedResultMesh = null;
                     }
                     else
                     {
@@ -152,7 +141,29 @@ namespace EsteboFracture.Editor
             
             GUILayout.EndHorizontal();
         }
+        private void ExecuteGeneration()
+        {
+            if (fracturedResultMesh != null)
+            {
+                DestroyImmediate(fracturedResultMesh);
+            }
 
+            fracturedResultMesh = Instantiate(mesh);
+            fracturedResultMesh.name = $"{mesh.name}_Fractured";
+            mesh.SetActive(false);
+
+            voronoiFracture = fracturedResultMesh.GetComponent<VoronoiFracture>();
+            if (voronoiFracture == null)
+            {
+                voronoiFracture = fracturedResultMesh.AddComponent<VoronoiFracture>();
+            }
+
+            voronoiFracture.Parameters = parameters;
+
+            voronoiFracture.GenerateFracture();
+
+            SceneView.RepaintAll();
+        }
         private void GeneralGUIParams()
         {
             EditorGUILayout.LabelField("Object Properties", CustomEditorStyle.HeaderStyleLeft);

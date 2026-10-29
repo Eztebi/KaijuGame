@@ -15,9 +15,15 @@ namespace EsteboFracture
     [Serializable]
     public class FractureParameters
     {
-        public VoronoiCell[] cells;
-        public EFractureType fractureType;
-        public EPointGenerationType generationType;
-        public int points;
+        [HideInInspector]public EFractureType fractureType;
+        [HideInInspector]public EPointGenerationType generationType;
+        [HideInInspector]public int points = 10;
+
+        [Header("Visualization")]
+        public bool showGizmos = true;
+        public Color gizmoColor = Color.yellow;
+        public float gizmoRadius = 0.05f;
+
+        [HideInInspector] public VoronoiCell[] cells;
     }
 }

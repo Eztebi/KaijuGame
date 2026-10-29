@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace EsteboFracture
 {
+    [Serializable]
     public class VoronoiCell
     {
         Point site;
