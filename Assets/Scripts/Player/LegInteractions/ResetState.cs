@@ -20,7 +20,7 @@ public class ResetState : LegInteractionState
         {
             Context._currentLegPos = Context.LegIKTargetTransform.position;
         }
-
+        Context.SetLegToIdle();
         Debug.Log("Enter Reset State");
     }
 

@@ -158,6 +158,7 @@ namespace EsteboFracture.Editor
                 fracture = fracturedResultMesh.AddComponent<Fracture>();
             }
 
+            fracture.Parameters.insideMaterial = insideMaterial;
             fracture.Parameters = parameters;
 
             fracture.GenerateFracture();

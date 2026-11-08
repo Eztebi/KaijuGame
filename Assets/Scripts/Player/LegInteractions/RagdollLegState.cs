@@ -63,6 +63,6 @@ public class RagdollLegState : LegInteractionState
     }
     public override void MoveToPosition()
     {
-        // Vacío, la física controla la posición ahora.
+        // .
     }
 }

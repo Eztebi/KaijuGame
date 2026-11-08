@@ -11,9 +11,11 @@ public class ResetBodyState : BodyState
         Context.SetBodyToReset();
         Context.currentLaunchTimer = 0;
         Context.InputHandler.BodyActiveState = InputHandler.EBodyActiveState.Reset;
+        Context.InputHandler.LeftLegActiveState = InputHandler.EBodyActiveState.Reset;
+        Context.InputHandler.RightLegActiveState = InputHandler.EBodyActiveState.Reset;
         Debug.Log("Enter Body Reset State ");
     }
-
+     
     public override void ExitState() { }
 
     public override void UpdateState()

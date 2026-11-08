@@ -39,13 +39,6 @@ public class RagdollBodyState : BodyState
             return BodyStateMachine.EBodyState.Reset;
         }
 
-        bool rightLegReady = Context.InputHandler.RightLegActiveState != InputHandler.EBodyActiveState.Ragdoll;
-        bool leftLegReady = Context.InputHandler.LeftLegActiveState != InputHandler.EBodyActiveState.Ragdoll;
-
-        if (rightLegReady && leftLegReady)
-        {
-            return BodyStateMachine.EBodyState.Reset;
-        }
         if (Context.InputHandler.DebugMoveToolInput == InputHandler.EControllerInput.Down) return BodyStateMachine.EBodyState.DebugMode;
 
         return StateKey;

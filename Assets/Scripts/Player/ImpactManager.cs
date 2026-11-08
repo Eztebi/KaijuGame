@@ -7,6 +7,7 @@ public class PlayerImpactHandler : MonoBehaviour
     [Header("Configuración de Impacto")]
     [SerializeField] private string bulletTag = "Bullet";
     [SerializeField] private string hazardTag = "Hazzard";
+    [SerializeField] private string fragmentTag = "Fragment";
     [SerializeField] private float minVelocityToRagdoll = 12f;
 
     [Header("Referencias")]
@@ -30,6 +31,10 @@ public class PlayerImpactHandler : MonoBehaviour
         if (collision.collider.CompareTag(hazardTag))
         {
             ForceRagdollState();
+        }
+        if (collision.collider.CompareTag(fragmentTag))
+        {
+            collision.collider.GetComponent<Fragment>()?.RecieveImpact(50);
         }
     }
 

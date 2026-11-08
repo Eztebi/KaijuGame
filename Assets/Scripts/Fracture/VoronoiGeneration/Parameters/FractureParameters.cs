@@ -19,6 +19,7 @@ namespace EsteboFracture
         [HideInInspector]public EFractureType fractureType;
         [HideInInspector]public EPointGenerationType generationType;
         [HideInInspector]public int points = 10;
+        [HideInInspector] public Material insideMaterial;
 
         [Header("Visualization")]
         public bool showGizmos = true;

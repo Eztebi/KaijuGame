@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace EsteboFracture
@@ -27,6 +28,7 @@ namespace EsteboFracture
             }
 
             parameters.cells = PointGenerator.GeneratePoints(parameters.generationType, parameters.points, mesh);
+            List<Mesh> fragments = new List<Mesh>();
 
             switch (parameters.fractureType)
             {
@@ -34,10 +36,42 @@ namespace EsteboFracture
                     EsteboFracture.FractureGenerator.VoronoiFracture();
                     break;
                 case EFractureType.Slicer:
-                    EsteboFracture.FractureGenerator.SliceFracture(mesh, parameters.cells);
+                    fragments = EsteboFracture.FractureGenerator.SliceFracture(mesh, parameters.cells);
                     break;
                 default:
                     break;
+            }
+            if (fragments != null && fragments.Count > 0)
+            {
+                MeshRenderer originalRenderer = GetComponent<MeshRenderer>();
+                if (originalRenderer != null) originalRenderer.enabled = false;
+
+                for (int i = 0; i < fragments.Count; i++)
+                {
+                    GameObject fragmentObj = new GameObject($"Fragment_{i}");
+
+                    fragmentObj.transform.SetParent(this.transform);
+                    fragmentObj.transform.localPosition = Vector3.zero;
+                    fragmentObj.transform.localRotation = Quaternion.identity;
+                    fragmentObj.transform.localScale = Vector3.one;
+
+                    MeshFilter mf = fragmentObj.AddComponent<MeshFilter>();
+                    mf.sharedMesh = fragments[i];
+
+                    MeshRenderer mr = fragmentObj.AddComponent<MeshRenderer>();
+                    if (originalRenderer != null)
+                    {
+                        mr.sharedMaterials = originalRenderer.sharedMaterials;
+                    }
+                    fragmentObj.AddComponent<MeshCollider>().convex = true;
+                    Rigidbody rb = fragmentObj.AddComponent<Rigidbody>();
+                    rb.useGravity = false;    
+                    rb.isKinematic = true;
+                    rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
+                    fragmentObj.AddComponent<Fragment>();
+                    fragmentObj.tag = "Fragment";
+                }
+                MeshSlicer.ConnectNeighbors(new List<Fragment>(GetComponentsInChildren<Fragment>()));
             }
         }
         private void OnDrawGizmos()
