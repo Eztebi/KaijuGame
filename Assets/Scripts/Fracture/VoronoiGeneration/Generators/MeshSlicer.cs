@@ -38,9 +38,9 @@ namespace EsteboFracture
                 float distanceB = plane.GetDistanceToPoint(vertexB);
                 float distanceC = plane.GetDistanceToPoint(vertexC);
 
-                bool isAInside = distanceA <= 0;
-                bool isBInside = distanceB <= 0;
-                bool isCInside = distanceC <= 0;
+                bool isAInside = distanceA < 0;
+                bool isBInside = distanceB < 0;
+                bool isCInside = distanceC < 0;
 
                 int insideCount = (isAInside ? 1 : 0) + (isBInside ? 1 : 0) + (isCInside ? 1 : 0);
 
@@ -77,9 +77,15 @@ namespace EsteboFracture
         {
             int startIndex = newVertices.Count;
 
-            newVertices.Add(vA); newVertices.Add(vB); newVertices.Add(vC);
-            newNormals.Add(nA); newNormals.Add(nB); newNormals.Add(nC);
-            newUVs.Add(uvA); newUVs.Add(uvB); newUVs.Add(uvC);
+            newVertices.Add(vA);
+            newVertices.Add(vB); 
+            newVertices.Add(vC);
+            newNormals.Add(nA); 
+            newNormals.Add(nB); 
+            newNormals.Add(nC);
+            newUVs.Add(uvA); 
+            newUVs.Add(uvB); 
+            newUVs.Add(uvC);
 
             newTriangles.Add(startIndex);
             newTriangles.Add(startIndex + 1);
@@ -156,7 +162,7 @@ namespace EsteboFracture
 
                 Vector2 uvBA = Vector2.Lerp(uvB, uvA, t1);
                 Vector2 uvCA = Vector2.Lerp(uvC, uvA, t2);
-
+    
                 AddTriangle(newVertices, newNormals, newUVs, newTriangles, vB, vC, cutBA, nB, nC, normBA, uvB, uvC, uvBA);
                 AddTriangle(newVertices, newNormals, newUVs, newTriangles, vC, cutCA, cutBA, nC, normCA, normBA, uvC, uvCA, uvBA);
             }

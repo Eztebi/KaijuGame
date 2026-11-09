@@ -44,8 +44,7 @@ namespace EsteboFracture
             if (fragments != null && fragments.Count > 0)
             {
                 MeshRenderer originalRenderer = GetComponent<MeshRenderer>();
-                if (originalRenderer != null) originalRenderer.enabled = false;
-
+                originalRenderer.enabled = false;
                 for (int i = 0; i < fragments.Count; i++)
                 {
                     GameObject fragmentObj = new GameObject($"Fragment_{i}");
@@ -57,19 +56,21 @@ namespace EsteboFracture
 
                     MeshFilter mf = fragmentObj.AddComponent<MeshFilter>();
                     mf.sharedMesh = fragments[i];
-
+                    mf.sharedMesh.name = $"FragmentMaterial_{fragments[i]}";
                     MeshRenderer mr = fragmentObj.AddComponent<MeshRenderer>();
                     if (originalRenderer != null)
                     {
                         mr.sharedMaterials = originalRenderer.sharedMaterials;
                     }
                     fragmentObj.AddComponent<MeshCollider>().convex = true;
+                    fragmentObj.GetComponent<MeshCollider>().sharedMesh= fragments[i];
                     Rigidbody rb = fragmentObj.AddComponent<Rigidbody>();
                     rb.useGravity = false;    
                     rb.isKinematic = true;
-                    rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
+                    rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
                     fragmentObj.AddComponent<Fragment>();
                     fragmentObj.tag = "Fragment";
+                    //fragmentObj.SetActive();
                 }
                 MeshSlicer.ConnectNeighbors(new List<Fragment>(GetComponentsInChildren<Fragment>()));
             }

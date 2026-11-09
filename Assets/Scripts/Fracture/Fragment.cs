@@ -19,7 +19,7 @@ public class Fragment : MonoBehaviour
         if (health <= 0)
         {
             ActivateRigidbody(); 
-            Destroy(gameObject, 3f); 
+            Destroy(gameObject, 20f); 
         }
         else
         {
@@ -45,9 +45,8 @@ public class Fragment : MonoBehaviour
         if (col == null)
         {
             col = gameObject.AddComponent<MeshCollider>();
-            col.convex = true;
+            col.convex = false;
         }
-
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         rb.isKinematic = false;
         rb.useGravity = true;
