@@ -9,6 +9,7 @@ TagManager:
   - Hazzard
   - Turret
   - Fragment
+  - PowerUp
   layers:
   - Default
   - TransparentFX

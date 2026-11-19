@@ -8,6 +8,7 @@ public class PlayerImpactHandler : MonoBehaviour
     [SerializeField] private string bulletTag = "Bullet";
     [SerializeField] private string hazardTag = "Hazzard";
     [SerializeField] private string fragmentTag = "Fragment";
+    [SerializeField] private string growthTag = "PowerUp";
     [SerializeField] private float minVelocityToRagdoll = 12f;
 
     [Header("Referencias")]
@@ -36,6 +37,7 @@ public class PlayerImpactHandler : MonoBehaviour
         {
             collision.collider.GetComponent<Fragment>()?.RecieveImpact(50);
         }
+
     }
 
     public void ProcessTrigger(Collider other)

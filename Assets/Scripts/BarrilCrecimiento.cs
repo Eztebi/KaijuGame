@@ -1,16 +1,22 @@
 using UnityEngine;
 
-public class BarrilCrecimiento : MonoBehaviour
+[RequireComponent (typeof(BoxCollider))]
+public class GrowdthPowerUp : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        if (collision.collider.CompareTag("Player"))
+        {
+            Transform parent = collision.collider.transform.root;
+            GrowManager growManager = parent.GetComponentInChildren<GrowManager>();
+            growManager.SetScale(growManager.CurrentScale + 1);
+
+            DestroyOnContact();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void DestroyOnContact()
     {
-        
+        Destroy(this.gameObject);
     }
 }

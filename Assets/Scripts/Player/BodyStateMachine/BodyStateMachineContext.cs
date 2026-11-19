@@ -29,7 +29,7 @@ public class BodyStateMachineContext
     public BodyStateMachineContext(Transform bodypos, StaticBoneFollower[] bones,InputHandler handler, Rigidbody[] rbs, Animator animator,
         Rigidbody hipsRB, Rigidbody spineRB, Rigidbody headRB,
         ConfigurableJoint hipsJoint, ConfigurableJoint spineJoint, ConfigurableJoint headJoint,
-        Transform rightLegPos, Transform leftLegPos, Transform SpinePos, CinemachineOrbitalFollow fallingCinemachine, CinemachineOrbitalFollow movingCinemachine)
+        Transform rightLegPos, Transform leftLegPos, Transform SpinePos, CinemachineOrbitalFollow fallingCinemachine, CinemachineOrbitalFollow movingCinemachine, GrowManager growManager)
     {
         _inputHandler = handler;
         _rigidbodies = rbs;
@@ -47,13 +47,14 @@ public class BodyStateMachineContext
         _spinePos = SpinePos;
         _fallingCinemachine = fallingCinemachine;
         _movingCinemachine = movingCinemachine;
+        _growthManager = growManager;
     }
     public void SetBodyToIdle()
     {
-        SetHipsBalance(15000f, 500f);
+        SetHipsBalance(_growthManager.CurrentSpring, _growthManager.CurrentDamper);
 
-        SetJointSlerp(SpineJoint, 4000f, 150f);
-        SetJointSlerp(HeadJoint, 1000f, 40f);
+        SetJointSlerp(SpineJoint, _growthManager.CurrentSpring, _growthManager.CurrentDamper);
+        SetJointSlerp(HeadJoint, _growthManager.CurrentSpring, _growthManager.CurrentDamper);
     }
 
     public void SetBodyToRagdoll()
@@ -94,9 +95,9 @@ public class BodyStateMachineContext
 public void SetBodyToReset()
     {
 
-        SetHipsBalance(20000f, 1000f); 
-        SetJointSlerp(SpineJoint, 10000f, 600f);
-        SetJointSlerp(HeadJoint, 800f, 60f);
+        SetHipsBalance(_growthManager.CurrentSpring, _growthManager.CurrentDamper); 
+        SetJointSlerp(SpineJoint, _growthManager.CurrentSpring, _growthManager.CurrentDamper);
+        SetJointSlerp(HeadJoint, _growthManager.CurrentSpring, _growthManager.CurrentDamper);
     }
     public void SetBoneStiffness(float spring, float damper)
     {
@@ -116,4 +117,5 @@ public void SetBodyToReset()
     public Rigidbody[] Rigidbodies => _rigidbodies;
     public CinemachineOrbitalFollow MovingCinemachine => _movingCinemachine;
     public CinemachineOrbitalFollow FallingCinemachine => _fallingCinemachine;
+    public GrowManager GrowManager => _growthManager;
 }
