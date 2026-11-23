@@ -26,6 +26,8 @@ public class TouchState : LegInteractionState
     {
         if (Context.InputHandler.DebugMoveToolInput == InputHandler.EControllerInput.Down) return LegStateMachine.ELegState.DebugMode;
 
+        if (Context.InputHandler.BodyActiveState == InputHandler.EBodyActiveState.Grow) return LegStateMachine.ELegState.Grow;
+
         return LegStateMachine.ELegState.Reset;
         return StateKey;
     }

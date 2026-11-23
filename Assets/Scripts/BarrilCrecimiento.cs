@@ -8,9 +8,13 @@ public class GrowdthPowerUp : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
             Transform parent = collision.collider.transform.root;
-            GrowManager growManager = parent.GetComponentInChildren<GrowManager>();
-            growManager.SetScale(growManager.CurrentScale + 1);
+            GrowManager growManager = parent.GetComponent<GrowManager>();
+            if (growManager)
+            {
+                growManager.SetScale(growManager.CurrentScale + 1);
 
+                Debug.LogWarning("Escala");
+            }
             DestroyOnContact();
         }
     }

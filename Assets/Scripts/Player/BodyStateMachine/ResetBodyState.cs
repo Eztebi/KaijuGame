@@ -25,6 +25,8 @@ public class ResetBodyState : BodyState
 
     public override BodyStateMachine.EBodyState GetNextState()
     {
+        if (Context.InputHandler.BodyActiveState == InputHandler.EBodyActiveState.Grow) return BodyStateMachine.EBodyState.Grow;
+
         return BodyStateMachine.EBodyState.Idle;
         if (Context.InputHandler.DebugMoveToolInput == InputHandler.EControllerInput.Down) return BodyStateMachine.EBodyState.DebugMode;
 

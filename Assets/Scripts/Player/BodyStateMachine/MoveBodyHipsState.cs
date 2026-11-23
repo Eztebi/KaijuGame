@@ -30,6 +30,8 @@ public class MoveBodyHipsState : BodyState
         {
             return BodyStateMachine.EBodyState.Reset;
         }
+        if (Context.InputHandler.BodyActiveState == InputHandler.EBodyActiveState.Grow) return BodyStateMachine.EBodyState.Grow;
+
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

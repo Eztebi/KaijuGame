@@ -22,6 +22,8 @@ public class DebugMoveLegState : LegInteractionState
     public override LegStateMachine.ELegState GetNextState()
     {
         if (Context.InputHandler.DebugMoveToolInput == InputHandler.EControllerInput.Up) return LegStateMachine.ELegState.Reset;
+        if (Context.InputHandler.BodyActiveState == InputHandler.EBodyActiveState.Grow) return LegStateMachine.ELegState.Grow;
+
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

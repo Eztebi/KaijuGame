@@ -13,7 +13,7 @@ public class InputHandler : MonoBehaviour
     }
     public enum EBodyActiveState
     {
-        Down, Up, Ragdoll, Reset, Launch
+        Down, Up, Ragdoll, Reset, Launch, Grow
     }
     private EBodyActiveState bodyActiveState;
     private EBodyActiveState leftLegState;

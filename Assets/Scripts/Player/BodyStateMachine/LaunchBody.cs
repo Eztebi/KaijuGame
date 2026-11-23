@@ -30,6 +30,8 @@ public class LaunchBody : BodyState
     }
     public override BodyStateMachine.EBodyState GetNextState()
     {
+        if (Context.InputHandler.BodyActiveState == InputHandler.EBodyActiveState.Grow) return BodyStateMachine.EBodyState.Grow;
+
         return BodyStateMachine.EBodyState.Ragdoll;
         if (Context.InputHandler.DebugMoveToolInput == InputHandler.EControllerInput.Down) return BodyStateMachine.EBodyState.DebugMode;
         return StateKey;

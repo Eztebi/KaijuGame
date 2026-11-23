@@ -44,6 +44,8 @@ public class DebugMoveBodyState : BodyState
         {
             return BodyStateMachine.EBodyState.Reset;
         }
+        if (Context.InputHandler.BodyActiveState == InputHandler.EBodyActiveState.Grow) return BodyStateMachine.EBodyState.Grow;
+
         return BodyStateMachine.EBodyState.DebugMode;
     }
     public override void OnTriggerEnter(Collider other) { }

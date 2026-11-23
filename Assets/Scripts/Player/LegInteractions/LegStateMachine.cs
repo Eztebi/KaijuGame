@@ -15,7 +15,8 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
         Relocate,
         Ragdoll,
         Reset,
-        DebugMode
+        DebugMode,
+        Grow
     }
     public enum ELegType
     {
@@ -102,6 +103,7 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
         States.Add(ELegState.Reset, new ResetState(_context, ELegState.Reset));
         States.Add(ELegState.Ragdoll, new RagdollLegState(_context, ELegState.Ragdoll));
         States.Add(ELegState.DebugMode, new DebugMoveLegState(_context, ELegState.DebugMode));
+        States.Add(ELegState.Grow, new LegGrowState(_context, ELegState.Grow));
         currentState = States[ELegState.Reset];
     }
     public bool Isgrounded => isGrounded;

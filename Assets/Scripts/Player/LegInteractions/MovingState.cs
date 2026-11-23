@@ -43,6 +43,8 @@ public class MovingState : LegInteractionState
         }
         if (Context.InputHandler.DebugMoveToolInput == InputHandler.EControllerInput.Down) return LegStateMachine.ELegState.DebugMode;
 
+        if (Context.InputHandler.BodyActiveState == InputHandler.EBodyActiveState.Grow) return LegStateMachine.ELegState.Grow;
+
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

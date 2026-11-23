@@ -51,10 +51,10 @@ public class BodyStateMachineContext
     }
     public void SetBodyToIdle()
     {
-        SetHipsBalance(_growthManager.CurrentSpring, _growthManager.CurrentDamper);
+        SetHipsBalance(_growthManager.GetJointSpring(HipsJoint), _growthManager.GetJointDamper(HipsJoint));
 
-        SetJointSlerp(SpineJoint, _growthManager.CurrentSpring, _growthManager.CurrentDamper);
-        SetJointSlerp(HeadJoint, _growthManager.CurrentSpring, _growthManager.CurrentDamper);
+        SetJointSlerp(SpineJoint, _growthManager.GetJointSpring(SpineJoint), _growthManager.GetJointDamper(SpineJoint));
+        SetJointSlerp(HeadJoint, _growthManager.GetJointSpring(HeadJoint), _growthManager.GetJointDamper(HeadJoint));
     }
 
     public void SetBodyToRagdoll()
@@ -95,9 +95,9 @@ public class BodyStateMachineContext
 public void SetBodyToReset()
     {
 
-        SetHipsBalance(_growthManager.CurrentSpring, _growthManager.CurrentDamper); 
-        SetJointSlerp(SpineJoint, _growthManager.CurrentSpring, _growthManager.CurrentDamper);
-        SetJointSlerp(HeadJoint, _growthManager.CurrentSpring, _growthManager.CurrentDamper);
+        SetHipsBalance(_growthManager.GetJointSpring(HipsJoint), _growthManager.GetJointDamper(HipsJoint)); 
+        SetJointSlerp(SpineJoint, _growthManager.GetJointSpring(SpineJoint), _growthManager.GetJointDamper(SpineJoint));
+        SetJointSlerp(HeadJoint, _growthManager.GetJointSpring(HeadJoint), _growthManager.GetJointDamper(HeadJoint));
     }
     public void SetBoneStiffness(float spring, float damper)
     {

@@ -13,7 +13,8 @@ public class BodyStateMachine : StateManager<BodyStateMachine.EBodyState>
         Moving,
         Reset,
         Launch,
-        DebugMode
+        DebugMode,
+        Grow
     }
     private BodyStateMachineContext _context;
 
@@ -59,6 +60,7 @@ public class BodyStateMachine : StateManager<BodyStateMachine.EBodyState>
         States.Add(EBodyState.Reset, new ResetBodyState(_context, EBodyState.Reset));
         States.Add(EBodyState.Launch, new LaunchBody(_context, EBodyState.Launch));
         States.Add(EBodyState.DebugMode, new DebugMoveBodyState(_context, EBodyState.DebugMode));
+        States.Add(EBodyState.Grow, new GrowBodyState(_context, EBodyState.Grow));
         currentState = States[EBodyState.Reset];
     }
    

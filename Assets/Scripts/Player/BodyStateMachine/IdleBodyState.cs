@@ -57,6 +57,8 @@ public class IdleBodyState : BodyState
         }
         if (Context.InputHandler.DebugMoveToolInput == InputHandler.EControllerInput.Down) return BodyStateMachine.EBodyState.DebugMode;
 
+        if (Context.InputHandler.BodyActiveState == InputHandler.EBodyActiveState.Grow) return BodyStateMachine.EBodyState.Grow;
+
         return StateKey;
     }
     public override void OnTriggerEnter(Collider other) { }

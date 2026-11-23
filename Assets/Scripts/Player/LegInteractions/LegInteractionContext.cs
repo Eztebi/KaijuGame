@@ -41,7 +41,23 @@ public class LegInteractionContext
     private float ragdollDistance = 1.5f;
     private float movingSpeed = 2.5f;
     private float maxLegMovingDistance = .9f;
+    private float currentScale =1f;
 
+    public float MaxLegMovingDistance
+    {
+        get { return maxLegMovingDistance * currentScale; }
+        set { maxLegMovingDistance = value; }
+    }
+    public float MovingSpeed
+    {
+        get { return movingSpeed * currentScale; }
+        set { movingSpeed = value; }
+    }
+    public float RagdollDistance
+    {
+        get { return ragdollDistance * currentScale; }
+        set { ragdollDistance = value; }
+    }
     public LegInteractionContext(TwoBoneIKConstraint ikConstraint, MultiRotationConstraint legMultiRotationConstraint,
             /*Rigidbody rigidbody, CapsuleCollider rootCollider,*/ Transform legRestPosition, Transform legUpPosition,
             Transform legIKTargetTransform, BoxCollider legCollider,
@@ -200,7 +216,5 @@ public class LegInteractionContext
     public Rigidbody HipRB => _hipRB;
     public Transform OtherRagdollLegPos => _ragdollOtherLegPos;
     public CinemachineBasicMultiChannelPerlin CameraShake => _cameraShake;
-    public float RagdollDistance => ragdollDistance;
-    public float MovingSpeed => movingSpeed;
-    public float MaxLegMovingDistance => maxLegMovingDistance;
+    public float CurrentScale => currentScale;
 }
