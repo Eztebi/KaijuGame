@@ -38,6 +38,7 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
     [SerializeField] private Transform _feetRestPosition;
     [SerializeField] private Transform _hipPosition;
     [SerializeField] private Transform _hipNormalPos;
+    [SerializeField] private GrowManager _growManager;
 
     [SerializeField] private Transform _legIKTargetTransform;
     [SerializeField] private Transform _feetIKTargetTransform;
@@ -79,7 +80,7 @@ public class LegStateMachine : StateManager<LegStateMachine.ELegState>
              _legIKTargetTransform, _legCollider, _hipPosition,
             _groundLayerMask, _otherLeg, _fullBody, _currentLegBones, isGrounded, _eLegType,
             _handler,_upperLegRB, _lowerLegRB, _feetRB, _upperLegJoint, _lowerLegJoint, _feetJoint,_ragdollLegPos, _ragdollOtherLegPos,
-            _cameraShake, _hipJoint, _hipsRB);
+            _cameraShake, _hipJoint, _hipsRB, _growManager);
         InitializeStates();
     }
     private void ValidateConstraints()

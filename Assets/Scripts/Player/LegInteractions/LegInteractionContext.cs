@@ -26,7 +26,7 @@ public class LegInteractionContext
     private Transform _ragdollOtherLegPos;
     private StaticBoneFollower[] _currentLegBones;
     private CinemachineBasicMultiChannelPerlin _cameraShake;
-
+    private GrowManager _growManager;
     public Rigidbody UpperLegRB { get; private set; }
     public Rigidbody LowerLegRB { get; private set; }
     public Rigidbody FeetRB { get; private set; }
@@ -43,21 +43,24 @@ public class LegInteractionContext
     private float maxLegMovingDistance = .9f;
     private float currentScale =1f;
 
+    public float CurrentScale => _growManager != null ? _growManager.CurrentScale : 1f;
+
     public float MaxLegMovingDistance
     {
-        get { return maxLegMovingDistance * currentScale; }
+        get { return maxLegMovingDistance * CurrentScale; }
         set { maxLegMovingDistance = value; }
     }
     public float MovingSpeed
     {
-        get { return movingSpeed * currentScale; }
+        get { return movingSpeed * CurrentScale; }
         set { movingSpeed = value; }
     }
     public float RagdollDistance
     {
-        get { return ragdollDistance * currentScale; }
+        get { return ragdollDistance * CurrentScale; }
         set { ragdollDistance = value; }
     }
+    
     public LegInteractionContext(TwoBoneIKConstraint ikConstraint, MultiRotationConstraint legMultiRotationConstraint,
             /*Rigidbody rigidbody, CapsuleCollider rootCollider,*/ Transform legRestPosition, Transform legUpPosition,
             Transform legIKTargetTransform, BoxCollider legCollider,
@@ -65,7 +68,7 @@ public class LegInteractionContext
             StaticBoneFollower[] currentLegBones, bool isGrounded,
             LegStateMachine.ELegType legType, InputHandler inputHandler, Rigidbody upLegRB, Rigidbody lowLegRB, Rigidbody feetRB,
             ConfigurableJoint upLegJoint, ConfigurableJoint lowLegJoint, ConfigurableJoint feetJoint, Transform ragdollLegPos,
-            Transform ragdollOtherLegPos, CinemachineBasicMultiChannelPerlin cameraShake, ConfigurableJoint hipJoint, Rigidbody hipRB)
+            Transform ragdollOtherLegPos, CinemachineBasicMultiChannelPerlin cameraShake, ConfigurableJoint hipJoint, Rigidbody hipRB, GrowManager growManager)
     {
         _ikConstraint = ikConstraint;
         _multiRotationConstraint = legMultiRotationConstraint;
@@ -94,6 +97,7 @@ public class LegInteractionContext
         _ragdollOtherLegPos = ragdollOtherLegPos;
         _cameraShake = cameraShake;
         _hipRB = hipRB;
+        _growManager = growManager;
 
         if (UpperLegRB != null) upperLegMass = UpperLegRB.mass;
         if (LowerLegRB != null) lowerLegMass = LowerLegRB.mass;
@@ -168,26 +172,30 @@ public class LegInteractionContext
     }
     public void SetLegToIdle()
     {
-        // 1. Restaurar masas pesadas
-        if (UpperLegRB != null) UpperLegRB.mass = upperLegMass;
-        if (LowerLegRB != null) LowerLegRB.mass = lowerLegMass;
-        if (FeetRB != null) FeetRB.mass = FeetMass;
+        float scale = CurrentScale;
+
+        // 1. Restaurar masas escaladas al tamaño actual
+        if (UpperLegRB != null) UpperLegRB.mass = upperLegMass * scale;
+        if (LowerLegRB != null) LowerLegRB.mass = lowerLegMass * scale;
+        if (FeetRB != null) FeetRB.mass = FeetMass * scale;
 
         // 2. Fuerza fuerte y estable
-        SetJointSlerp(UpperLegJoint, 20000f, 500f);
-        SetJointSlerp(LowerLegJoint, 10000f, 300f);
-        SetJointSlerp(FeetJoint, 10000f, 200f);
+        SetJointSlerp(UpperLegJoint, _growManager.GetJointSpring(UpperLegJoint), _growManager.GetJointDamper(UpperLegJoint));
+        SetJointSlerp(LowerLegJoint, _growManager.GetJointSpring(LowerLegJoint), _growManager.GetJointDamper(LowerLegJoint));
+        SetJointSlerp(FeetJoint, _growManager.GetJointSpring(FeetJoint), _growManager.GetJointDamper(FeetJoint));
     }
 
     public void SetLegToRise()
     {
-        if (UpperLegRB != null) UpperLegRB.mass = 0.2f;
-        if (LowerLegRB != null) LowerLegRB.mass = 0.1f;
-        if (FeetRB != null) FeetRB.mass = 0.05f;
+        float scale = CurrentScale;
 
-        SetJointSlerp(UpperLegJoint, 25000f, 50f);
-        SetJointSlerp(LowerLegJoint, 15000f, 30f);
-        SetJointSlerp(FeetJoint, 2000f, 10f);
+        if (UpperLegRB != null) UpperLegRB.mass = 0.2f * scale;
+        if (LowerLegRB != null) LowerLegRB.mass = 0.1f * scale;
+        if (FeetRB != null) FeetRB.mass = 0.05f * scale;
+
+        SetJointSlerp(UpperLegJoint, _growManager.GetJointSpring(UpperLegJoint), _growManager.GetJointDamper(UpperLegJoint));
+        SetJointSlerp(LowerLegJoint, _growManager.GetJointSpring(LowerLegJoint), _growManager.GetJointDamper(LowerLegJoint));
+        SetJointSlerp(FeetJoint, _growManager.GetJointSpring(FeetJoint), _growManager.GetJointDamper(FeetJoint));
     }
 
     public void SetJointSlerp(ConfigurableJoint joint, float spring, float damper)
@@ -216,5 +224,4 @@ public class LegInteractionContext
     public Rigidbody HipRB => _hipRB;
     public Transform OtherRagdollLegPos => _ragdollOtherLegPos;
     public CinemachineBasicMultiChannelPerlin CameraShake => _cameraShake;
-    public float CurrentScale => currentScale;
 }
