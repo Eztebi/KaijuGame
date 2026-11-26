@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class ResetState : LegInteractionState
 {
-    private Vector3 targetFootPosGlobal;
     private float moveSpeed = 5f;
     private float timer;
 
@@ -15,7 +14,6 @@ public class ResetState : LegInteractionState
     {
 
         timer = 0;
-        targetFootPosGlobal = GetFloorPosition();
         if (Context._currentLegPos == Vector3.zero)
         {
             Context._currentLegPos = Context.LegIKTargetTransform.position;
@@ -34,7 +32,7 @@ public class ResetState : LegInteractionState
 
     public override LegStateMachine.ELegState GetNextState()
     {
-        if ( Vector3.Distance(Context._currentLegPos, targetFootPosGlobal) < 0.05f)
+        if ( Vector3.Distance(Context._currentLegPos, Context.LegRestPosition.position) < 0.05f)
         {
             return LegStateMachine.ELegState.Idle;
         }
@@ -56,13 +54,7 @@ public class ResetState : LegInteractionState
 
     public override void MoveToPosition()
     {
-        targetFootPosGlobal = GetFloorPosition();
-        Context._currentLegPos = Vector3.MoveTowards(Context._currentLegPos, targetFootPosGlobal,Time.deltaTime * moveSpeed);
+        Context._currentLegPos = Vector3.MoveTowards(Context._currentLegPos, Context.LegRestPosition.position, Time.deltaTime * moveSpeed);
         Context.LegIKTargetTransform.position = Context._currentLegPos;
-    }
-
-    private Vector3 GetFloorPosition()
-    {
-        return Context.LegRestPosition.position;
     }
 }

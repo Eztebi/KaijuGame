@@ -41,7 +41,7 @@ public class ReleaseState : LegInteractionState
     {
         Vector3 pos = new Vector3(Context._currentLegPos.x, Context.FullBodyPos.position.y, Context._currentLegPos.z);
 
-        float maxDistance = Mathf.Abs(Context.FullBodyPos.position.y - Context.LegRestPosition.position.y) + (2f * Context.CurrentScale);
+        float maxDistance = Mathf.Abs(Context.FullBodyPos.position.y - Context.LegRestPosition.position.y) + (2f /** Context.CurrentScale*/);
 
         if (Physics.Raycast(pos, Vector3.down, out RaycastHit hit, maxDistance, Context.GroundMask))
         {

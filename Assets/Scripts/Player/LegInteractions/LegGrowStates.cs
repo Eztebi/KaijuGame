@@ -10,9 +10,9 @@ public class LegGrowState : LegInteractionState
     //public override void AwakeState() { }
     public override void EnterState()
     {
-        Context.RagdollDistance *= Context.CurrentScale; 
-        Context.MaxLegMovingDistance *= Context.CurrentScale; 
-        Context.MovingSpeed *= Context.CurrentScale; 
+        //Context.RagdollDistance *= Context.CurrentScale; 
+        //Context.MaxLegMovingDistance *= Context.CurrentScale; 
+        //Context.MovingSpeed *= Context.CurrentScale; 
     }
     public override void ExitState() { }
     public override void UpdateState()

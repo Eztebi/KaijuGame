@@ -30,10 +30,10 @@ public class RelocateState : LegInteractionState
 
     public override void UpdateState()
     {
-        legPos = new Vector3(Context.LegRestPosition.position.x, Context.LegRestPosition.position.y - (2.0f * Context.CurrentScale), Context.LegRestPosition.position.z);
+        legPos = new Vector3(Context.LegRestPosition.position.x, Context.LegRestPosition.position.y - (2.0f /** Context.CurrentScale*/), Context.LegRestPosition.position.z);
         float distanciaRecorrida = Vector3.Distance(Context.LegIKTargetTransform.position, Context.LegUpPosition.position);
         float distanciaTotal = Vector3.Distance(Context.LegUpPosition.position, Context.LegRestPosition.position);
-        bool bajarCuerpo = distanciaRecorrida > (distanciaTotal * (0.5f * Context.CurrentScale));
+        bool bajarCuerpo = distanciaRecorrida > (distanciaTotal * (0.5f /** Context.CurrentScale*/));
         float midX = (Context.LegIKTargetTransform.position.x + Context.OtherLegPosition.position.x) / 2f;
         float midZ = (Context.LegIKTargetTransform.position.z + Context.OtherLegPosition.position.z) / 2f;
 
@@ -42,13 +42,13 @@ public class RelocateState : LegInteractionState
 
         if (!bajarCuerpo)
         {
-            targetY = Context.OtherLegPosition.position.y + fixedBodyOffset + (bodyHeightTweak * Context.CurrentScale);
+            targetY = Context.OtherLegPosition.position.y + fixedBodyOffset + (bodyHeightTweak);// * Context.CurrentScale);
         }
         else
         {
-            targetY = (Context.LegIKTargetTransform.position.y + fixedBodyOffset) - (0.4f * Context.CurrentScale);
+            targetY = (Context.LegIKTargetTransform.position.y + fixedBodyOffset) - (0.4f);// * Context.CurrentScale);
 
-            float minHeight = Context.OtherLegPosition.position.y + fixedBodyOffset - (0.6f * Context.CurrentScale);
+            float minHeight = Context.OtherLegPosition.position.y + fixedBodyOffset - (0.6f);// * Context.CurrentScale);
             targetY = Mathf.Max(targetY, minHeight);
         }
 
@@ -113,7 +113,7 @@ public class RelocateState : LegInteractionState
         Context.FullBodyPos.position = Vector3.Lerp(Context.FullBodyPos.position, bodyPos, Time.deltaTime * moveSpeed);
         if (!Context.IsGrounded)
         {
-            Context.LegIKTargetTransform.position = Vector3.Lerp(Context.LegIKTargetTransform.position, legPos, Time.deltaTime * (moveSpeed * (1.5f * Context.CurrentScale)));
+            Context.LegIKTargetTransform.position = Vector3.Lerp(Context.LegIKTargetTransform.position, legPos, Time.deltaTime * (moveSpeed * (1.5f /** Context.CurrentScale*/)));
             Context._currentLegPos = Context.LegIKTargetTransform.position;
         }
     }

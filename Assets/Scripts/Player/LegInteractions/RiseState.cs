@@ -7,7 +7,6 @@ public class RiseState : LegInteractionState
 {
     private Vector3 targetBodyPos;
     private float moveSpeed = 3f;
-    JointDrive savedDrive;
     public RiseState(LegInteractionContext context, LegStateMachine.ELegState estate) : base(context, estate)
     {
         LegInteractionContext Context = context;
@@ -15,10 +14,6 @@ public class RiseState : LegInteractionState
 
     public override void EnterState()
     {
-        savedDrive = Context.HipJoint.slerpDrive;
-        savedDrive.positionSpring = Context.HipJoint.slerpDrive.positionSpring;
-        savedDrive.positionDamper = Context.HipJoint.slerpDrive.positionDamper;
-
         //Context.SetJointSlerp(Context.HipJoint, 25000f, 500f);
         Context.SetLegToRise();
 
